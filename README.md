@@ -1,9 +1,11 @@
 Qdemos!
 =========
 
-App Android participante en el **VIII Concurso Universitario de Software Libre**
+App Android participante en el [**VIII Concurso Universitario de Software Libre**](http://www.concursosoftwarelibre.org/1314/)
 
-[CUSL 2013-2014](http://www.concursosoftwarelibre.org/1314/themes/kanji/logo.png "CUSL 2013-2014")
+<a href="http://www.concursosoftwarelibre.org/1314/">
+  <img alt="CUSL" src="http://www.concursosoftwarelibre.org/1314/themes/kanji/logo.png" />
+</a>
 
 Con **Qdemos!** podremos crear y gestionar quedadas entre amigos, convirtiendo en historia las largas discusiones que se generan por Whatsapp o Facebook cuando queremos coordinarnos para quedar.
 
