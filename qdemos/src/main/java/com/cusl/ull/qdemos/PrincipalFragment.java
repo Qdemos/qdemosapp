@@ -15,7 +15,7 @@ import com.facebook.model.GraphUser;
 
 /**
  * Created by Paco on 7/01/14.
- * A placeholder fragment containing a simple view.
+ * Fragment que se encarga de mostrar la primera pantalla que ve el usuario si esta logueado.
  */
 public class PrincipalFragment extends Fragment {
 

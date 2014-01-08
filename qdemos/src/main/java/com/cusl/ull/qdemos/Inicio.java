@@ -8,22 +8,33 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 
+/**
+ * Activity Incial que se encarga de redirigir a la pantalla principal si estamos logueados o de mostrar la pantalla de Login si no lo estamos.
+ * Tambien se encarga de mostrar la pantalla de logout en caso de que estemos logueados y queramos cerrar sesion con Facebook.
+ */
+
 public class Inicio extends FragmentActivity {
 
-    private static final int SPLASH = 0;
-    private static final int SELECTION = 1;
+    // Variables usadas para representar los fragments de Login, Pantalla principal (una vez logueado) y el LogOut.
+    private static final int LOGIN = 0;
+    private static final int PRINCIPAL = 1;
     private static final int LOGOUT = 2;
     private static final int FRAGMENT_COUNT = LOGOUT+1;
 
+    // Item del menu que permitira cerrar sesion en Facebook
     private MenuItem logout;
 
+    // Variables para controlar los fragments, cual esta activo, etc.
     private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
     private boolean isResumed = false;
+
+    // Variables para controlar el ciclo de vida de la sesion de Facebook
     private UiLifecycleHelper uiHelper;
     private Session.StatusCallback callback = new Session.StatusCallback() {
         @Override
@@ -36,17 +47,18 @@ public class Inicio extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Ciclo de vida de la sesion de autenticacion de Facebook
         uiHelper = new UiLifecycleHelper(this, callback);
         uiHelper.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_inicio);
 
         FragmentManager fm = getSupportFragmentManager();
-        LoginFragment splashFragment = (LoginFragment) fm.findFragmentById(R.id.splashFragment);
-        fragments[SPLASH] = splashFragment;
-        fragments[SELECTION] = fm.findFragmentById(R.id.selectionFragment);
+        fragments[LOGIN] = fm.findFragmentById(R.id.splashFragment);
+        fragments[PRINCIPAL] = fm.findFragmentById(R.id.selectionFragment);
         fragments[LOGOUT] = fm.findFragmentById(R.id.logOutFragment);
 
+        // Ocultamos todos los fragments que maneja nuestra activity para despues ir mostrando y ocultando segun se vaya pidiendo por parte del usuario
         FragmentTransaction transaction = fm.beginTransaction();
         for(int i = 0; i < fragments.length; i++) {
             transaction.hide(fragments[i]);
@@ -91,16 +103,22 @@ public class Inicio extends FragmentActivity {
         super.onResumeFragments();
         Session session = Session.getActiveSession();
 
+        // Cada vez que la app se ponga en primer plano, comprobaremos si nuestra sesión de FB aun sigue vigente, para entrar directamente. Si ha caducado o hemos hecho logout, mostramos el fragment de Login.
         if (session != null && session.isOpened()) {
             // if the session is already open, try to show the selection fragment
-            showFragment(SELECTION, false);
+            if (!getActionBar().isShowing())
+                getActionBar().show();
+            showFragment(PRINCIPAL, false);
         }  else {
             // otherwise present the splash screen and ask the user to login, unless the user explicitly skipped.
-            showFragment(SPLASH, false);
+            if (getActionBar().isShowing())
+                getActionBar().hide();
+            showFragment(LOGIN, false);
         }
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+        // Si hacemos login o logout, el estado de la sesion cambiará, por lo que en esta función se controla y se muestra el fragment correspondiente en funcion de si la sesión esta abierta o cerrada.
         if (isResumed) {
             FragmentManager manager = getSupportFragmentManager();
             int backStackSize = manager.getBackStackEntryCount();
@@ -110,13 +128,18 @@ public class Inicio extends FragmentActivity {
             // check for the OPENED state instead of session.isOpened() since for the
             // OPENED_TOKEN_UPDATED state, the selection fragment should already be showing.
             if (state.equals(SessionState.OPENED)) {
-                showFragment(SELECTION, false);
+                if (!getActionBar().isShowing())
+                    getActionBar().show();
+                showFragment(PRINCIPAL, false);
             } else if (state.isClosed()) {
-                showFragment(SPLASH, false);
+                if (getActionBar().isShowing())
+                    getActionBar().hide();
+                showFragment(LOGIN, false);
             }
         }
     }
 
+    // Función que a partir del ID (0: Login, 1: Principal, 2: Logout), muestra el fragment correspondiente, ocultando el resto.
     private void showFragment(int fragmentIndex, boolean addToBackStack) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
@@ -133,10 +156,11 @@ public class Inicio extends FragmentActivity {
         transaction.commit();
     }
 
+    // Funcion para manejar el Menu de la app, que en este caso es el que nos permitira hacer Logout
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // only add the menu when the selection fragment is showing
-        if (fragments[SELECTION].isVisible()) {
+        if (fragments[PRINCIPAL].isVisible()) {
             if (menu.size() == 0) {
                 logout = menu.add(R.string.logout);
             }
@@ -148,9 +172,12 @@ public class Inicio extends FragmentActivity {
         return false;
     }
 
+    // Si se ha clickado en la opcion de cerrar sesión del menu, mostraremos el fragment que nos permitirá cerrar la sesión.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.equals(logout)) {
+            if (!getActionBar().isShowing())
+                getActionBar().show();
             showFragment(LOGOUT, true);
             return true;
         }

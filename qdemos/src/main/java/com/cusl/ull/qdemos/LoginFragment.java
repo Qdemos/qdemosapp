@@ -11,7 +11,7 @@ import com.facebook.model.*;
 
 /**
  * Created by Paco on 7/01/14.
- * A placeholder fragment containing a simple view.
+ * Fragment que se encarga de Loguear al usuario, es el splash screen inicial de login
  */
 public class LoginFragment extends Fragment {
 
