@@ -1,0 +1,2 @@
+include ':qdemos'
+include ':libraries:facebook'
