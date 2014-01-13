@@ -1,6 +1,10 @@
 Qdemos!
 =========
 
+<a href="http://qdemos.wordpress.com/">
+  <img alt="Qdemos!" src="http://qdemos.files.wordpress.com/2014/01/screenshot_2014-01-08-17-24-58.png?w=310&h=550" />
+</a>
+
 App Android participante en el [**VIII Concurso Universitario de Software Libre**](http://www.concursosoftwarelibre.org/1314/)
 
 <a href="http://www.concursosoftwarelibre.org/1314/">
