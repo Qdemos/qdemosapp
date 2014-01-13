@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -51,6 +52,9 @@ public class Inicio extends FragmentActivity {
         uiHelper = new UiLifecycleHelper(this, callback);
         uiHelper.onCreate(savedInstanceState);
 
+        // Inicializamos cosas propias de la app, como la BBDD
+        initConfigApp();
+
         setContentView(R.layout.activity_inicio);
 
         FragmentManager fm = getSupportFragmentManager();
@@ -64,6 +68,10 @@ public class Inicio extends FragmentActivity {
             transaction.hide(fragments[i]);
         }
         transaction.commit();
+    }
+
+    public void initConfigApp (){
+        BBDD.initBBDD(this);
     }
 
     @Override
