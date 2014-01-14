@@ -4,8 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <fragment android:name="com.cusl.ull.qdemos.fragments.LoginFragment"
-        android:id="@+id/splashFragment"
+    <fragment android:name="com.facebook.widget.UserSettingsFragment"
+        android:id="@+id/logOutFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

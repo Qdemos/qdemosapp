@@ -1,36 +1,28 @@
 package com.cusl.ull.qdemos;
 
+import android.app.Activity;
+import android.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.os.Build;
 
-import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 
-/**
- * Activity Incial que se encarga de redirigir a la pantalla principal si estamos logueados o de mostrar la pantalla de Login si no lo estamos.
- * Tambien se encarga de mostrar la pantalla de logout en caso de que estemos logueados y queramos cerrar sesion con Facebook.
- */
+public class Logout extends FragmentActivity {
 
-public class Inicio extends FragmentActivity {
+    Fragment logout;
 
-    // Variables usadas para representar los fragments de Login, Pantalla principal (una vez logueado) y el LogOut.
-    private static final int LOGIN = 0;
-    private static final int FRAGMENT_COUNT = LOGIN+1;
-
-    // Item del menu que permitira cerrar sesion en Facebook
-    private MenuItem logout;
-
-    // Variables para controlar los fragments, cual esta activo, etc.
-    private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
     private boolean isResumed = false;
 
     // Variables para controlar el ciclo de vida de la sesion de Facebook
@@ -43,30 +35,22 @@ public class Inicio extends FragmentActivity {
     };
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Ciclo de vida de la sesion de autenticacion de Facebook
         uiHelper = new UiLifecycleHelper(this, callback);
         uiHelper.onCreate(savedInstanceState);
 
-        // Inicializamos cosas propias de la app, como la BBDD
-        initConfigApp();
-
-        setContentView(R.layout.activity_inicio);
+        setContentView(R.layout.activity_logout);
 
         FragmentManager fm = getSupportFragmentManager();
-        fragments[LOGIN] = fm.findFragmentById(R.id.splashFragment);
+        logout = fm.findFragmentById(R.id.logOutFragment);
 
         // Ocultamos todos los fragments que maneja nuestra activity para despues mostrarlo si procede o saltar a la siguiente activity.
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.hide(fragments[LOGIN]);
+        transaction.show(logout);
         transaction.commit();
-        getActionBar().hide();
-    }
-
-    public void initConfigApp (){
-        BBDD.initBBDD(this);
     }
 
     @Override
@@ -108,46 +92,31 @@ public class Inicio extends FragmentActivity {
 
         // Cada vez que la app se ponga en primer plano, comprobaremos si nuestra sesión de FB aun sigue vigente, para entrar directamente. Si ha caducado o hemos hecho logout, mostramos el fragment de Login.
         if (session != null && session.isOpened()) {
-            goToHome();
+            // Si esta abierta la sesion no hacer nada
         }  else {
-            // otherwise present the splash screen and ask the user to login, unless the user explicitly skipped.
-            showFragment(LOGIN, false);
+            // Si no está abierta, está cerrada, redirigir a Login
+            goToLogin();
         }
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         // Si hacemos login o logout, el estado de la sesion cambiará, por lo que en esta función se controla y se muestra el fragment correspondiente en funcion de si la sesión esta abierta o cerrada.
         if (isResumed) {
-            FragmentManager manager = getSupportFragmentManager();
-            int backStackSize = manager.getBackStackEntryCount();
-            for (int i = 0; i < backStackSize; i++) {
-                manager.popBackStack();
-            }
-            // check for the OPENED state instead of session.isOpened() since for the
-            // OPENED_TOKEN_UPDATED state, the selection fragment should already be showing.
             if (state.equals(SessionState.OPENED)) {
-                goToHome();
+                // Si esta abierta la sesion no hacer nada
             } else if (state.isClosed()) {
-                showFragment(LOGIN, false);
+                // Si no está abierta, está cerrada, redirigir a Login
+                goToLogin();
             }
         }
     }
 
-    // Función que a partir del ID (0: Login), muestra el fragment correspondiente, ocultando el resto.
-    private void showFragment(int fragmentIndex, boolean addToBackStack) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.show(fragments[LOGIN]);
-        if (addToBackStack) {
-            transaction.addToBackStack(null);
-        }
-        transaction.commit();
-    }
 
-    // Funcion encargada de redireccionar a la pantalla principal de usuario una vez logueado correctamente en Facebook
-    public void goToHome(){
-        // Empezar aqui a trabajar con la UI
-        Intent intent = new Intent(this, Home.class);
+    // Funcion encargada de redireccionar a la pantalla de login tras el cierre de sesion de usuario en Facebook
+    public void goToLogin(){
+        Intent intent = new Intent(this, Inicio.class);
+        // Para borrar el historial del botón atrás y no permitir hacer nada en eso boton ya que nos hemos deslogueado
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }

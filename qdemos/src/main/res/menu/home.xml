@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- Nueva Quedada -->
+    <item android:id="@+id/menu_nuevo"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/nuevo"
+        android:showAsAction="ifRoom" />
+
+    <item android:id="@+id/menu_logout"
+        android:title="@string/logout"
+        android:showAsAction="never" />
+
+</menu>
