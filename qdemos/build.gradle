@@ -33,6 +33,8 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:+'
     compile 'com.android.support:support-v13:+'
+    compile 'com.google.android.gms:play-services:4.0.30'
     compile project(':libraries:facebook')
+    compile project(':libraries:datetimepicker-library')
     compile files('C:/Users/Paco/AndroidStudioProjects/Qdemos/libs/com.mobandme.ada_v2.4.1.jar')
 }

@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">Qdemos!</string>
-    <string name="app_id">488901467895705</string>
+    <string name="app_id_facebook">488901467895705</string>
+    <string name="app_key_play_services">AIzaSyBBgC6pax3qlZDpHOqV1BArBgCLpN85TZs</string>
     <string name="logout">Cerrar Sesión</string>
     <string name="inicio">Inicio</string>
     <string name="nuevo">Nuevo</string>
@@ -14,5 +15,9 @@
     <string name="title_section_info">Información General</string>
     <string name="title_section_fechas">Fechas</string>
     <string name="title_section_invitados">Invitados</string>
+
+    <string name="titulo">Título</string>
+    <string name="descripcion">Descripción</string>
+    <string name="direccion">Dirección</string>
 
 </resources>

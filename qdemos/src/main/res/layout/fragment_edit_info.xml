@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Dummy item to prevent EditText from receiving focus -->
+    <RelativeLayout
+        android:id="@+id/linearLayout_focus"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
+    <RelativeLayout
+        android:id="@+id/tituloBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        >
+
+        <EditText
+            android:id="@+id/tituloET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/titulo"
+            android:lines="1"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/descripcionBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tituloBox"
+        android:layout_margin="15dp"
+        >
+
+        <EditText
+            android:id="@+id/descripcionET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/descripcion"
+            android:lines="6"
+            android:maxLines="6"
+            android:scrollbars="vertical"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/direccionBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descripcionBox"
+        android:layout_margin="15dp"
+        >
+
+        <EditText
+            android:id="@+id/direccionET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/direccion"
+            android:lines="1"
+            />
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/direccionET"
+            class="com.google.android.gms.maps.SupportMapFragment"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

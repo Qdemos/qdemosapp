@@ -17,14 +17,19 @@ public class Usuario extends Entity{
     @TableField(name = "Idfacebook", datatype = DATATYPE_STRING)
     public String idfacebook;
 
+    // Identificador del usuario (cuenta google) en GCM para las notificaciones push
+    @TableField(name = "Idgcm", datatype = DATATYPE_STRING)
+    public String idgcm;
+
     public Usuario(){
         super();
     }
 
-    public Usuario(String nombre, String idfacebook){
+    public Usuario(String nombre, String idfacebook, String idgcm){
         super();
         setNombre(nombre);
         setIdfacebook(idfacebook);
+        setIdgcm(idgcm);
     }
 
     public String getNombre() {
@@ -41,5 +46,13 @@ public class Usuario extends Entity{
 
     public void setIdfacebook(String idfacebook) {
         idfacebook = idfacebook;
+    }
+
+    public String getIdgcm() {
+        return idgcm;
+    }
+
+    public void setIdgcm(String idgcm) {
+        this.idgcm = idgcm;
     }
 }
