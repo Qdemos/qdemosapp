@@ -12,41 +12,37 @@
         android:layout_height="0px"/>
 
     <RelativeLayout
-        android:id="@+id/fechasBox"
+        android:id="@+id/fechasListBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/nuevaFechaBox"
+        >
+
+        <ListView
+            android:id="@+id/listaFechas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/nuevaFechaBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
         >
 
         <Button
             android:id="@+id/nuevaFecha"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/nuevo"/>
 
-
     </RelativeLayout>
-
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/limiteBox"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/tituloBox"-->
-        <!--android:layout_margin="15dp"-->
-        <!-->-->
-
-        <!--<EditText-->
-            <!--android:id="@+id/descripcionET"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="@string/descripcion"-->
-            <!--android:lines="6"-->
-            <!--android:maxLines="6"-->
-            <!--android:scrollbars="vertical"-->
-            <!--/>-->
-
-    <!--</RelativeLayout>-->
-
-
 
 </RelativeLayout>

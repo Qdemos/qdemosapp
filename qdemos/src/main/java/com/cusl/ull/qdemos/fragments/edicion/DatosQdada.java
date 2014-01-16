@@ -35,10 +35,12 @@ public class DatosQdada {
         reinvitacion = null;
     }
 
-    public static void setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
+    public static Date setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hourOfDay, minute);
-        fechas.add(calendar.getTime());
+        Date fecha = calendar.getTime();
+        fechas.add(fecha);
+        return fecha;
     }
 
     public static void setTitulo (String tit){

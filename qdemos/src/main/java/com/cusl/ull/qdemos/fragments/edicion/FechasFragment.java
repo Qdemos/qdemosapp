@@ -5,7 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.cusl.ull.qdemos.adapters.FechaAdapter;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
@@ -28,6 +30,8 @@ public class FechasFragment extends Fragment implements DatePickerDialog.OnDateS
         DatePickerDialog datePickerDialog = null;
         Calendar calendar = null;
         int year, month, day;
+        ListView listView;
+        FechaAdapter fechaAdapter;
 
         public FechasFragment() {
             // Se ejecuta antes que el onCreateView
@@ -52,6 +56,12 @@ public class FechasFragment extends Fragment implements DatePickerDialog.OnDateS
                 }
             });
 
+            listView = (ListView) rootView.findViewById(R.id.listaFechas);
+
+            fechaAdapter = new FechaAdapter(getActivity(), DatosQdada.fechas);
+            listView.setAdapter(fechaAdapter);
+            listView.setClickable(false);
+
             return rootView;
         }
 
@@ -66,5 +76,6 @@ public class FechasFragment extends Fragment implements DatePickerDialog.OnDateS
         @Override
         public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
             DatosQdada.setNuevaFecha(year, month, day, hourOfDay, minute);
+            fechaAdapter.notifyDataSetChanged();
         }
 }
