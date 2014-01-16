@@ -20,4 +20,6 @@
     <string name="descripcion">Descripción</string>
     <string name="direccion">Dirección</string>
 
+    <string name="exception">Excepción</string>
+
 </resources>

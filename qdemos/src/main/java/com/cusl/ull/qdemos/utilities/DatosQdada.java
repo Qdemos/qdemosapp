@@ -1,7 +1,8 @@
-package com.cusl.ull.qdemos.fragments.edicion;
+package com.cusl.ull.qdemos.utilities;
 
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
+import com.facebook.model.GraphUser;
 import com.mobandme.ada.annotations.TableField;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class DatosQdada {
     public static Date limite;
     public static Boolean reinvitacion;
 
+    public static List<GraphUser> selectedUsers;
+
     public static void reset(){
         fechas = new ArrayList<Date>();
         titulo = null;
@@ -33,14 +36,21 @@ public class DatosQdada {
         longitud = null;
         limite = null;
         reinvitacion = null;
+        selectedUsers = new ArrayList<GraphUser>();
     }
 
-    public static Date setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
+    public static List<GraphUser> getSelectedUsers() {
+        return selectedUsers;
+    }
+
+    public static void setSelectedUsers(List<GraphUser> selectedU) {
+        selectedUsers = selectedU;
+    }
+
+    public static void setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hourOfDay, minute);
-        Date fecha = calendar.getTime();
-        fechas.add(fecha);
-        return fecha;
+        fechas.add(calendar.getTime());
     }
 
     public static void setTitulo (String tit){

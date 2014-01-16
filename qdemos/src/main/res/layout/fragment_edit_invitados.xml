@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Dummy item to prevent EditText from receiving focus -->
+    <RelativeLayout
+        android:id="@+id/linearLayout_focus"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
+    <RelativeLayout
+        android:id="@+id/invitadosListBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/nuevosInvitadosBox"
+        >
+
+        <ListView
+            android:id="@+id/listaInvitados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/nuevosInvitadosBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+        >
+
+        <Button
+            android:id="@+id/nuevosInvitados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nuevo"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

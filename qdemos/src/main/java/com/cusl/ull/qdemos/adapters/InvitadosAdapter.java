@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
+import com.facebook.model.GraphUser;
+import com.facebook.widget.ProfilePictureView;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -20,11 +22,11 @@ import java.util.List;
 /**
  * Created by Paco on 16/01/14.
  */
-public class FechaAdapter extends BaseAdapter {
+public class InvitadosAdapter extends BaseAdapter {
     protected Activity activity;
-    protected List<Date> items;
+    protected List<GraphUser> items;
 
-    public FechaAdapter(Activity activity, List<Date> items) {
+    public InvitadosAdapter(Activity activity, List<GraphUser> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -50,15 +52,18 @@ public class FechaAdapter extends BaseAdapter {
 
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            vi = inflater.inflate(R.layout.item_fecha_list, null);
+            vi = inflater.inflate(R.layout.item_invitados_list, null);
         }
 
-        Date item = items.get(position);
+        GraphUser item = items.get(position);
 
-        TextView fecha = (TextView) vi.findViewById(R.id.fecha);
-        fecha.setText(new SimpleDateFormat("EEEE dd MMMM yyyy, hh:mm").format(item));
+        ProfilePictureView foto = (ProfilePictureView) vi.findViewById(R.id.fotoPerfil);
+        foto.setProfileId(item.getId());
 
-        ImageButton eliminar = (ImageButton) vi.findViewById(R.id.eliminar);
+        TextView nombre = (TextView) vi.findViewById(R.id.nombrePerfil);
+        nombre.setText(item.getName());
+
+        ImageButton eliminar = (ImageButton) vi.findViewById(R.id.eliminarInvitado);
         // Usamos el SETTAG y despues el GETTAG para saber que botón ha sido pulsado de todos los items que son visibles, y así poder saber que item borrar.
         eliminar.setTag(position);
         eliminar.setOnClickListener(new View.OnClickListener() {
@@ -72,22 +77,22 @@ public class FechaAdapter extends BaseAdapter {
         return vi;
     }
 
-    public void addItem (Date fecha){
-        this.items.add(fecha);
-        // Para ordenar la lista por fecha y que aparezca en el layout (ListView) en orden
-        Collections.sort(this.items, new Comparator<Date>() {
-            public int compare(Date o1, Date o2) {
-                return o1.compareTo(o2);
+    public void addItem (GraphUser user){
+        this.items.add(user);
+        // Para ordenar la lista por nombre de usuario en FB y que aparezca en el layout (ListView) en orden
+        Collections.sort(this.items, new Comparator<GraphUser>() {
+            public int compare(GraphUser o1, GraphUser o2) {
+                return o1.getName().compareTo(o2.getName());
             }
         });
     }
 
     public void deleteItem (int position){
         this.items.remove(position);
-        // Para ordenar la lista por fecha y que aparezca en el layout (ListView) en orden
-        Collections.sort(this.items, new Comparator<Date>() {
-            public int compare(Date o1, Date o2) {
-                return o1.compareTo(o2);
+        // Para ordenar la lista por por nombre de usuario en FB y que aparezca en el layout (ListView) en orden
+        Collections.sort(this.items, new Comparator<GraphUser>() {
+            public int compare(GraphUser o1, GraphUser o2) {
+                return o1.getName().compareTo(o2.getName());
             }
         });
     }
