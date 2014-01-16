@@ -14,6 +14,8 @@ import com.facebook.widget.FriendPickerFragment;
 import com.facebook.widget.PickerFragment;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 // This class provides an example of an Activity that uses FriendPickerFragment to display a list of
@@ -46,8 +48,8 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
             // First time through, we create our fragment programmatically.
             final Bundle args = getIntent().getExtras();
             friendPickerFragment = new FriendPickerFragment(args);
-            // TODO: Descomentar para que solo salgan los usuario de Facebook que tengan instalas la APP
-            //friendPickerFragment.setExtraFields(Arrays.asList(INSTALLED));
+            // TODO: Descomentar para que solo salgan los usuario de Facebook que tengan instalas la APP o buscar otra manera
+            friendPickerFragment.setExtraFields(Arrays.asList(INSTALLED));
             fm.beginTransaction().add(R.id.friend_picker_fragment, friendPickerFragment).commit();
         } else {
             // Subsequent times, our fragment is recreated by the framework and already has saved and
@@ -68,7 +70,11 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
             public void onDoneButtonClicked(PickerFragment<?> fragment) {
                 // We just store our selection in the Application for other activities to look at.
                 DatosQdada.setSelectedUsers(friendPickerFragment.getSelection());
-
+                Collections.sort(DatosQdada.getSelectedUsers(), new Comparator<GraphUser>() {
+                    public int compare(GraphUser o1, GraphUser o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
                 setResult(RESULT_OK, null);
                 finish();
             }

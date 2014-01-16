@@ -69,22 +69,20 @@ public class InvitadosAdapter extends BaseAdapter {
         eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getTag() instanceof Integer)
+                if (view.getTag() instanceof Integer){
                     deleteItem(((Integer)view.getTag()));
+                    notifyDataSetChanged();
+                }
             }
         });
 
         return vi;
     }
 
-    public void addItem (GraphUser user){
-        this.items.add(user);
+    public void addAllItem (List<GraphUser> users){
+        this.items = users;
         // Para ordenar la lista por nombre de usuario en FB y que aparezca en el layout (ListView) en orden
-        Collections.sort(this.items, new Comparator<GraphUser>() {
-            public int compare(GraphUser o1, GraphUser o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+
     }
 
     public void deleteItem (int position){

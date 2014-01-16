@@ -8,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
+import com.cusl.ull.qdemos.adapters.FechaAdapter;
+import com.cusl.ull.qdemos.adapters.InvitadosAdapter;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -31,6 +34,7 @@ public class InvitadosFragment extends Fragment {
         private TextView resultsTextView;
         private UiLifecycleHelper lifecycleHelper;
         boolean pickFriendsWhenSessionOpened;
+        InvitadosAdapter invitadosAdapter;
 
         public InvitadosFragment() {
             // Se ejecuta antes que el onCreateView
@@ -58,6 +62,13 @@ public class InvitadosFragment extends Fragment {
             lifecycleHelper.onCreate(savedInstanceState);
 
             ensureOpenSession();
+
+            ListView listView = (ListView) rootView.findViewById(R.id.listaInvitados);
+
+            invitadosAdapter = new InvitadosAdapter(getActivity(), DatosQdada.selectedUsers);
+            listView.setAdapter(invitadosAdapter);
+            listView.setClickable(false);
+
             return rootView;
         }
 
@@ -73,20 +84,8 @@ public class InvitadosFragment extends Fragment {
     }
 
     private void displaySelectedFriends(int resultCode) {
-        String results = "";
-
-        Collection<GraphUser> selection = DatosQdada.getSelectedUsers();
-        if (selection != null && selection.size() > 0) {
-            ArrayList<String> names = new ArrayList<String>();
-            for (GraphUser user : selection) {
-                names.add(user.getName());
-            }
-            results = TextUtils.join(", ", names);
-        } else {
-            results = "<No friends selected>";
-        }
-
-        System.out.println(results);
+        invitadosAdapter.addAllItem(DatosQdada.getSelectedUsers());
+        invitadosAdapter.notifyDataSetChanged();
     }
 
     private boolean ensureOpenSession() {

@@ -64,22 +64,14 @@ public class FechaAdapter extends BaseAdapter {
         eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getTag() instanceof Integer)
+                if (view.getTag() instanceof Integer){
                     deleteItem(((Integer)view.getTag()));
+                    notifyDataSetChanged();
+                }
             }
         });
 
         return vi;
-    }
-
-    public void addItem (Date fecha){
-        this.items.add(fecha);
-        // Para ordenar la lista por fecha y que aparezca en el layout (ListView) en orden
-        Collections.sort(this.items, new Comparator<Date>() {
-            public int compare(Date o1, Date o2) {
-                return o1.compareTo(o2);
-            }
-        });
     }
 
     public void deleteItem (int position){

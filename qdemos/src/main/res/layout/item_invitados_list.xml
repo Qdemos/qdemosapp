@@ -26,7 +26,6 @@
         android:id="@+id/eliminarInvitado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/nombrePerfil"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:src="@android:drawable/ic_menu_delete"

@@ -12,6 +12,7 @@
     <string name="title_section_pendientes">Pendientes</string>
     <string name="title_section_historial">Historial</string>
     <string name="title_activity_qdada">Editar Qdada</string>
+    <string name="title_activity_invitados">¿Con quién quieres Qdar?</string>
     <string name="title_section_info">Información General</string>
     <string name="title_section_fechas">Fechas</string>
     <string name="title_section_invitados">Invitados</string>

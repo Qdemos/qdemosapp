@@ -7,6 +7,8 @@ import com.mobandme.ada.annotations.TableField;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +53,11 @@ public class DatosQdada {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hourOfDay, minute);
         fechas.add(calendar.getTime());
+        Collections.sort(fechas, new Comparator<Date>() {
+            public int compare(Date o1, Date o2) {
+                return o1.compareTo(o2);
+            }
+        });
     }
 
     public static void setTitulo (String tit){

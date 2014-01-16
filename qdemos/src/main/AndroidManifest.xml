@@ -49,6 +49,10 @@
             android:name="com.cusl.ull.qdemos.Qdada"
             android:label="@string/title_activity_qdada" >
         </activity>
+
+        <activity android:name="com.cusl.ull.qdemos.fragments.edicion.PickFriendsFragmentActivity"
+            android:label="@string/title_activity_invitados">
+        </activity>
     </application>
 
     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
