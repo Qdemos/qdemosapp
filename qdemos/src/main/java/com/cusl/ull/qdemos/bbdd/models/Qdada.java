@@ -42,6 +42,10 @@ public class Qdada extends Entity{
     @TableField(name = "Longitud", datatype = DATATYPE_DOUBLE)
     public Double longitud;
 
+    // Nombre de la calle y similar de donde se celebrará la Qdada
+    @TableField(name = "Direccion", datatype = DATATYPE_STRING)
+    public String direccion;
+
     // Fechas propuestas para la realización de las quedadas, por parte del creador
     @TableField(name = "Fechas", datatype = DATATYPE_ENTITY_LINK)
     public List<Date> fechas = new ArrayList<Date>();

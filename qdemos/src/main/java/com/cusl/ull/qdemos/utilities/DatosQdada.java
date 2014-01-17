@@ -17,17 +17,18 @@ import java.util.List;
  */
 public class DatosQdada {
 
-    public static List<Usuario> invitados = new ArrayList<Usuario>();
     public static String titulo;
     public static String descripcion;
     public static Usuario creador;
+
+    public static String direccion;
     public static Double latitud;
     public static Double longitud;
     public static List<Date> fechas = new ArrayList<Date>();
     public static Date limite;
     public static Boolean reinvitacion;
 
-    public static List<GraphUser> selectedUsers;
+    public static List<GraphUser> invitados;
 
     public static void reset(){
         fechas = new ArrayList<Date>();
@@ -36,17 +37,18 @@ public class DatosQdada {
         // TODO: Setear CREADOR al usuario actual mediante un quienSoy() o algo de eso
         latitud = null;
         longitud = null;
+        direccion=null;
         limite = null;
         reinvitacion = null;
-        selectedUsers = new ArrayList<GraphUser>();
+        invitados = new ArrayList<GraphUser>();
     }
 
     public static List<GraphUser> getSelectedUsers() {
-        return selectedUsers;
+        return invitados;
     }
 
     public static void setSelectedUsers(List<GraphUser> selectedU) {
-        selectedUsers = selectedU;
+        invitados = selectedU;
     }
 
     public static void setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
@@ -81,4 +83,47 @@ public class DatosQdada {
         reinvitacion = reinvit;
     }
 
+    public static void setDireccion(String direccion) {
+        DatosQdada.direccion = direccion;
+    }
+
+    public static String getTitulo() {
+        return titulo;
+    }
+
+    public static String getDescripcion() {
+        return descripcion;
+    }
+
+    public static Usuario getCreador() {
+        return creador;
+    }
+
+    public static String getDireccion() {
+        return direccion;
+    }
+
+    public static Double getLatitud() {
+        return latitud;
+    }
+
+    public static Double getLongitud() {
+        return longitud;
+    }
+
+    public static List<Date> getFechas() {
+        return fechas;
+    }
+
+    public static Date getLimite() {
+        return limite;
+    }
+
+    public static Boolean getReinvitacion() {
+        return reinvitacion;
+    }
+
+    public static List<GraphUser> getInvitados() {
+        return invitados;
+    }
 }

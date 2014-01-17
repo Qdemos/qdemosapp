@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
+import com.cusl.ull.qdemos.utilities.Utilities;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -56,7 +57,7 @@ public class FechaAdapter extends BaseAdapter {
         Date item = items.get(position);
 
         TextView fecha = (TextView) vi.findViewById(R.id.fecha);
-        fecha.setText(new SimpleDateFormat("EEEE dd MMMM yyyy, hh:mm").format(item));
+        fecha.setText(Utilities.getCamelCase(new SimpleDateFormat("EEEE dd MMMM yyyy, HH:mm").format(item)));
 
         ImageButton eliminar = (ImageButton) vi.findViewById(R.id.eliminar);
         // Usamos el SETTAG y despues el GETTAG para saber que botón ha sido pulsado de todos los items que son visibles, y así poder saber que item borrar.

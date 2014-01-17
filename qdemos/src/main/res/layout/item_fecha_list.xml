@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp">
 
     <TextView
         android:id="@+id/fecha"
