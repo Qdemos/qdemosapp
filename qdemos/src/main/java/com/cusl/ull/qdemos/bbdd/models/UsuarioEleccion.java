@@ -1,6 +1,10 @@
 package com.cusl.ull.qdemos.bbdd.models;
 
+import android.content.Context;
+
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.mobandme.ada.Entity;
+import com.mobandme.ada.annotations.Table;
 import com.mobandme.ada.annotations.TableField;
 
 import java.util.ArrayList;
@@ -11,37 +15,48 @@ import java.util.List;
  * Created by Paco on 13/01/14.
  */
 // Clase que representa la elección de un usuario en una quedada, o sea, que ha respondido a que participará y las fechas que ha dicho que puede asistir.
+@Table(name = "Usuarioeleccion")
 public class UsuarioEleccion extends Entity {
 
+    // Este campo lo coloco ya que la el ORM que utilizo le encontré un fallo que salta cuando no tiene atributos propios, sólo enlaces a otras entidades como sería este caso, por ello creo un atributo propio con un valor Mock
+    @TableField(name = "Mock", datatype = DATATYPE_STRING)
+    public String Mock;
+
     @TableField(name = "Usuario", datatype = DATATYPE_ENTITY_LINK)
-    public Usuario usuario;
+    public Usuario Usuario;
 
     @TableField(name = "Fechas", datatype = DATATYPE_ENTITY_LINK)
-    public List<Date> fechas = new ArrayList<Date>();
+    public List<Fecha> Fechas = new ArrayList<Fecha>();
 
     public UsuarioEleccion(){
         super();
     }
 
-    public UsuarioEleccion(com.cusl.ull.qdemos.bbdd.models.Usuario usuario, List<Date> fechas) {
+    public UsuarioEleccion(Context ctx, Usuario user, List<Fecha> fechas) {
         super();
-        setUsuario(usuario);
-        setFechas(fechas);
+        this.Mock = "SinAtributosPropios";
+        setUsuario(user);
+        setFechas(ctx, fechas);
     }
 
     public Usuario getUsuario() {
-        return usuario;
+        return this.Usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        usuario = usuario;
+    public void setUsuario(Usuario user) {
+        this.Usuario = user;
     }
 
-    public List<Date> getFechas() {
-        return fechas;
+    public List<Fecha> getFechas() {
+        return this.Fechas;
     }
 
-    public void setFechas(List<Date> fechas) {
-        fechas = fechas;
+    public void setFechas(Context ctx, List<Fecha> fechasParam) {
+        try {
+            for (Fecha fecha: fechasParam){
+                BBDD.getApplicationDataContext(ctx).fechaDao.save(fecha);
+            }
+            this.Fechas = fechasParam;
+        } catch (Exception e){}
     }
 }

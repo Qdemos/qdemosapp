@@ -1,9 +1,15 @@
 package com.cusl.ull.qdemos.utilities;
 
+import android.app.Activity;
+import android.content.Context;
+
+import com.cusl.ull.qdemos.R;
+import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
-import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
+import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
 import com.facebook.model.GraphUser;
-import com.mobandme.ada.annotations.TableField;
+import com.mobandme.ada.exceptions.AdaFrameworkException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,29 +18,33 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
+
 /**
  * Created by Paco on 15/01/14.
  */
 public class DatosQdada {
 
-    public static String titulo;
-    public static String descripcion;
-    public static Usuario creador;
+    private static String titulo;
+    private static String descripcion;
+    private static Usuario creador;
 
-    public static String direccion;
-    public static Double latitud;
-    public static Double longitud;
-    public static List<Date> fechas = new ArrayList<Date>();
-    public static Date limite;
-    public static Boolean reinvitacion;
+    private static String direccion;
+    private static Double latitud;
+    private static Double longitud;
+    private static List<Date> fechas = new ArrayList<Date>();
+    private static Date limite;
+    private static Boolean reinvitacion;
 
-    public static List<GraphUser> invitados;
+    private static List<GraphUser> invitados;
 
-    public static void reset(){
+    public static void reset(Context ctx){
         fechas = new ArrayList<Date>();
         titulo = null;
         descripcion = null;
-        // TODO: Setear CREADOR al usuario actual mediante un quienSoy() o algo de eso
+        creador = BBDD.quienSoy(ctx);
         latitud = null;
         longitud = null;
         direccion=null;
@@ -125,5 +135,43 @@ public class DatosQdada {
 
     public static List<GraphUser> getInvitados() {
         return invitados;
+    }
+
+    public static boolean validarFechas (Activity activity){
+        if ((DatosQdada.getFechas() != null) && (!DatosQdada.getFechas().isEmpty()))
+            return true;
+        Crouton.makeText(activity, R.string.validar_fechas, Style.ALERT).show();
+        return false;
+    }
+
+    public static boolean validarInvitados (Activity activity){
+        if ((DatosQdada.getInvitados() != null) && (!DatosQdada.getInvitados().isEmpty()))
+            return true;
+        Crouton.makeText(activity, R.string.validar_invitados, Style.ALERT).show();
+        return false;
+    }
+
+    public static boolean validarInfo (Activity activity){
+        if ((DatosQdada.getTitulo() == null) || (DatosQdada.getTitulo().trim().isEmpty())){
+            Crouton.makeText(activity, R.string.validar_titulo, Style.ALERT).show();
+            return false;
+        } else if (/*(DatosQdada.getLatitud() == null) || (DatosQdada.getLongitud() == null) ||*/ (DatosQdada.getDireccion() == null) || (DatosQdada.getDireccion().trim().isEmpty())){
+            // TODO: Descomentar lo de LAT y LNG
+            Crouton.makeText(activity, R.string.validar_direccion, Style.ALERT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean guardarBBDD (Context ctx){
+        try {
+            Qdada qdada = Conversores.fromDatosQdadaToQdada(ctx);
+            if (qdada == null)
+                return false;
+            BBDD.appDataContext.qdadaDao.save(qdada);
+            return true;
+        } catch (AdaFrameworkException e) {
+            return false;
+        }
     }
 }

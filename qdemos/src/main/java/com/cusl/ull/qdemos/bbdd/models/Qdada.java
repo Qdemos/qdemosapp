@@ -3,6 +3,10 @@ package com.cusl.ull.qdemos.bbdd.models;
 /**
  * Created by Paco on 13/01/14.
  */
+import android.content.Context;
+
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
+import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
 import com.mobandme.ada.Entity;
 import com.mobandme.ada.annotations.Table;
 import com.mobandme.ada.annotations.TableField;
@@ -48,7 +52,7 @@ public class Qdada extends Entity{
 
     // Fechas propuestas para la realización de las quedadas, por parte del creador
     @TableField(name = "Fechas", datatype = DATATYPE_ENTITY_LINK)
-    public List<Date> fechas = new ArrayList<Date>();
+    public List<Fecha> fechas = new ArrayList<Fecha>();
 
     // Fecha limite de respuesta para decir si un invitado asistira o no la quedada y en que fechas podra
     @TableField(name = "Limite", datatype = DATATYPE_DATE_BINARY)
@@ -62,7 +66,7 @@ public class Qdada extends Entity{
         super();
     }
 
-    public Qdada(String titulo, String descripcion, Usuario creador, List<Usuario> invitados, List<UsuarioEleccion> participantes, Double latitud, Double longitud, List<Date> fechas, Date limite, Boolean reinvitacion) {
+    public Qdada(Context ctx, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, List<UsuarioEleccion> participantes, Double latitud, Double longitud, String direccion, List<Date> fechas, Date limite, Boolean reinvitacion) {
         setTitulo(titulo);
         setDescripcion(descripcion);
         setCreador(creador);
@@ -70,9 +74,10 @@ public class Qdada extends Entity{
         setParticipantes(participantes);
         setLatitud(latitud);
         setLongitud(longitud);
-        setFechas(fechas);
+        setFechas(ctx, Conversores.fromListDateToListFecha(fechas));
         setLimite(limite);
         setReinvitacion(reinvitacion);
+        setDireccion(direccion);
     }
 
     public String getTitulo() {
@@ -131,12 +136,17 @@ public class Qdada extends Entity{
         this.longitud = longitud;
     }
 
-    public List<Date> getFechas() {
+    public List<Fecha> getFechas() {
         return fechas;
     }
 
-    public void setFechas(List<Date> fechas) {
-        this.fechas = fechas;
+    public void setFechas(Context ctx, List<Fecha> fechas) {
+        try {
+            for (Fecha fecha: fechas){
+                BBDD.getApplicationDataContext(ctx).fechaDao.save(fecha);
+            }
+            this.fechas = fechas;
+        } catch (Exception e){}
     }
 
     public Date getLimite() {
@@ -155,8 +165,16 @@ public class Qdada extends Entity{
         this.reinvitacion = reinvitacion;
     }
 
-    public void setParticipante(Usuario usuario, List<Date> fechas){
+    public void setParticipante(Context ctx, Usuario usuario, List<Date> fechas){
         invitados.remove(usuario);
-        participantes.add(new UsuarioEleccion(usuario, fechas));
+        participantes.add(new UsuarioEleccion(ctx, usuario, Conversores.fromListDateToListFecha(fechas)));
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

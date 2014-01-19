@@ -23,4 +23,11 @@
 
     <string name="exception">Excepción</string>
 
+    <string name="validar_fechas">Debes INDICAR al menos una FECHA para la Qdada</string>
+    <string name="validar_invitados">Debes INVITAR al menos a una PERSONA a la Qdada</string>
+    <string name="validar_titulo">Debes INDICAR un TITULO para la Qdada</string>
+    <string name="validar_direccion">Debes INDICAR correctamente un LUGAR para la Qdada</string>
+
+    <string name="error_bbdd">Hubo un ERROR al GUARDAR en Base de Datos, contacte con el administrador</string>
+
 </resources>

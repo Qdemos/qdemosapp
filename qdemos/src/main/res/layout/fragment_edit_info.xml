@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/descripcion"
-            android:lines="6"
+            android:lines="3"
             android:maxLines="6"
             android:scrollbars="vertical"
             />

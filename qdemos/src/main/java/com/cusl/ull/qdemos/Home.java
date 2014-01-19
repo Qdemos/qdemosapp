@@ -1,5 +1,8 @@
 package com.cusl.ull.qdemos;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -15,9 +18,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.cusl.ull.qdemos.bbdd.models.Fecha;
+import com.cusl.ull.qdemos.bbdd.models.Usuario;
+import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
+import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
 import com.cusl.ull.qdemos.fragments.listas.AceptadasFragment;
 import com.cusl.ull.qdemos.fragments.listas.HistorialFragment;
 import com.cusl.ull.qdemos.fragments.listas.PendientesFragment;
+import com.cusl.ull.qdemos.utilities.DatosQdada;
+import com.mobandme.ada.exceptions.AdaFrameworkException;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class Home extends FragmentActivity implements ActionBar.TabListener {
 
@@ -71,6 +84,14 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
             // this tab is selected.
             actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
+        /*try {
+            List<com.cusl.ull.qdemos.bbdd.models.Qdada> qdadas = BBDD.appDataContext.qdadaDao.search(false, null, null, null, null, null, null, null);
+            System.out.println(qdadas.get(0).getInvitados().get(0).getNombre()+"-"+qdadas.get(0).getFechas().get(0).getFecha()+"||"+qdadas.get(0).getParticipantes().get(0).getFechas().get(0).getFecha()+"||"+qdadas.get(0).getParticipantes().get(0).getUsuario().getNombre());
+
+        } catch (Exception e){
+            System.out.println("Error: "+e.getMessage());
+        }*/
+
     }
 
     @Override

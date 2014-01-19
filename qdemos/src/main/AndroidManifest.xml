@@ -2,12 +2,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cusl.ull.qdemos" >
 
-    <uses-permission android:name="paco.lugares.comer.opendata.chascarentenerife.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.iot.dephisit.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_STATE"
+        android:required="true" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission
+        android:name="com.iot.dephisit.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.iot.dephisit.permission.C2D_MESSAGE" />
+
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
         android:allowBackup="true"
@@ -47,6 +69,7 @@
         </activity>
         <activity
             android:name="com.cusl.ull.qdemos.Qdada"
+            android:windowSoftInputMode="adjustResize"
             android:label="@string/title_activity_qdada" >
         </activity>
 

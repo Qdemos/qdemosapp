@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -22,6 +23,10 @@ import android.widget.TextView;
 import com.cusl.ull.qdemos.fragments.edicion.FechasFragment;
 import com.cusl.ull.qdemos.fragments.edicion.InfoFragment;
 import com.cusl.ull.qdemos.fragments.edicion.InvitadosFragment;
+import com.cusl.ull.qdemos.utilities.DatosQdada;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class Qdada extends FragmentActivity implements ActionBar.TabListener {
 
@@ -93,10 +98,28 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.menu_guardar) {
-            // TODO: Comprobar los tres fragments de esta activity que tengan valores seteadas y guardar (enviando al server)
+            if (validacionDatos()){
+                if (DatosQdada.guardarBBDD(this)){
+                    // TODO: Enviar al SERVER
+                    // TODO: Pasar algun Bundle para mostrar un Crouton de EXITO en el fragment del HOME
+                    Intent intent = new Intent(this, Home.class);
+                    // Para eliminar el historial de activities visitadas ya que volvemos al HOME y asi el boton ATRAS no tenga ningun comportamiento, se resetee.
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Crouton.makeText(this, R.string.error_bbdd, Style.ALERT).show();
+                }
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean validacionDatos(){
+        if (DatosQdada.validarInfo(this) && DatosQdada.validarFechas(this) && DatosQdada.validarInvitados(this))
+            return true;
+        return false;
     }
 
     @Override

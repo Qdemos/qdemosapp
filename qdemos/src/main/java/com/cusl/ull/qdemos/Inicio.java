@@ -11,9 +11,12 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
+import com.facebook.Request;
+import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
 
 /**
  * Activity Incial que se encarga de redirigir a la pantalla principal si estamos logueados o de mostrar la pantalla de Login si no lo estamos.
@@ -108,7 +111,7 @@ public class Inicio extends FragmentActivity {
 
         // Cada vez que la app se ponga en primer plano, comprobaremos si nuestra sesión de FB aun sigue vigente, para entrar directamente. Si ha caducado o hemos hecho logout, mostramos el fragment de Login.
         if (session != null && session.isOpened()) {
-            goToHome();
+            goToHome(session);
         }  else {
             // otherwise present the splash screen and ask the user to login, unless the user explicitly skipped.
             showFragment(LOGIN, false);
@@ -126,7 +129,7 @@ public class Inicio extends FragmentActivity {
             // check for the OPENED state instead of session.isOpened() since for the
             // OPENED_TOKEN_UPDATED state, the selection fragment should already be showing.
             if (state.equals(SessionState.OPENED)) {
-                goToHome();
+                goToHome(session);
             } else if (state.isClosed()) {
                 showFragment(LOGIN, false);
             }
@@ -145,7 +148,24 @@ public class Inicio extends FragmentActivity {
     }
 
     // Funcion encargada de redireccionar a la pantalla principal de usuario una vez logueado correctamente en Facebook
-    public void goToHome(){
+    public void goToHome(final Session session){
+        // Obtenemos nuestros datos para crear el usuario que nos represente
+        Request request = Request.newMeRequest(session,
+                new Request.GraphUserCallback() {
+                    @Override
+                    public void onCompleted(GraphUser user, Response response) {
+                        // If the response is successful
+                        if (session == Session.getActiveSession()) {
+                            if (user != null) {
+                                BBDD.crearUsuarioIfNotExist(getApplicationContext(), user.getName(), user.getId());
+                            }
+                        }
+                        if (response.getError() != null) {
+                            // Handle errors, will do so later.
+                        }
+                    }
+                });
+        request.executeAsync();
         // Empezar aqui a trabajar con la UI
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);

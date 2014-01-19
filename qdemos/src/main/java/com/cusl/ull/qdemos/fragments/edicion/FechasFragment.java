@@ -35,7 +35,7 @@ public class FechasFragment extends Fragment implements DatePickerDialog.OnDateS
 
         public FechasFragment() {
             // Se ejecuta antes que el onCreateView
-            DatosQdada.reset();
+            DatosQdada.reset(getActivity());
         }
 
         @Override
@@ -58,7 +58,7 @@ public class FechasFragment extends Fragment implements DatePickerDialog.OnDateS
 
             listView = (ListView) rootView.findViewById(R.id.listaFechas);
 
-            fechaAdapter = new FechaAdapter(getActivity(), DatosQdada.fechas);
+            fechaAdapter = new FechaAdapter(getActivity(), DatosQdada.getFechas());
             listView.setAdapter(fechaAdapter);
             listView.setClickable(false);
 

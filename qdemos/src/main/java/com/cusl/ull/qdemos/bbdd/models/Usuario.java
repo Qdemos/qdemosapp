@@ -1,12 +1,14 @@
 package com.cusl.ull.qdemos.bbdd.models;
 
 import com.mobandme.ada.Entity;
+import com.mobandme.ada.annotations.Table;
 import com.mobandme.ada.annotations.TableField;
 
 /**
  * Created by Paco on 13/01/14.
  */
 // Clase que representa a un usuario.
+@Table(name = "Usuario")
 public class Usuario extends Entity{
 
     // Nombre del usuario, se almacena para que en caso de que no haya conexion a internet, y no poder acceder a su info de Facebook, al menos mostrar el nombre de los usuarios
@@ -18,6 +20,7 @@ public class Usuario extends Entity{
     public String idfacebook;
 
     // Identificador del usuario (cuenta google) en GCM para las notificaciones push
+    // Solo lo tendra seteado el usuario principal, el dueño del smartphone, ya que el resto de usuarios estaran almacenados en el Servidor, para mas seguridad
     @TableField(name = "Idgcm", datatype = DATATYPE_STRING)
     public String idgcm;
 
@@ -40,12 +43,12 @@ public class Usuario extends Entity{
         return idfacebook;
     }
 
-    public void setNombre(String nombre) {
-        nombre = nombre;
+    public void setNombre(String nomb) {
+        nombre = nomb;
     }
 
-    public void setIdfacebook(String idfacebook) {
-        idfacebook = idfacebook;
+    public void setIdfacebook(String idface) {
+        idfacebook = idface;
     }
 
     public String getIdgcm() {

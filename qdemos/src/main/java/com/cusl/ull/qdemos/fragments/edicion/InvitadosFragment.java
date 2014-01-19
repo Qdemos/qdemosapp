@@ -65,7 +65,7 @@ public class InvitadosFragment extends Fragment {
 
             ListView listView = (ListView) rootView.findViewById(R.id.listaInvitados);
 
-            invitadosAdapter = new InvitadosAdapter(getActivity(), DatosQdada.selectedUsers);
+            invitadosAdapter = new InvitadosAdapter(getActivity(), DatosQdada.getInvitados());
             listView.setAdapter(invitadosAdapter);
             listView.setClickable(false);
 
