@@ -69,8 +69,8 @@ public class InvitadosAdapter extends BaseAdapter {
         eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getTag() instanceof Integer){
-                    deleteItem(((Integer)view.getTag()));
+                if (view.getTag() instanceof Integer) {
+                    deleteItem(((Integer) view.getTag()));
                     notifyDataSetChanged();
                 }
             }

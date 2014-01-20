@@ -82,7 +82,7 @@ public class Qdada extends Entity{
         setLimite(limite);
         setReinvitacion(reinvitacion);
         setDireccion(direccion);
-        setFechaGanadora(Conversores.fromDateToFecha(fechas.get(0)));
+        setFechaGanadora(getFechas().get(0));
     }
 
     public String getTitulo() {

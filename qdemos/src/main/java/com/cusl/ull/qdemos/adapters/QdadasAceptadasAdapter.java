@@ -6,14 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.utilities.Utilities;
+import com.facebook.widget.ProfilePictureView;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -55,7 +58,29 @@ public class QdadasAceptadasAdapter extends BaseAdapter {
             vi = inflater.inflate(R.layout.item_qdada_list, null);
         }
 
-        
+        Qdada qdada = items.get(position);
+
+        TextView titulo = (TextView) vi.findViewById(R.id.tituloQdada);
+        titulo.setText(qdada.getTitulo());
+
+        ProfilePictureView foto = (ProfilePictureView) vi.findViewById(R.id.fotoPerfil);
+        foto.setProfileId(qdada.getCreador().getIdfacebook());
+
+        TextView nombre = (TextView) vi.findViewById(R.id.nombrePerfil);
+        nombre.setText(qdada.getCreador().getNombre());
+
+        TextView confirmados = (TextView) vi.findViewById(R.id.confirmadasTV);
+        confirmados.setText(String.valueOf(qdada.getParticipantes().size()));
+
+        TextView invitados = (TextView) vi.findViewById(R.id.invitadasTV);
+        invitados.setText(String.valueOf(qdada.getInvitados().size()));
+
+        CalendarView fecha = (CalendarView) vi.findViewById(R.id.dateView);
+        fecha.setDate(qdada.getFechaGanadora().getFecha().getTime());
+        fecha.setEnabled(false);
+
+        TextView hora = (TextView) vi.findViewById(R.id.horaTV);
+        hora.setText(new SimpleDateFormat("HH:mm").format(qdada.getFechaGanadora().getFecha()));
 
         return vi;
     }
