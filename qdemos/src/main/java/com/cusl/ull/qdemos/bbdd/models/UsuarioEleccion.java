@@ -19,8 +19,8 @@ import java.util.List;
 public class UsuarioEleccion extends Entity {
 
     // Este campo lo coloco ya que la el ORM que utilizo le encontré un fallo que salta cuando no tiene atributos propios, sólo enlaces a otras entidades como sería este caso, por ello creo un atributo propio con un valor Mock
-    @TableField(name = "Mock", datatype = DATATYPE_STRING)
-    public String Mock;
+    @TableField(name = "Idqdada", datatype = DATATYPE_STRING)
+    public Long Idqdada;
 
     @TableField(name = "Usuario", datatype = DATATYPE_ENTITY_LINK)
     public Usuario Usuario;
@@ -32,9 +32,9 @@ public class UsuarioEleccion extends Entity {
         super();
     }
 
-    public UsuarioEleccion(Context ctx, Usuario user, List<Fecha> fechas) {
+    public UsuarioEleccion(Context ctx, Usuario user, List<Fecha> fechas, Long idqdada) {
         super();
-        this.Mock = "SinAtributosPropios";
+        setIdqdada(idqdada);
         setUsuario(user);
         setFechas(ctx, fechas);
     }
@@ -49,6 +49,14 @@ public class UsuarioEleccion extends Entity {
 
     public List<Fecha> getFechas() {
         return this.Fechas;
+    }
+
+    public Long getIdqdada() {
+        return Idqdada;
+    }
+
+    public void setIdqdada(Long idqdada) {
+        this.Idqdada = idqdada;
     }
 
     public void setFechas(Context ctx, List<Fecha> fechasParam) {

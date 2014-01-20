@@ -24,6 +24,8 @@ public class Conversores {
             try{
                 BBDD.getApplicationDataContext(ctx).usuarioDao.save(u);
             } catch (Exception e){}
+        } else {
+                u = BBDD.getUsuario(ctx, user.getId());
         }
         return u;
     }
@@ -41,7 +43,7 @@ public class Conversores {
     public static Qdada fromDatosQdadaToQdada (Context ctx){
         try {
             List<UsuarioEleccion> eleccion = new ArrayList<UsuarioEleccion>();
-            UsuarioEleccion ue = new UsuarioEleccion(ctx, DatosQdada.getCreador(), fromListDateToListFecha(DatosQdada.getFechas()));
+            UsuarioEleccion ue = new UsuarioEleccion(ctx, DatosQdada.getCreador(), fromListDateToListFecha(DatosQdada.getFechas()), null);
             BBDD.appDataContext.participanteDao.save(ue);
             eleccion.add(ue);
             Qdada qdada =  new Qdada(ctx, DatosQdada.getTitulo(), DatosQdada.getDescripcion(), DatosQdada.getCreador(), Conversores.fromGraphUserToUsuario(ctx, DatosQdada.getInvitados()), eleccion, DatosQdada.getLatitud(), DatosQdada.getLongitud(), DatosQdada.getDireccion(), DatosQdada.getFechas(), DatosQdada.getLimite(), DatosQdada.getReinvitacion());

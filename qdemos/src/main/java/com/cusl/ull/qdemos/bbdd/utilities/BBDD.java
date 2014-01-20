@@ -72,4 +72,15 @@ public class BBDD {
             return false;
         }
     }
+
+    public static Usuario getUsuario (Context ctx, String idFB){
+        try {
+            if (BBDD.getApplicationDataContext(ctx).usuarioDao.search(false, "Idfacebook = ?", new String[] { idFB }, null, null, null, null, null).size() > 0)
+                return BBDD.getApplicationDataContext(ctx).usuarioDao.search(false, "Idfacebook = ?", new String[] { idFB }, null, null, null, null, null).get(0);
+            else
+                return null;
+        } catch (Exception e){
+            return null;
+        }
+    }
 }

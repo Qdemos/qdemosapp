@@ -6,9 +6,11 @@ import android.content.Context;
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
+import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
 import com.facebook.model.GraphUser;
+import com.mobandme.ada.Entity;
 import com.mobandme.ada.exceptions.AdaFrameworkException;
 
 import java.util.ArrayList;
@@ -63,7 +65,8 @@ public class DatosQdada {
 
     public static void setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day, hourOfDay, minute);
+        calendar.set(year, month, day, hourOfDay, minute, 0);
+        // TODO: No dejar añadir fechas ya existentes
         fechas.add(calendar.getTime());
         Collections.sort(fechas, new Comparator<Date>() {
             public int compare(Date o1, Date o2) {
@@ -169,6 +172,10 @@ public class DatosQdada {
             if (qdada == null)
                 return false;
             BBDD.appDataContext.qdadaDao.save(qdada);
+            UsuarioEleccion ue = qdada.getParticipantes().get(0);
+            ue.setIdqdada(qdada.getID());
+            ue.setStatus(Entity.STATUS_UPDATED);
+            BBDD.appDataContext.qdadaDao.save();
             return true;
         } catch (AdaFrameworkException e) {
             return false;
