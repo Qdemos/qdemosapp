@@ -3,7 +3,6 @@ package com.cusl.ull.qdemos.fragments.edicion;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
-import com.cusl.ull.qdemos.adapters.FechaAdapter;
-import com.cusl.ull.qdemos.adapters.InvitadosAdapter;
+import com.cusl.ull.qdemos.adapters.edicion.InvitadosAdapter;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
-import com.facebook.model.GraphUser;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by Paco on 7/01/14.

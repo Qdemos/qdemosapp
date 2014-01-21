@@ -2,7 +2,6 @@ package com.cusl.ull.qdemos;
 
 import java.util.Locale;
 
-import android.app.Activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -12,18 +11,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.cusl.ull.qdemos.fragments.LoginFragment;
 import com.cusl.ull.qdemos.fragments.edicion.FechasFragment;
 import com.cusl.ull.qdemos.fragments.edicion.InfoFragment;
 import com.cusl.ull.qdemos.fragments.edicion.InvitadosFragment;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
+import com.google.gson.Gson;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -150,13 +147,32 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
+            boolean isEdition = getIntent().getExtras().getBoolean("edicion");
             switch (position) {
                 case 0:
-                    return new InfoFragment();
+                    if (isEdition)
+                        return new InfoFragment();
+                    else {
+                        String qdadajson = getIntent().getExtras().getString("qdadajson");
+                        com.cusl.ull.qdemos.bbdd.models.Qdada datos = new Gson().fromJson(qdadajson, com.cusl.ull.qdemos.bbdd.models.Qdada.class);
+                        return new LoginFragment();
+                    }
                 case 1:
-                    return new FechasFragment();
+                    if (isEdition)
+                        return new FechasFragment();
+                    else {
+                        String qdadajson = getIntent().getExtras().getString("qdadajson");
+                        com.cusl.ull.qdemos.bbdd.models.Qdada datos = new Gson().fromJson(qdadajson, com.cusl.ull.qdemos.bbdd.models.Qdada.class);
+                        return new com.cusl.ull.qdemos.fragments.lectura.FechasFragment(datos);
+                    }
                 case 2:
-                    return new InvitadosFragment();
+                    if (isEdition)
+                        return new InvitadosFragment();
+                    else {
+                        String qdadajson = getIntent().getExtras().getString("qdadajson");
+                        com.cusl.ull.qdemos.bbdd.models.Qdada datos = new Gson().fromJson(qdadajson, com.cusl.ull.qdemos.bbdd.models.Qdada.class);
+                        return new LoginFragment();
+                    }
             }
             return null;
         }

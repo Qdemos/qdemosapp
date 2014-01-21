@@ -113,6 +113,7 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
                 return true;
             case R.id.menu_nuevo:
                 Intent intentQ = new Intent(this, Qdada.class);
+                intentQ.putExtra("edicion", true);
                 startActivity(intentQ);
                 return true;
             default:

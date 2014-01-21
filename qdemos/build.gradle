@@ -37,6 +37,7 @@ dependencies {
     compile project(':libraries:facebook')
     compile project(':libraries:datetimepicker-library')
     compile files('C:/Users/Paco/AndroidStudioProjects/Qdemos/libs/com.mobandme.ada_v2.4.4.jar')
+    compile files('C:/Users/Paco/AndroidStudioProjects/Qdemos/libs/gson-2.2.4.jar')
     compile('de.keyboardsurfer.android.widget:crouton:1.8.1') {
         // exclusion is not neccessary, but generally a good idea.
         exclude group: 'com.google.android', module: 'support-v4'

@@ -4,7 +4,12 @@ import android.content.Context;
 import android.util.Log;
 
 import com.cusl.ull.qdemos.bbdd.dao.QdemosDataContext;
+import com.cusl.ull.qdemos.bbdd.models.Fecha;
+import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
+import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
+
+import java.util.List;
 
 /**
  * Created by Paco on 13/01/14.
@@ -82,5 +87,14 @@ public class BBDD {
         } catch (Exception e){
             return null;
         }
+    }
+
+    public static List<Fecha> miEleccion (Context ctx, Qdada qdada){
+        for (UsuarioEleccion usuario: qdada.getParticipantes()){
+            if (usuario.getUsuario().getIdfacebook().equals(BBDD.quienSoy(ctx).getIdfacebook())){
+                return usuario.getFechas();
+            }
+        }
+        return null;
     }
 }

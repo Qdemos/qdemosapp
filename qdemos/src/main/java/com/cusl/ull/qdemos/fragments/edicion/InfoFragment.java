@@ -104,6 +104,9 @@ public class InfoFragment extends Fragment {
             return rootView;
         }
 
+        // Para que no pete al mostrar el mapa en sucesivas veces (por si cambiamos de pestaña y volvemos).
+        // El mapa al ser un fragment, y estar dentro de otro fragment, hay que ir liberando los fragments que no usemos (como el mapa), para cuando lo queramos volver
+        // a abrir, pues que nno haya problemas ya que lo hemos destruido correctamente con anterioridad
         @Override
         public void onDestroyView() {
             super.onDestroyView();

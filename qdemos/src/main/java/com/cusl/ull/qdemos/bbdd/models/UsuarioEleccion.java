@@ -18,7 +18,9 @@ import java.util.List;
 @Table(name = "Usuarioeleccion")
 public class UsuarioEleccion extends Entity {
 
-    // Este campo lo coloco ya que la el ORM que utilizo le encontré un fallo que salta cuando no tiene atributos propios, sólo enlaces a otras entidades como sería este caso, por ello creo un atributo propio con un valor Mock
+    // Este campo lo coloco ya que la el ORM que utilizo le encontré un fallo que salta cuando no tiene atributos propios,
+    // sólo enlaces a otras entidades como sería este caso, por ello creo un atributo propio con un valor que ademas me sirve
+    // para buscar mas rapido sin hacer JOINS entra las tablas de QDADAS y USUARIOELECCION
     @TableField(name = "Idqdada", datatype = DATATYPE_STRING)
     public Long Idqdada;
 

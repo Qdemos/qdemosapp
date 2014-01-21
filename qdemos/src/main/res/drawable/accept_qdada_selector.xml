@@ -21,6 +21,11 @@
         android:state_selected="true"
         android:drawable="@drawable/roundedbutton_hover" />
 
+    <!-- Button UnSelected-->
+    <item
+        android:state_selected="false"
+        android:drawable="@drawable/roundedbutton" />
+
     <!-- Button Default Image-->
     <item android:drawable="@drawable/roundedbutton"/>
 

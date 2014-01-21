@@ -11,12 +11,13 @@ import com.mobandme.ada.Entity;
 import com.mobandme.ada.annotations.Table;
 import com.mobandme.ada.annotations.TableField;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Table(name = "Qdada")
-public class Qdada extends Entity{
+public class Qdada extends Entity {
 
     // Nombre que le asignara el creador al evento o quedada
     @TableField(name = "Titulo", datatype = DATATYPE_STRING)

@@ -1,4 +1,4 @@
-package com.cusl.ull.qdemos.adapters;
+package com.cusl.ull.qdemos.adapters.edicion;
 
 import android.app.Activity;
 import android.content.Context;

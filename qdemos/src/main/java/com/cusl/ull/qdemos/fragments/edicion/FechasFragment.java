@@ -7,22 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.cusl.ull.qdemos.adapters.FechaAdapter;
-import com.cusl.ull.qdemos.bbdd.models.Fecha;
-import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
-import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
+import com.cusl.ull.qdemos.adapters.edicion.FechaAdapter;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
-import com.cusl.ull.qdemos.utilities.Utilities;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import com.cusl.ull.qdemos.R;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created by Paco on 7/01/14.
