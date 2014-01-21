@@ -2,13 +2,17 @@ Qdemos!
 =========
 
 <a href="http://qdemos.wordpress.com/">
-  <img alt="Qdemos!" src="http://qdemos.files.wordpress.com/2014/01/screenshot_2014-01-08-17-24-58.png?w=310&h=550" />
+  <p align="center">
+    <img alt="Qdemos!" src="http://qdemos.files.wordpress.com/2014/01/screenshot_2014-01-08-17-24-58.png?w=310&h=550" />
+  </p>
 </a>
 
 App Android participante en el [**VIII Concurso Universitario de Software Libre**](http://www.concursosoftwarelibre.org/1314/)
 
 <a href="http://www.concursosoftwarelibre.org/1314/">
-  <img alt="CUSL" src="http://www.concursosoftwarelibre.org/1314/themes/kanji/logo.png" />
+  <p align="center">
+    <img alt="CUSL" src="http://www.concursosoftwarelibre.org/1314/themes/kanji/logo.png" />
+  </p>
 </a>
 
 Con **Qdemos!** podremos crear y gestionar quedadas entre amigos, convirtiendo en historia las largas discusiones que se generan por Whatsapp o Facebook cuando queremos coordinarnos para quedar.
