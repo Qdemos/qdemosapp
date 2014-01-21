@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp">
+
+    <CalendarView
+        android:id="@+id/dateView"
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:showWeekNumber="false"
+        android:layout_marginLeft="5dp"
+        android:animateLayoutChanges="false"
+        android:clipChildren="false"
+        android:firstDayOfWeek="2"
+        android:drawingCacheQuality="low"
+        android:soundEffectsEnabled="false"
+        android:focusedMonthDateColor="@android:color/holo_orange_dark"
+        android:selectedWeekBackgroundColor="#22CC9900"
+        android:selectedDateVerticalBar="@color/darker_blue"
+        android:hapticFeedbackEnabled="false"/>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/dateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/dateView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/horaTV"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="34sp"
+            android:text="15:58"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/accept_qdada"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerInside"
+            android:padding="11dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/confirmados_icon"
+            android:background = "@drawable/accept_qdada_selector"
+            android:layout_below="@+id/horaTV"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true"
+            />
+
+        <ImageButton
+            android:id="@+id/deny_qdada"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/no"
+            android:scaleType="centerInside"
+            android:padding="11dp"
+            android:adjustViewBounds="true"
+            android:background = "@drawable/deny_qdada_selector"
+            android:layout_below="@+id/horaTV"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            />
+
+     </RelativeLayout>
+
+</RelativeLayout>
