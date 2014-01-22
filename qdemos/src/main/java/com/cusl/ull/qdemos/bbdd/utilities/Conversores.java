@@ -65,4 +65,12 @@ public class Conversores {
     public static Fecha fromDateToFecha(Date date){
         return new Fecha(date);
     }
+
+    public static List<Usuario> fromListUsuarioEleccionToListUsuario (List<UsuarioEleccion> uelist){
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        for (UsuarioEleccion ue: uelist){
+            usuarios.add(ue.getUsuario());
+        }
+        return usuarios;
+    }
 }

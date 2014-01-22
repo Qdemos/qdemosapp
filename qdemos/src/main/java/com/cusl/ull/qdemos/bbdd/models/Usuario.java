@@ -4,6 +4,8 @@ import com.mobandme.ada.Entity;
 import com.mobandme.ada.annotations.Table;
 import com.mobandme.ada.annotations.TableField;
 
+import java.util.Calendar;
+
 /**
  * Created by Paco on 13/01/14.
  */
@@ -58,4 +60,19 @@ public class Usuario extends Entity{
     public void setIdgcm(String idgcm) {
         this.idgcm = idgcm;
     }
+
+    @Override
+    public boolean equals(Object object){
+        if (object != null && object instanceof Usuario) {
+            Usuario comp = (Usuario) object;
+            if (comp.getIdfacebook().equals(this.getIdfacebook())){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }

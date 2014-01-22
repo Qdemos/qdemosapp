@@ -69,4 +69,19 @@ public class UsuarioEleccion extends Entity {
             this.Fechas = fechasParam;
         } catch (Exception e){}
     }
+
+    @Override
+    public boolean equals(Object object){
+        if (object != null && object instanceof UsuarioEleccion) {
+            UsuarioEleccion comp = (UsuarioEleccion) object;
+            if ((comp.getUsuario().getIdfacebook().equals(this.getUsuario().getIdfacebook())) && (comp.getIdqdada().equals(this.getIdqdada()))){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }

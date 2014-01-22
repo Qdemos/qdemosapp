@@ -17,6 +17,10 @@
     <string name="title_section_fechas">Fechas</string>
     <string name="title_section_invitados">Invitados</string>
 
+    <string name="title_qdada_lectura">Datos Qdada</string>
+
+    <string name="nodescripcion">No existe más información sobre esta Qdada</string>
+
     <string name="titulo">Título</string>
     <string name="descripcion">Descripción</string>
     <string name="direccion">Dirección</string>

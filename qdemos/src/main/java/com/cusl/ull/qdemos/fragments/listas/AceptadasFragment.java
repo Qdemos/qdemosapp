@@ -15,6 +15,7 @@ import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.google.gson.Gson;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,4 +61,5 @@ public class AceptadasFragment extends Fragment {
 
             return rootView;
         }
+
 }

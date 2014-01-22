@@ -6,7 +6,7 @@
     android:paddingBottom="7dp"
     android:paddingTop="7dp"
     android:descendantFocusability="blocksDescendants"
-    android:background="@drawable/background_listview_qdadas">
+    android:background="@drawable/background_listview_qdadas_selector">
 
     <TextView
         android:id="@+id/tituloQdada"

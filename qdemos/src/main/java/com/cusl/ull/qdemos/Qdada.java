@@ -77,6 +77,10 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
             // this tab is selected.
             actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
+
+        boolean isEdition = getIntent().getExtras().getBoolean("edicion");
+        if (!isEdition)
+            getActionBar().setTitle(R.string.title_qdada_lectura);
     }
 
 
@@ -95,7 +99,8 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.menu_guardar) {
-            if (validacionDatos()){
+            boolean isEdition = getIntent().getExtras().getBoolean("edicion");
+            if ((isEdition) && (validacionDatos())){
                 if (DatosQdada.guardarBBDD(this)){
                     // TODO: Enviar al SERVER
                     // TODO: Pasar algun Bundle para mostrar un Crouton de EXITO en el fragment del HOME
@@ -107,6 +112,8 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                 } else {
                     Crouton.makeText(this, R.string.error_bbdd, Style.ALERT).show();
                 }
+            } else if (!isEdition){
+                // TODO: Validar y guardar la eleccion de fechas
             }
             return true;
         }
@@ -155,7 +162,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                     else {
                         String qdadajson = getIntent().getExtras().getString("qdadajson");
                         com.cusl.ull.qdemos.bbdd.models.Qdada datos = new Gson().fromJson(qdadajson, com.cusl.ull.qdemos.bbdd.models.Qdada.class);
-                        return new LoginFragment();
+                        return new com.cusl.ull.qdemos.fragments.lectura.InfoFragment(datos);
                     }
                 case 1:
                     if (isEdition)
@@ -171,7 +178,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                     else {
                         String qdadajson = getIntent().getExtras().getString("qdadajson");
                         com.cusl.ull.qdemos.bbdd.models.Qdada datos = new Gson().fromJson(qdadajson, com.cusl.ull.qdemos.bbdd.models.Qdada.class);
-                        return new LoginFragment();
+                        return new com.cusl.ull.qdemos.fragments.lectura.InvitadosFragment(datos);
                     }
             }
             return null;

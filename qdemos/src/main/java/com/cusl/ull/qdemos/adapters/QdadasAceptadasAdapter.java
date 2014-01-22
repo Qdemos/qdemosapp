@@ -72,8 +72,9 @@ public class QdadasAceptadasAdapter extends BaseAdapter {
         TextView confirmados = (TextView) vi.findViewById(R.id.confirmadasTV);
         confirmados.setText(String.valueOf(qdada.getParticipantes().size()));
 
+        // El más uno es para sumar tambien la 'auto'-invitación del creador
         TextView invitados = (TextView) vi.findViewById(R.id.invitadasTV);
-        invitados.setText(String.valueOf(qdada.getInvitados().size()));
+        invitados.setText(String.valueOf(qdada.getInvitados().size()+1));
 
         CalendarView fecha = (CalendarView) vi.findViewById(R.id.dateView);
         fecha.setDate(qdada.getFechaGanadora().getFecha().getTime());

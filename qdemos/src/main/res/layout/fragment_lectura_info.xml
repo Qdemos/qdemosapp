@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:background="@drawable/background_listview_qdadas">
+
+            <RelativeLayout
+                android:id="@+id/tituloBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                >
+
+                <TextView
+                    android:id="@+id/tituloTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:lines="1"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/descripcionBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tituloBox"
+                android:layout_margin="15dp"
+                >
+
+                <TextView
+                    android:id="@+id/descripcionTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="3"
+                    android:maxLines="6"
+                    android:scrollbars="vertical"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/direccionBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/descripcionBox"
+                android:layout_margin="15dp"
+                >
+
+                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    class="com.google.android.gms.maps.SupportMapFragment"/>
+
+            </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
