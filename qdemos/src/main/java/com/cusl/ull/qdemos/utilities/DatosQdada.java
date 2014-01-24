@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.cusl.ull.qdemos.R;
+import com.cusl.ull.qdemos.bbdd.models.Fecha;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
@@ -36,14 +37,14 @@ public class DatosQdada {
     private static String direccion;
     private static Double latitud;
     private static Double longitud;
-    private static List<Date> fechas = new ArrayList<Date>();
+    private static List<Fecha> fechas = new ArrayList<Fecha>();
     private static Date limite;
     private static Boolean reinvitacion;
 
     private static List<GraphUser> invitados;
 
     public static void reset(Context ctx){
-        fechas = new ArrayList<Date>();
+        fechas = new ArrayList<Fecha>();
         titulo = null;
         descripcion = null;
         creador = BBDD.quienSoy(ctx);
@@ -63,16 +64,20 @@ public class DatosQdada {
         invitados = selectedU;
     }
 
-    public static void setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
+    public static boolean setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hourOfDay, minute, 0);
-        // TODO: No dejar añadir fechas ya existentes
-        fechas.add(calendar.getTime());
-        Collections.sort(fechas, new Comparator<Date>() {
-            public int compare(Date o1, Date o2) {
-                return o1.compareTo(o2);
+        Fecha nuevFecha = new Fecha(calendar.getTime());
+        if (fechas.contains(nuevFecha)){
+            return false;
+        }
+        fechas.add(nuevFecha);
+        Collections.sort(fechas, new Comparator<Fecha>() {
+            public int compare(Fecha o1, Fecha o2) {
+                return o1.getFecha().compareTo(o2.getFecha());
             }
         });
+        return true;
     }
 
     public static void setTitulo (String tit){
@@ -124,7 +129,7 @@ public class DatosQdada {
         return longitud;
     }
 
-    public static List<Date> getFechas() {
+    public static List<Fecha> getFechas() {
         return fechas;
     }
 

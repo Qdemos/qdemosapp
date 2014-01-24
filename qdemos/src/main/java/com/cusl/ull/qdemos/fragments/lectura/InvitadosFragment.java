@@ -53,7 +53,8 @@ public class InvitadosFragment extends Fragment {
             // Empezar aqui a trabajar con la UI
 
             gridView = (GridView) rootView.findViewById(R.id.listaInvitados);
-            List<Usuario> invitados = (ArrayList) qdada.getInvitados();
+            List<Usuario> invitados = new ArrayList<Usuario>();
+            invitados.addAll(qdada.getInvitados());
             invitados.add(this.qdada.getCreador());
             Collections.sort(invitados, new Comparator<Usuario>() {
                 public int compare(Usuario o1, Usuario o2) {

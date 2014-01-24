@@ -71,7 +71,7 @@ public class Qdada extends Entity {
         super();
     }
 
-    public Qdada(Context ctx, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, List<UsuarioEleccion> participantes, Double latitud, Double longitud, String direccion, List<Date> fechas, Date limite, Boolean reinvitacion) {
+    public Qdada(Context ctx, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, List<UsuarioEleccion> participantes, Double latitud, Double longitud, String direccion, List<Fecha> fechas, Date limite, Boolean reinvitacion) {
         setTitulo(titulo);
         setDescripcion(descripcion);
         setCreador(creador);
@@ -79,7 +79,7 @@ public class Qdada extends Entity {
         setParticipantes(participantes);
         setLatitud(latitud);
         setLongitud(longitud);
-        setFechas(ctx, Conversores.fromListDateToListFecha(fechas));
+        setFechas(ctx, fechas);
         setLimite(limite);
         setReinvitacion(reinvitacion);
         setDireccion(direccion);

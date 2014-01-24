@@ -15,7 +15,12 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import com.cusl.ull.qdemos.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * Created by Paco on 7/01/14.
@@ -75,7 +80,14 @@ public class FechasFragment extends Fragment implements DatePickerDialog.OnDateS
 
         @Override
         public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-            DatosQdada.setNuevaFecha(year, month, day, hourOfDay, minute);
-            fechaAdapter.notifyDataSetChanged();
+            if (DatosQdada.setNuevaFecha(year, month, day, hourOfDay, minute))
+                fechaAdapter.notifyDataSetChanged();
+            else{
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day, hourOfDay, minute, 0);
+                String fecha = new SimpleDateFormat("dd MMMM yyyy, HH:mm").format(calendar.getTime());
+                Crouton.cancelAllCroutons();
+                Crouton.makeText(getActivity(), getString(R.string.error_fecha)+" "+fecha, Style.ALERT).show();
+            }
         }
 }

@@ -71,6 +71,8 @@ public class InvitadoGridAdapter extends ArrayAdapter<Usuario> {
             } else {
                 holder.fondo.setBackgroundResource(R.drawable.background_noparticipante_usuario_qdadas);
             }
+        } else {
+            holder.fondo.setBackgroundResource(R.drawable.background_invitados_qdadas);
         }
         return row;
 

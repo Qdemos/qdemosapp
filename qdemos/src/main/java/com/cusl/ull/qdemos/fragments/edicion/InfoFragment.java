@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.InflateException;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class InfoFragment extends Fragment {
 
         EditText titulo, descripcion, direccion;
+        View rootView;
 
         public InfoFragment() {
             // Se ejecuta antes que el onCreateView
@@ -39,8 +41,16 @@ public class InfoFragment extends Fragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_edit_info, container, false);
             // Empezar aqui a trabajar con la UI
+
+            if (rootView != null) {
+                ViewGroup parent = (ViewGroup) rootView.getParent();
+                if (parent != null)
+                    parent.removeView(rootView);
+            }
+            try {
+                rootView = inflater.inflate(R.layout.fragment_edit_info, container, false);
+            } catch (InflateException e) {}
 
             try {
                 MapsInitializer.initialize(getActivity());
@@ -48,6 +58,8 @@ public class InfoFragment extends Fragment {
 
             GoogleMap mapa = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
             mapa.setMyLocationEnabled(true);
+
+            // TODO: Logica Mapa con autocompletado
 
 
 //            mapa.addMarker(new MarkerOptions()
@@ -102,21 +114,5 @@ public class InfoFragment extends Fragment {
             });
 
             return rootView;
-        }
-
-        // Para que no pete al mostrar el mapa en sucesivas veces (por si cambiamos de pestaña y volvemos).
-        // El mapa al ser un fragment, y estar dentro de otro fragment, hay que ir liberando los fragments que no usemos (como el mapa), para cuando lo queramos volver
-        // a abrir, pues que nno haya problemas ya que lo hemos destruido correctamente con anterioridad
-        @Override
-        public void onDestroyView() {
-            super.onDestroyView();
-            try {
-                Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.remove(fragment);
-                ft.commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
 }

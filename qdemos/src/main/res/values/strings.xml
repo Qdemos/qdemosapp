@@ -33,5 +33,6 @@
     <string name="validar_direccion">Debes INDICAR correctamente un LUGAR para la Qdada</string>
 
     <string name="error_bbdd">Hubo un ERROR al GUARDAR en Base de Datos, contacte con el administrador</string>
+    <string name="error_fecha">Ya existe la fecha: </string>
 
 </resources>
