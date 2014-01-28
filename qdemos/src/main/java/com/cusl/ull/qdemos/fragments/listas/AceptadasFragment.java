@@ -42,8 +42,10 @@ public class AceptadasFragment extends Fragment {
 
             List<Qdada> qdadas = new ArrayList<Qdada>();
             try {
-                qdadas = BBDD.appDataContext.qdadaDao.search(false, null, null, null, null, null, null, null);
-            } catch (Exception e){}
+                qdadas = BBDD.getApplicationDataContext(getActivity()).qdadaDao.search(false, null, null, null, null, null, null, null);
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
 
             QdadasAceptadasAdapter qdadasAceptadasAdapter = new QdadasAceptadasAdapter(getActivity(), qdadas);
             listView.setAdapter(qdadasAceptadasAdapter);

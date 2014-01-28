@@ -5,11 +5,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
+import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -100,12 +104,11 @@ public class Utilities {
         }
     }
 
-    public static List<Usuario> ordenarInvitados (List<Usuario> invitados, List<UsuarioEleccion> participantes){
+    public static List<Usuario> ordenarInvitados (List<Usuario> invitados, List<Usuario> participantes){
         List<Usuario> ordenado = new ArrayList<Usuario>();
         List<Usuario> noparticipantesU = new ArrayList<Usuario>();
-        List<Usuario> participantesU = Conversores.fromListUsuarioEleccionToListUsuario(participantes);
         for (Usuario user: invitados){
-            if (participantesU.contains(user)){
+            if (participantes.contains(user)){
                 ordenado.add(user);
             } else {
                 noparticipantesU.add(user);
@@ -115,13 +118,44 @@ public class Utilities {
         return ordenado;
     }
 
-    public static UsuarioEleccion containsListUsuarioEleccionToUsuario (List<UsuarioEleccion> uelist, Usuario usuario){
-        for (UsuarioEleccion ue: uelist){
-            if (ue.getUsuario().equals(usuario)){
-                return ue;
+    public static Boolean isParticipante (Context ctx, Qdada qdada, String idFacebook){
+        try {
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{qdada.getID().toString(), idFacebook}, null, null, null, null, null);
+            if ((elecciones == null) || elecciones.isEmpty())
+                return null;
+            for (UsuarioEleccion ue: elecciones){
+                if (ue.getFecha().equals(qdada.getFechaGanadora()))
+                    return true;
+            }
+        } catch (Exception e){}
+        return false;
+    }
+
+    public static boolean containsDate (List<Date> lista, Date fecha){
+        for (Date date: lista){
+            Calendar c1 = Calendar.getInstance();
+            c1.setTime(date);
+            Calendar c2  = Calendar.getInstance();
+            c2.setTime(fecha);
+            if (   (c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR))
+                    && (c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH))
+                    && (c1.get(Calendar.DAY_OF_MONTH) == c2.get(Calendar.DAY_OF_MONTH))
+                    && (c1.get(Calendar.HOUR) == c2.get(Calendar.HOUR))
+                    && (c1.get(Calendar.MINUTE) == c2.get(Calendar.MINUTE))
+                    ){
+                return true;
             }
         }
-        return null;
+        return false;
+    }
+
+    public static boolean containsUsuario (List<Usuario> lista, String idFacebook){
+        for (Usuario user: lista){;
+            if (user.getIdfacebook().equals(idFacebook)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

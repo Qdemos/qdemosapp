@@ -40,7 +40,6 @@ public class FechasFragment extends Fragment implements DatePickerDialog.OnDateS
 
         public FechasFragment() {
             // Se ejecuta antes que el onCreateView
-            DatosQdada.reset(getActivity());
         }
 
         @Override

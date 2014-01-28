@@ -11,13 +11,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
-import com.cusl.ull.qdemos.bbdd.models.Fecha;
 import com.cusl.ull.qdemos.utilities.EleccionFecha;
-import com.cusl.ull.qdemos.utilities.Utilities;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -27,10 +23,10 @@ import java.util.List;
 public class FechaAdapter extends BaseAdapter {
 
     protected Activity activity;
-    protected List<Fecha> items;
+    protected List<Date> items;
     ImageButton si, no;
 
-    public FechaAdapter(Activity activity, List<Fecha> items) {
+    public FechaAdapter(Activity activity, List<Date> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -59,14 +55,14 @@ public class FechaAdapter extends BaseAdapter {
             vi = inflater.inflate(R.layout.item_fecha_eleccion_list, null);
         }
 
-        Fecha item = items.get(position);
+        Date item = items.get(position);
 
         CalendarView fecha = (CalendarView) vi.findViewById(R.id.dateView);
-        fecha.setDate(item.getFecha().getTime());
+        fecha.setDate(item.getTime());
         fecha.setEnabled(false);
 
         TextView hora = (TextView) vi.findViewById(R.id.horaTV);
-        hora.setText(new SimpleDateFormat("HH:mm").format(item.getFecha()));
+        hora.setText(new SimpleDateFormat("HH:mm").format(item));
 
         si = (ImageButton) vi.findViewById(R.id.accept_qdada);
         no = (ImageButton) vi.findViewById(R.id.deny_qdada);
@@ -85,7 +81,7 @@ public class FechaAdapter extends BaseAdapter {
             public void onClick(View view) {
                 si.setSelected(true);
                 no.setSelected(false);
-                EleccionFecha.setSelectedFecha(((Fecha) view.getTag()), true);
+                EleccionFecha.setSelectedFecha(((Date) view.getTag()), true);
                 notifyDataSetChanged();
             }
         });
@@ -96,7 +92,7 @@ public class FechaAdapter extends BaseAdapter {
             public void onClick(View view) {
                 no.setSelected(true);
                 si.setSelected(false);
-                EleccionFecha.setSelectedFecha(((Fecha)view.getTag()), false);
+                EleccionFecha.setSelectedFecha(((Date)view.getTag()), false);
                 notifyDataSetChanged();
             }
         });

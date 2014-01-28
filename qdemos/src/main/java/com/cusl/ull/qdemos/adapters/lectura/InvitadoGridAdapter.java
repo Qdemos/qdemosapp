@@ -64,15 +64,12 @@ public class InvitadoGridAdapter extends ArrayAdapter<Usuario> {
         Usuario item = data.get(position);
         holder.txtTitle.setText(item.getNombre().split(" ")[0]);
         holder.imageItem.setProfileId(item.getIdfacebook());
-        UsuarioEleccion ue = Utilities.containsListUsuarioEleccionToUsuario(qdada.getParticipantes(), item);
-        if (ue != null){
-            if (ue.getFechas().contains(qdada.getFechaGanadora())){
-                holder.fondo.setBackgroundResource(R.drawable.background_participante_usuario_qdadas);
-            } else {
-                holder.fondo.setBackgroundResource(R.drawable.background_noparticipante_usuario_qdadas);
-            }
-        } else {
+        if (Utilities.isParticipante(getContext(), qdada, item.getIdfacebook()) == null){
             holder.fondo.setBackgroundResource(R.drawable.background_invitados_qdadas);
+        } else if (Utilities.isParticipante(getContext(), qdada, item.getIdfacebook())){
+            holder.fondo.setBackgroundResource(R.drawable.background_participante_usuario_qdadas);
+        } else {
+            holder.fondo.setBackgroundResource(R.drawable.background_noparticipante_usuario_qdadas);
         }
         return row;
 

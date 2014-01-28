@@ -32,7 +32,11 @@
     <string name="validar_titulo">Debes INDICAR un TITULO para la Qdada</string>
     <string name="validar_direccion">Debes INDICAR correctamente un LUGAR para la Qdada</string>
 
+    <string name="validar_fechas_invitado">Debes RESPONDER a todas las FECHAS propuestas</string>
+    <string name="validar_fechas_creador">Como CREADOR debes INDICAR al menos una FECHA</string>
+
     <string name="error_bbdd">Hubo un ERROR al GUARDAR en Base de Datos, contacte con el administrador</string>
+    <string name="error_bbdd_r">Hubo un ERROR al RECUPERAR de Base de Datos, contacte con el administrador</string>
     <string name="error_fecha">Ya existe la fecha: </string>
 
 </resources>

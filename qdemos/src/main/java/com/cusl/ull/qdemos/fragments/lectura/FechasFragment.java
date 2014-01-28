@@ -9,11 +9,11 @@ import android.widget.ListView;
 
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.adapters.lectura.FechaAdapter;
-import com.cusl.ull.qdemos.bbdd.models.Fecha;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.utilities.EleccionFecha;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -37,14 +37,14 @@ public class FechasFragment extends Fragment  {
             // Empezar aqui a trabajar con la UI
 
             listView = (ListView) rootView.findViewById(R.id.listaFechas);
-            List<Fecha> miEleccion = BBDD.miEleccion(getActivity(), this.qdada);
+            List<Date> miEleccion = BBDD.miEleccion(getActivity(), this.qdada.getID(), BBDD.quienSoy(getActivity()).getIdfacebook());
             if (miEleccion == null){
-                miEleccion=this.qdada.getFechas();
+                miEleccion=BBDD.getFechas(getActivity(), qdada.getID());
                 EleccionFecha.reset(miEleccion);
             } else {
-                EleccionFecha.reset(this.qdada.getFechas(), miEleccion);
+                EleccionFecha.reset(BBDD.getFechas(getActivity(), qdada.getID()), miEleccion);
             }
-            fechaAdapter = new FechaAdapter(getActivity(), this.qdada.getFechas());
+            fechaAdapter = new FechaAdapter(getActivity(), BBDD.getFechas(getActivity(), qdada.getID()));
             listView.setAdapter(fechaAdapter);
             listView.setClickable(false);
 

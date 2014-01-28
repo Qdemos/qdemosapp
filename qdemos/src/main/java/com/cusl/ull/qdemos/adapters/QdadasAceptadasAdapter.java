@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.utilities.Utilities;
 import com.facebook.widget.ProfilePictureView;
 
@@ -70,18 +71,19 @@ public class QdadasAceptadasAdapter extends BaseAdapter {
         nombre.setText(qdada.getCreador().getNombre());
 
         TextView confirmados = (TextView) vi.findViewById(R.id.confirmadasTV);
-        confirmados.setText(String.valueOf(qdada.getParticipantes().size()));
+        confirmados.setText(String.valueOf(BBDD.numeroParticipantes(vi.getContext(), qdada.getID())));
 
         // El más uno es para sumar tambien la 'auto'-invitación del creador
         TextView invitados = (TextView) vi.findViewById(R.id.invitadasTV);
         invitados.setText(String.valueOf(qdada.getInvitados().size()+1));
 
-        CalendarView fecha = (CalendarView) vi.findViewById(R.id.dateView);
-        fecha.setDate(qdada.getFechaGanadora().getFecha().getTime());
-        fecha.setEnabled(false);
-
-        TextView hora = (TextView) vi.findViewById(R.id.horaTV);
-        hora.setText(new SimpleDateFormat("HH:mm").format(qdada.getFechaGanadora().getFecha()));
+        if (qdada.getFechaGanadora() != null){
+            CalendarView fecha = (CalendarView) vi.findViewById(R.id.dateView);
+            fecha.setDate(qdada.getFechaGanadora().getTime());
+            fecha.setEnabled(false);
+            TextView hora = (TextView) vi.findViewById(R.id.horaTV);
+            hora.setText(new SimpleDateFormat("HH:mm").format(qdada.getFechaGanadora()));
+        }
 
         return vi;
     }

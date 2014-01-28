@@ -18,39 +18,29 @@ import java.util.List;
 @Table(name = "Usuarioeleccion")
 public class UsuarioEleccion extends Entity {
 
-    // Este campo lo coloco ya que la el ORM que utilizo le encontré un fallo que salta cuando no tiene atributos propios,
-    // sólo enlaces a otras entidades como sería este caso, por ello creo un atributo propio con un valor que ademas me sirve
-    // para buscar mas rapido sin hacer JOINS entra las tablas de QDADAS y USUARIOELECCION
-    @TableField(name = "Idqdada", datatype = DATATYPE_STRING)
+
+    @TableField(name = "Idqdada", datatype = DATATYPE_LONG)
     public Long Idqdada;
 
-    @TableField(name = "Usuario", datatype = DATATYPE_ENTITY_LINK)
-    public Usuario Usuario;
+    @TableField(name = "Idfacebook", datatype = DATATYPE_STRING)
+    public String Idfacebook;
 
-    @TableField(name = "Fechas", datatype = DATATYPE_ENTITY_LINK)
-    public List<Fecha> Fechas = new ArrayList<Fecha>();
+    @TableField(name = "Fecha", datatype = DATATYPE_DATE_BINARY)
+    public Date Fecha;
 
     public UsuarioEleccion(){
         super();
     }
 
-    public UsuarioEleccion(Context ctx, Usuario user, List<Fecha> fechas, Long idqdada) {
+    public UsuarioEleccion(Context ctx, String idFB, Date fecha, Long idqdada) {
         super();
         setIdqdada(idqdada);
-        setUsuario(user);
-        setFechas(ctx, fechas);
+        setIdusuario(idFB);
+        setFecha(ctx, fecha);
     }
 
-    public Usuario getUsuario() {
-        return this.Usuario;
-    }
-
-    public void setUsuario(Usuario user) {
-        this.Usuario = user;
-    }
-
-    public List<Fecha> getFechas() {
-        return this.Fechas;
+    public Date getFecha() {
+        return this.Fecha;
     }
 
     public Long getIdqdada() {
@@ -61,12 +51,9 @@ public class UsuarioEleccion extends Entity {
         this.Idqdada = idqdada;
     }
 
-    public void setFechas(Context ctx, List<Fecha> fechasParam) {
+    public void setFecha(Context ctx, Date fechap) {
         try {
-            for (Fecha fecha: fechasParam){
-                BBDD.getApplicationDataContext(ctx).fechaDao.save(fecha);
-            }
-            this.Fechas = fechasParam;
+            this.Fecha = fechap;
         } catch (Exception e){}
     }
 
@@ -74,7 +61,7 @@ public class UsuarioEleccion extends Entity {
     public boolean equals(Object object){
         if (object != null && object instanceof UsuarioEleccion) {
             UsuarioEleccion comp = (UsuarioEleccion) object;
-            if ((comp.getUsuario().getIdfacebook().equals(this.getUsuario().getIdfacebook())) && (comp.getIdqdada().equals(this.getIdqdada()))){
+            if ((comp.getIdusuario().equals(this.getIdusuario())) && (comp.getIdqdada().equals(this.getIdqdada()))){
                 return true;
             } else {
                 return false;
@@ -84,4 +71,11 @@ public class UsuarioEleccion extends Entity {
         }
     }
 
+    public String getIdusuario() {
+        return Idfacebook;
+    }
+
+    public void setIdusuario(String idusuario) {
+        Idfacebook = idusuario;
+    }
 }

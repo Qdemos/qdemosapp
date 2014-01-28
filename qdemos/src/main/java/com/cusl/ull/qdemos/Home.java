@@ -1,7 +1,5 @@
 package com.cusl.ull.qdemos;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,19 +16,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.cusl.ull.qdemos.bbdd.models.Fecha;
-import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
-import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
 import com.cusl.ull.qdemos.fragments.listas.AceptadasFragment;
 import com.cusl.ull.qdemos.fragments.listas.HistorialFragment;
 import com.cusl.ull.qdemos.fragments.listas.PendientesFragment;
-import com.cusl.ull.qdemos.utilities.DatosQdada;
-import com.mobandme.ada.exceptions.AdaFrameworkException;
-
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class Home extends FragmentActivity implements ActionBar.TabListener {
 
@@ -91,6 +81,7 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
         } catch (Exception e){
             System.out.println("Error: "+e.getMessage());
         }*/
+
 
     }
 

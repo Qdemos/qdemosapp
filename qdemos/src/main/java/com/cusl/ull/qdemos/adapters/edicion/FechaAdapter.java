@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
-import com.cusl.ull.qdemos.bbdd.models.Fecha;
 import com.cusl.ull.qdemos.utilities.Utilities;
 
 import java.text.SimpleDateFormat;
@@ -24,9 +23,9 @@ import java.util.List;
  */
 public class FechaAdapter extends BaseAdapter {
     protected Activity activity;
-    protected List<Fecha> items;
+    protected List<Date> items;
 
-    public FechaAdapter(Activity activity, List<Fecha> items) {
+    public FechaAdapter(Activity activity, List<Date> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -55,10 +54,10 @@ public class FechaAdapter extends BaseAdapter {
             vi = inflater.inflate(R.layout.item_fecha_list, null);
         }
 
-        Fecha item = items.get(position);
+        Date item = items.get(position);
 
         TextView fecha = (TextView) vi.findViewById(R.id.fecha);
-        fecha.setText(Utilities.getCamelCase(new SimpleDateFormat("EEEE dd MMMM yyyy, HH:mm").format(item.getFecha())));
+        fecha.setText(Utilities.getCamelCase(new SimpleDateFormat("EEEE dd MMMM yyyy, HH:mm").format(item)));
 
         ImageButton eliminar = (ImageButton) vi.findViewById(R.id.eliminar);
         // Usamos el SETTAG y despues el GETTAG para saber que botón ha sido pulsado de todos los items que son visibles, y así poder saber que item borrar.
@@ -79,9 +78,9 @@ public class FechaAdapter extends BaseAdapter {
     public void deleteItem (int position){
         this.items.remove(position);
         // Para ordenar la lista por fecha y que aparezca en el layout (ListView) en orden
-        Collections.sort(this.items, new Comparator<Fecha>() {
-            public int compare(Fecha o1, Fecha o2) {
-                return o1.getFecha().compareTo(o2.getFecha());
+        Collections.sort(this.items, new Comparator<Date>() {
+            public int compare(Date o1, Date o2) {
+                return o1.compareTo(o2);
             }
         });
     }

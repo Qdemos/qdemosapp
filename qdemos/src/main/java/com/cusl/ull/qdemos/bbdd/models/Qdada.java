@@ -35,10 +35,6 @@ public class Qdada extends Entity {
     @TableField(name = "Invitados", datatype = DATATYPE_ENTITY_LINK)
     public List<Usuario> invitados = new ArrayList<Usuario>();
 
-    // Participantes que asistiran a la quedada, una vez han respondido. Estos participantes vendran de invitados, por lo que si un participantes esta en esta lista, ya no estara en la de invitados
-    @TableField(name = "Participantes", datatype = DATATYPE_ENTITY_LINK)
-    public List<UsuarioEleccion> participantes = new ArrayList<UsuarioEleccion>();
-
     // Latitud del lugar de la quedada
     @TableField(name = "Latitud", datatype = DATATYPE_DOUBLE)
     public Double latitud;
@@ -51,13 +47,9 @@ public class Qdada extends Entity {
     @TableField(name = "Direccion", datatype = DATATYPE_STRING)
     public String direccion;
 
-    // Fechas propuestas para la realización de las quedadas
-    @TableField(name = "Fechas", datatype = DATATYPE_ENTITY_LINK)
-    public List<Fecha> fechas = new ArrayList<Fecha>();
-
     // Fecha de momento ganadora
-    @TableField(name = "Fechaganadora", datatype = DATATYPE_ENTITY_LINK)
-    public Fecha fechaGanadora;
+    @TableField(name = "Fechaganadora", datatype = DATATYPE_DATE_BINARY)
+    public Date fechaGanadora;
 
     // Fecha limite de respuesta para decir si un invitado asistira o no la quedada y en que fechas podra
     @TableField(name = "Limite", datatype = DATATYPE_DATE_BINARY)
@@ -71,19 +63,16 @@ public class Qdada extends Entity {
         super();
     }
 
-    public Qdada(Context ctx, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, List<UsuarioEleccion> participantes, Double latitud, Double longitud, String direccion, List<Fecha> fechas, Date limite, Boolean reinvitacion) {
+    public Qdada(Context ctx, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, Double latitud, Double longitud, String direccion, Date limite, Boolean reinvitacion) {
         setTitulo(titulo);
         setDescripcion(descripcion);
         setCreador(creador);
         setInvitados(invitados);
-        setParticipantes(participantes);
         setLatitud(latitud);
         setLongitud(longitud);
-        setFechas(ctx, fechas);
         setLimite(limite);
         setReinvitacion(reinvitacion);
         setDireccion(direccion);
-        setFechaGanadora(getFechas().get(0));
     }
 
     public String getTitulo() {
@@ -118,14 +107,6 @@ public class Qdada extends Entity {
         this.invitados = invitados;
     }
 
-    public List<UsuarioEleccion> getParticipantes() {
-        return participantes;
-    }
-
-    public void setParticipantes(List<UsuarioEleccion> participantes) {
-        this.participantes = participantes;
-    }
-
     public Double getLatitud() {
         return latitud;
     }
@@ -142,24 +123,11 @@ public class Qdada extends Entity {
         this.longitud = longitud;
     }
 
-    public List<Fecha> getFechas() {
-        return fechas;
-    }
-
-    public void setFechas(Context ctx, List<Fecha> fechas) {
-        try {
-            for (Fecha fecha: fechas){
-                BBDD.getApplicationDataContext(ctx).fechaDao.save(fecha);
-            }
-            this.fechas = fechas;
-        } catch (Exception e){}
-    }
-
-    public Fecha getFechaGanadora() {
+    public Date getFechaGanadora() {
         return fechaGanadora;
     }
 
-    public void setFechaGanadora(Fecha fechaGanadora) {
+    public void setFechaGanadora(Date fechaGanadora) {
         this.fechaGanadora = fechaGanadora;
     }
 
@@ -179,13 +147,6 @@ public class Qdada extends Entity {
         this.reinvitacion = reinvitacion;
     }
 
-    public void setParticipante(Context ctx, Usuario usuario, List<Date> fechas){
-        invitados.remove(usuario);
-        List<Fecha> fechasEleccion = Conversores.fromListDateToListFecha(fechas);
-        participantes.add(new UsuarioEleccion(ctx, usuario, fechasEleccion, this.getID()));
-        calcularFechaGanadora(fechasEleccion);
-    }
-
     public String getDireccion() {
         return direccion;
     }
@@ -194,30 +155,4 @@ public class Qdada extends Entity {
         this.direccion = direccion;
     }
 
-    // Función que se encarga de saber cual es la fecha más repetida de los participantes para conocer la que mejor se adapta a la Qdada.
-    public void calcularFechaGanadora (List<Fecha> nuevas){
-        List<Fecha> totales = new ArrayList<Fecha>();
-        List<Fecha> comparador = new ArrayList<Fecha>();
-        totales.addAll(nuevas);
-        for (UsuarioEleccion participante: this.getParticipantes()){
-            totales.addAll(participante.getFechas());
-        }
-        List<Integer> repeticiones = new ArrayList<Integer>();
-        int mayor=-1, indice=0;
-        for (Fecha fecha: totales){
-            if (comparador.contains(fecha)){
-                int index = comparador.indexOf(fecha);
-                int repetido = (repeticiones.get(index)+1);
-                if (repetido > mayor){
-                    mayor = repetido;
-                    indice = index;
-                }
-                repeticiones.set(index, repetido);
-            } else {
-                comparador.add(fecha);
-                repeticiones.add(0);
-            }
-        }
-        this.setFechaGanadora(comparador.get(indice));
-    }
 }

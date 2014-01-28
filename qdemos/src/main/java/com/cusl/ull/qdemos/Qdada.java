@@ -1,5 +1,7 @@
 package com.cusl.ull.qdemos;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -14,13 +16,16 @@ import android.support.v4.view.ViewPager;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.cusl.ull.qdemos.fragments.LoginFragment;
+import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.fragments.edicion.FechasFragment;
 import com.cusl.ull.qdemos.fragments.edicion.InfoFragment;
 import com.cusl.ull.qdemos.fragments.edicion.InvitadosFragment;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
-import com.google.gson.Gson;
+import com.cusl.ull.qdemos.utilities.EleccionFecha;
+import com.mobandme.ada.Entity;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -81,6 +86,10 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
         boolean isEdition = getIntent().getExtras().getBoolean("edicion");
         if (!isEdition)
             getActionBar().setTitle(R.string.title_qdada_lectura);
+        else
+            DatosQdada.reset(this);
+
+        // TODO: Controlar el botón ATRAS por si hay modificaciones y no ha guardado (tanto en edit como en noEdit, por la seleccion de fechas)
     }
 
 
@@ -113,7 +122,26 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                     Crouton.makeText(this, R.string.error_bbdd, Style.ALERT).show();
                 }
             } else if (!isEdition){
-                // TODO: Validar y guardar la eleccion de fechas
+                List<Date> fechas = EleccionFecha.getFechas();
+                if (fechas == null){
+                    Crouton.makeText(this, R.string.validar_fechas_invitado, Style.ALERT).show();
+                } else if (fechas.isEmpty()) {
+                    Crouton.makeText(this, R.string.validar_fechas_creador, Style.ALERT).show();
+                } else {
+                    try {
+                        String qdadajson = getIntent().getExtras().getString("qdadajson");
+                        com.cusl.ull.qdemos.bbdd.models.Qdada qdada = BBDD.getQdadaFromJSON(this, qdadajson);
+
+                        BBDD.updateMiEleccion(this, qdada.getID(), BBDD.quienSoy(this).getIdfacebook(), fechas);
+
+                        Intent intent = new Intent(this, Home.class);
+                        // Para eliminar el historial de activities visitadas ya que volvemos al HOME y asi el boton ATRAS no tenga ningun comportamiento, se resetee.
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } catch (Exception e){
+                        Toast.makeText(this, R.string.error_bbdd_r, Toast.LENGTH_LONG).show();
+                    }
+                }
             }
             return true;
         }
@@ -161,7 +189,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                         return new InfoFragment();
                     else {
                         String qdadajson = getIntent().getExtras().getString("qdadajson");
-                        com.cusl.ull.qdemos.bbdd.models.Qdada datos = new Gson().fromJson(qdadajson, com.cusl.ull.qdemos.bbdd.models.Qdada.class);
+                        com.cusl.ull.qdemos.bbdd.models.Qdada datos = BBDD.getQdadaFromJSON(getApplicationContext(), qdadajson);
                         return new com.cusl.ull.qdemos.fragments.lectura.InfoFragment(datos);
                     }
                 case 1:
@@ -169,7 +197,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                         return new FechasFragment();
                     else {
                         String qdadajson = getIntent().getExtras().getString("qdadajson");
-                        com.cusl.ull.qdemos.bbdd.models.Qdada datos = new Gson().fromJson(qdadajson, com.cusl.ull.qdemos.bbdd.models.Qdada.class);
+                        com.cusl.ull.qdemos.bbdd.models.Qdada datos = BBDD.getQdadaFromJSON(getApplicationContext(), qdadajson);
                         return new com.cusl.ull.qdemos.fragments.lectura.FechasFragment(datos);
                     }
                 case 2:
@@ -177,7 +205,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                         return new InvitadosFragment();
                     else {
                         String qdadajson = getIntent().getExtras().getString("qdadajson");
-                        com.cusl.ull.qdemos.bbdd.models.Qdada datos = new Gson().fromJson(qdadajson, com.cusl.ull.qdemos.bbdd.models.Qdada.class);
+                        com.cusl.ull.qdemos.bbdd.models.Qdada datos = BBDD.getQdadaFromJSON(getApplicationContext(), qdadajson);
                         return new com.cusl.ull.qdemos.fragments.lectura.InvitadosFragment(datos);
                     }
             }

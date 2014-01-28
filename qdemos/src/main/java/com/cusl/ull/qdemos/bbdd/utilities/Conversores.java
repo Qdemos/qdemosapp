@@ -2,12 +2,12 @@ package com.cusl.ull.qdemos.bbdd.utilities;
 
 import android.content.Context;
 
-import com.cusl.ull.qdemos.bbdd.models.Fecha;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
 import com.facebook.model.GraphUser;
+import com.mobandme.ada.Entity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,11 +42,7 @@ public class Conversores {
 
     public static Qdada fromDatosQdadaToQdada (Context ctx){
         try {
-            List<UsuarioEleccion> eleccion = new ArrayList<UsuarioEleccion>();
-            UsuarioEleccion ue = new UsuarioEleccion(ctx, DatosQdada.getCreador(), DatosQdada.getFechas(), null);
-            BBDD.appDataContext.participanteDao.save(ue);
-            eleccion.add(ue);
-            Qdada qdada =  new Qdada(ctx, DatosQdada.getTitulo(), DatosQdada.getDescripcion(), DatosQdada.getCreador(), Conversores.fromGraphUserToUsuario(ctx, DatosQdada.getInvitados()), eleccion, DatosQdada.getLatitud(), DatosQdada.getLongitud(), DatosQdada.getDireccion(), DatosQdada.getFechas(), DatosQdada.getLimite(), DatosQdada.getReinvitacion());
+            Qdada qdada =  new Qdada(ctx, DatosQdada.getTitulo(), DatosQdada.getDescripcion(), DatosQdada.getCreador(), Conversores.fromGraphUserToUsuario(ctx, DatosQdada.getInvitados()), DatosQdada.getLatitud(), DatosQdada.getLongitud(), DatosQdada.getDireccion(), DatosQdada.getLimite(), DatosQdada.getReinvitacion());
             return qdada;
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -54,23 +50,4 @@ public class Conversores {
         }
     }
 
-    public static List<Fecha> fromListDateToListFecha(List<Date> dates){
-        List<Fecha> fechas = new ArrayList<Fecha>();
-        for (Date date: dates){
-            fechas.add(fromDateToFecha(date));
-        }
-        return fechas;
-    }
-
-    public static Fecha fromDateToFecha(Date date){
-        return new Fecha(date);
-    }
-
-    public static List<Usuario> fromListUsuarioEleccionToListUsuario (List<UsuarioEleccion> uelist){
-        List<Usuario> usuarios = new ArrayList<Usuario>();
-        for (UsuarioEleccion ue: uelist){
-            usuarios.add(ue.getUsuario());
-        }
-        return usuarios;
-    }
 }

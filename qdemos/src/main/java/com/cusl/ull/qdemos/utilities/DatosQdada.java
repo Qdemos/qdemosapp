@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.cusl.ull.qdemos.R;
-import com.cusl.ull.qdemos.bbdd.models.Fecha;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
@@ -37,17 +36,17 @@ public class DatosQdada {
     private static String direccion;
     private static Double latitud;
     private static Double longitud;
-    private static List<Fecha> fechas = new ArrayList<Fecha>();
+    private static List<Date> fechas = new ArrayList<Date>();
     private static Date limite;
     private static Boolean reinvitacion;
 
     private static List<GraphUser> invitados;
 
     public static void reset(Context ctx){
-        fechas = new ArrayList<Fecha>();
+        fechas = new ArrayList<Date>();
         titulo = null;
         descripcion = null;
-        creador = BBDD.quienSoy(ctx);
+        creador = com.cusl.ull.qdemos.bbdd.utilities.BBDD.quienSoy(ctx);
         latitud = null;
         longitud = null;
         direccion=null;
@@ -67,14 +66,13 @@ public class DatosQdada {
     public static boolean setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hourOfDay, minute, 0);
-        Fecha nuevFecha = new Fecha(calendar.getTime());
-        if (fechas.contains(nuevFecha)){
+        if (Utilities.containsDate(fechas, calendar.getTime())){
             return false;
         }
-        fechas.add(nuevFecha);
-        Collections.sort(fechas, new Comparator<Fecha>() {
-            public int compare(Fecha o1, Fecha o2) {
-                return o1.getFecha().compareTo(o2.getFecha());
+        fechas.add(calendar.getTime());
+        Collections.sort(fechas, new Comparator<Date>() {
+            public int compare(Date o1, Date o2) {
+                return o1.compareTo(o2);
             }
         });
         return true;
@@ -129,7 +127,7 @@ public class DatosQdada {
         return longitud;
     }
 
-    public static List<Fecha> getFechas() {
+    public static List<Date> getFechas() {
         return fechas;
     }
 
@@ -176,11 +174,19 @@ public class DatosQdada {
             Qdada qdada = Conversores.fromDatosQdadaToQdada(ctx);
             if (qdada == null)
                 return false;
-            BBDD.appDataContext.qdadaDao.save(qdada);
-            UsuarioEleccion ue = qdada.getParticipantes().get(0);
-            ue.setIdqdada(qdada.getID());
-            ue.setStatus(Entity.STATUS_UPDATED);
-            BBDD.appDataContext.qdadaDao.save();
+            qdada.setStatus(Entity.STATUS_NEW);
+            com.cusl.ull.qdemos.bbdd.utilities.BBDD.getApplicationDataContext(ctx).qdadaDao.add(qdada);
+            com.cusl.ull.qdemos.bbdd.utilities.BBDD.getApplicationDataContext(ctx).qdadaDao.save();
+
+            for (Date date: DatosQdada.getFechas()){
+                UsuarioEleccion ue = new UsuarioEleccion(ctx, DatosQdada.getCreador().getIdfacebook(), date, qdada.getID());
+                ue.setStatus(Entity.STATUS_NEW);
+                BBDD.getApplicationDataContext(ctx).participanteDao.add(ue);
+                BBDD.getApplicationDataContext(ctx).participanteDao.save();
+            }
+
+            BBDD.setFechas(ctx, DatosQdada.getFechas(), qdada.getID());
+
             return true;
         } catch (AdaFrameworkException e) {
             return false;

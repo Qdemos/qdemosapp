@@ -17,6 +17,7 @@ import com.cusl.ull.qdemos.adapters.edicion.InvitadosAdapter;
 import com.cusl.ull.qdemos.adapters.lectura.InvitadoGridAdapter;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.fragments.edicion.PickFriendsFragmentActivity;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
 import com.cusl.ull.qdemos.utilities.Utilities;
@@ -61,7 +62,7 @@ public class InvitadosFragment extends Fragment {
                     return o1.getNombre().compareTo(o2.getNombre());
                 }
             });
-            invitados=Utilities.ordenarInvitados(invitados, qdada.getParticipantes());
+            invitados=Utilities.ordenarInvitados(invitados, BBDD.getParticipantes(getActivity(), this.qdada.getID()));
 
             InvitadoGridAdapter customGridAdapter = new InvitadoGridAdapter(getActivity(), R.layout.item_invitados_lectura_list, invitados, this.qdada);
             gridView.setAdapter(customGridAdapter);
