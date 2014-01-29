@@ -109,10 +109,12 @@ public class BBDD {
     public static void updateMiEleccion (Context ctx, Long idQdada, String idFacebook, List<Date> fechas){
         try{
             List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada.toString(), idFacebook}, null, null, null, null, null);
-            for (UsuarioEleccion eleccion: elecciones){
-                eleccion.setStatus(Entity.STATUS_DELETED);
-                BBDD.getApplicationDataContext(ctx).participanteDao.remove(eleccion);
-                BBDD.getApplicationDataContext(ctx).participanteDao.save(eleccion);
+            if (elecciones != null){
+                for (UsuarioEleccion eleccion: elecciones){
+                    eleccion.setStatus(Entity.STATUS_DELETED);
+                    BBDD.getApplicationDataContext(ctx).participanteDao.remove(eleccion);
+                    BBDD.getApplicationDataContext(ctx).participanteDao.save(eleccion);
+                }
             }
             for (Date fecha: fechas){
                 UsuarioEleccion ue = new UsuarioEleccion(ctx, idFacebook, fecha, idQdada);

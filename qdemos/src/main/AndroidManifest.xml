@@ -35,7 +35,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.Qdemos" >
         <activity
             android:name="com.cusl.ull.qdemos.Inicio"
             android:configChanges="orientation"
