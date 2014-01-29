@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
+import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
@@ -156,6 +157,14 @@ public class Utilities {
             }
         }
         return false;
+    }
+
+    public static boolean hayDatosSinGuardar(Context ctx){
+        if (!DatosQdada.isEmpty() || (!EleccionFecha.isEmpty())){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

@@ -14,17 +14,20 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
+import com.cusl.ull.qdemos.dialogs.DatosSinGuardarDialog;
 import com.cusl.ull.qdemos.fragments.edicion.FechasFragment;
 import com.cusl.ull.qdemos.fragments.edicion.InfoFragment;
 import com.cusl.ull.qdemos.fragments.edicion.InvitadosFragment;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
 import com.cusl.ull.qdemos.utilities.EleccionFecha;
+import com.cusl.ull.qdemos.utilities.Utilities;
 import com.mobandme.ada.Entity;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -88,10 +91,22 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
             getActionBar().setTitle(R.string.title_qdada_lectura);
         else
             DatosQdada.reset(this);
-
-        // TODO: Controlar el botón ATRAS por si hay modificaciones y no ha guardado (tanto en edit como en noEdit, por la seleccion de fechas)
     }
 
+
+    // Sobreescribimos el metodo que controla el evento que se lanza cuando se pulsa sobre el botón atrás del móvil, para ver si hay datos que no se han persistido, avisar al usuario.
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (Utilities.hayDatosSinGuardar(this)){
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                DatosSinGuardarDialog dialogo = new DatosSinGuardarDialog();
+                dialogo.show(fragmentManager, "tagAlerta");
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,6 +130,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                     // TODO: Pasar algun Bundle para mostrar un Crouton de EXITO en el fragment del HOME
                     Intent intent = new Intent(this, Home.class);
                     // Para eliminar el historial de activities visitadas ya que volvemos al HOME y asi el boton ATRAS no tenga ningun comportamiento, se resetee.
+                    DatosQdada.reset(this);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
@@ -133,6 +149,8 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                         com.cusl.ull.qdemos.bbdd.models.Qdada qdada = BBDD.getQdadaFromJSON(this, qdadajson);
 
                         BBDD.updateMiEleccion(this, qdada.getID(), BBDD.quienSoy(this).getIdfacebook(), fechas);
+
+                        EleccionFecha.reset();
 
                         Intent intent = new Intent(this, Home.class);
                         // Para eliminar el historial de activities visitadas ya que volvemos al HOME y asi el boton ATRAS no tenga ningun comportamiento, se resetee.

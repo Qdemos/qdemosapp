@@ -12,6 +12,16 @@ import java.util.Map;
 public class EleccionFecha {
 
     public static Map<Date, Boolean> elecciones;
+    public static boolean hayCambios = false;
+
+    public static boolean isEmpty(){
+        return !hayCambios;
+    }
+
+    public static void reset(){
+        elecciones = new HashMap<Date, Boolean>();
+        hayCambios = false;
+    }
 
     // Inicializar por primera vez como todas las Fechas sin seleccion (si no ha respondido aun)
     public static void reset (List<Date> todas){
@@ -19,6 +29,7 @@ public class EleccionFecha {
         for (Date fecha: todas){
             elecciones.put(fecha, null);
         }
+        hayCambios=false;
     }
 
     // Inicializar con las fechas que seleccionó en su momento
@@ -30,10 +41,13 @@ public class EleccionFecha {
             else
                 elecciones.put(fecha, false);
         }
+        hayCambios=false;
     }
 
     public static void setSelectedFecha(Date fecha, Boolean selected){
         elecciones.put(fecha, selected);
+        if (!hayCambios)
+            hayCambios=true;
     }
 
     public static List<Date> getFechas (){

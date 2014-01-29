@@ -40,7 +40,7 @@ public class DatosQdada {
     private static Date limite;
     private static Boolean reinvitacion;
 
-    private static List<GraphUser> invitados;
+    private static List<GraphUser> invitados = new ArrayList<GraphUser>();
 
     public static void reset(Context ctx){
         fechas = new ArrayList<Date>();
@@ -53,6 +53,20 @@ public class DatosQdada {
         limite = null;
         reinvitacion = null;
         invitados = new ArrayList<GraphUser>();
+    }
+
+    public static boolean isEmpty(){
+        if (!fechas.isEmpty())
+            return false;
+        if (titulo != null)
+            return false;
+        if (descripcion != null)
+            return false;
+        if (direccion != null)
+            return false;
+        if (!invitados.isEmpty())
+            return false;
+        return true;
     }
 
     public static List<GraphUser> getSelectedUsers() {

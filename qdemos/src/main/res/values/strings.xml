@@ -35,6 +35,12 @@
     <string name="validar_fechas_invitado">Debes RESPONDER a todas las FECHAS propuestas</string>
     <string name="validar_fechas_creador">Como CREADOR debes INDICAR al menos una FECHA</string>
 
+    <string name="cuidado">¡Cuidado!</string>
+    <string name="validar_datos">Existen DATOS que NO has GUARDADO. ¿Deseas continuar y perderlos?</string>
+
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+
     <string name="error_bbdd">Hubo un ERROR al GUARDAR en Base de Datos, contacte con el administrador</string>
     <string name="error_bbdd_r">Hubo un ERROR al RECUPERAR de Base de Datos, contacte con el administrador</string>
     <string name="error_fecha">Ya existe la fecha: </string>
