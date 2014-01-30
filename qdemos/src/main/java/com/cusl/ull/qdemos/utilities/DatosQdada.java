@@ -34,6 +34,7 @@ public class DatosQdada {
     private static Usuario creador;
 
     private static String direccion;
+
     private static Double latitud;
     private static Double longitud;
     private static List<Date> fechas = new ArrayList<Date>();
@@ -175,8 +176,7 @@ public class DatosQdada {
         if ((DatosQdada.getTitulo() == null) || (DatosQdada.getTitulo().trim().isEmpty())){
             Crouton.makeText(activity, R.string.validar_titulo, Style.ALERT).show();
             return false;
-        } else if (/*(DatosQdada.getLatitud() == null) || (DatosQdada.getLongitud() == null) ||*/ (DatosQdada.getDireccion() == null) || (DatosQdada.getDireccion().trim().isEmpty())){
-            // TODO: Descomentar lo de LAT y LNG
+        } else if ((DatosQdada.getLatitud() == null) || (DatosQdada.getLongitud() == null) || (DatosQdada.getDireccion() == null) || (DatosQdada.getDireccion().trim().isEmpty())){
             Crouton.makeText(activity, R.string.validar_direccion, Style.ALERT).show();
             return false;
         }
@@ -206,4 +206,13 @@ public class DatosQdada {
             return false;
         }
     }
+
+    public static void setLongitud(Double longitud) {
+        DatosQdada.longitud = longitud;
+    }
+
+    public static void setLatitud(Double latitud) {
+        DatosQdada.latitud = latitud;
+    }
+
 }

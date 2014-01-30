@@ -17,9 +17,12 @@ import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.lang.reflect.Field;
 
@@ -63,10 +66,8 @@ public class InfoFragment extends Fragment {
             mapa.setMyLocationEnabled(true);
 
 
-//            mapa.addMarker(new MarkerOptions()
-//                    .position(new LatLng(48.397141, 9.98787)).title(" Theatro Club Ulm"));
-//
-//            mapa.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(48.397141, 9.98787), 14.0f) );
+
+
 
             titulo = (TextView) rootView.findViewById(R.id.tituloTV);
             descripcion = (TextView) rootView.findViewById(R.id.descripcionTV);
@@ -79,6 +80,13 @@ public class InfoFragment extends Fragment {
             } else {
                 descripcion.setText(this.qdada.getDescripcion());
             }
+
+            try{
+                mapa.addMarker(new MarkerOptions().position(new LatLng(qdada.getLatitud(), qdada.getLongitud())).title(qdada.getDireccion()));
+                mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(qdada.getLatitud(), qdada.getLongitud()), 14.0f));
+            } catch (Exception e){}
+
+            // TODO: Capturar el click del marcador para preguntar si quiere que te muestre como llegar
 
             return rootView;
         }
