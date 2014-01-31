@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/fotoPerfil"
         android:layout_centerVertical="true"
-        android:textColor="@color/com_facebook_blue"
+        android:textStyle="bold"
         android:layout_marginLeft="10dp"/>
 
     <ImageButton

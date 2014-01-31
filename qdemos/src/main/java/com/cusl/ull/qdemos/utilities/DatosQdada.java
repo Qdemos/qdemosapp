@@ -59,11 +59,11 @@ public class DatosQdada {
     public static boolean isEmpty(){
         if (!fechas.isEmpty())
             return false;
-        if (titulo != null)
+        if ((titulo != null) && (!titulo.trim().isEmpty()))
             return false;
-        if (descripcion != null)
+        if ((descripcion != null) && (!descripcion.trim().isEmpty()))
             return false;
-        if (direccion != null)
+        if ((direccion != null) && (!direccion.trim().isEmpty()))
             return false;
         if (!invitados.isEmpty())
             return false;

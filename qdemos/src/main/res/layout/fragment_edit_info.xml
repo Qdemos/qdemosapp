@@ -12,67 +12,74 @@
         android:layout_height="0px"/>
 
     <RelativeLayout
-        android:id="@+id/tituloBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="15dp"
-        >
+        android:background="@drawable/background_listview_qdadas">
 
-        <EditText
-            android:id="@+id/tituloET"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/tituloBox"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/titulo"
-            android:lines="1"
-            />
+            android:layout_margin="15dp"
+            >
+
+            <EditText
+                android:id="@+id/tituloET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/titulo"
+                android:lines="1"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/descripcionBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tituloBox"
+            android:layout_margin="15dp"
+            >
+
+            <EditText
+                android:id="@+id/descripcionET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/descripcion"
+                android:lines="3"
+                android:maxLines="6"
+                android:scrollbars="vertical"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/direccionBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/descripcionBox"
+            android:layout_margin="15dp"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/direccionET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/direccion"
+                android:lines="1"
+                />
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/direccionET"
+                class="com.google.android.gms.maps.SupportMapFragment"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/descripcionBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tituloBox"
-        android:layout_margin="15dp"
-        >
-
-        <EditText
-            android:id="@+id/descripcionET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/descripcion"
-            android:lines="3"
-            android:maxLines="6"
-            android:scrollbars="vertical"
-            />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/direccionBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/descripcionBox"
-        android:layout_margin="15dp"
-        >
-
-        <AutoCompleteTextView
-            android:id="@+id/direccionET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/direccion"
-            android:lines="1"
-            />
-
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/direccionET"
-            class="com.google.android.gms.maps.SupportMapFragment"/>
-
-    </RelativeLayout>
-
 
 </RelativeLayout>

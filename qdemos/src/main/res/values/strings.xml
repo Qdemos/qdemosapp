@@ -6,7 +6,7 @@
     <string name="app_key_play_services">AIzaSyBBgC6pax3qlZDpHOqV1BArBgCLpN85TZs</string>
     <string name="logout">Cerrar Sesión</string>
     <string name="inicio">Inicio</string>
-    <string name="nuevo">Nuevo</string>
+    <string name="nuevo">Añadir</string>
     <string name="guardar">Guardar</string>
     <string name="title_section_aceptadas">Aceptadas</string>
     <string name="title_section_pendientes">Pendientes</string>

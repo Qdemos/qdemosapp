@@ -5,21 +5,51 @@
     android:paddingBottom="7dp"
     android:paddingTop="7dp">
 
-    <TextView
-        android:id="@+id/fecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_centerVertical="true"
-        android:textColor="@color/com_facebook_blue"/>
+    <CalendarView
+        android:id="@+id/dateView"
+        android:layout_width="170dp"
+        android:layout_height="200dp"
+        android:showWeekNumber="false"
+        android:layout_marginLeft="5dp"
+        android:paddingBottom="7dp"
+        android:animateLayoutChanges="false"
+        android:clipChildren="false"
+        android:firstDayOfWeek="2"
+        android:drawingCacheQuality="low"
+        android:soundEffectsEnabled="false"
+        android:focusedMonthDateColor="@android:color/holo_orange_dark"
+        android:selectedWeekBackgroundColor="#22CC9900"
+        android:selectedDateVerticalBar="@color/darker_blue"
+        android:hapticFeedbackEnabled="false"/>
 
-    <ImageButton
-        android:id="@+id/eliminar"
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/dateLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_menu_delete"
-        android:background="#00000000"/>
+        android:layout_toRightOf="@+id/dateView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/horaTV"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="34sp"
+            android:text="15:58"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/eliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_below="@+id/horaTV"
+            android:layout_marginTop="40dp"
+            android:background="#00000000"/>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -12,6 +12,12 @@
         android:layout_height="0px"/>
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:background="@drawable/background_listview_qdadas">
+
+        <RelativeLayout
         android:id="@+id/fechasListBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,19 +35,22 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/nuevaFechaBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_alignParentBottom="true"
-        >
-
-        <Button
-            android:id="@+id/nuevaFecha"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/nuevaFechaBox"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nuevo"/>
+            android:layout_margin="15dp"
+            android:layout_alignParentBottom="true"
+            >
+
+            <Button
+                android:id="@+id/nuevaFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boton_nuevo"
+                android:text="@string/nuevo"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
