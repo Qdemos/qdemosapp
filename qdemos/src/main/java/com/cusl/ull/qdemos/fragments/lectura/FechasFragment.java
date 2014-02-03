@@ -26,9 +26,11 @@ public class FechasFragment extends Fragment  {
         ListView listView;
         FechaAdapter fechaAdapter;
         Qdada qdada;
+        boolean onlyRead;
 
-        public FechasFragment(Qdada qdada) {
+        public FechasFragment(Qdada qdada, boolean onlyRead) {
             this.qdada = qdada;
+            this.onlyRead = onlyRead;
         }
 
         @Override
@@ -44,7 +46,7 @@ public class FechasFragment extends Fragment  {
             } else {
                 EleccionFecha.reset(BBDD.getFechas(getActivity(), qdada.getID()), miEleccion);
             }
-            fechaAdapter = new FechaAdapter(getActivity(), BBDD.getFechas(getActivity(), qdada.getID()));
+            fechaAdapter = new FechaAdapter(getActivity(), BBDD.getFechas(getActivity(), qdada.getID()), onlyRead);
             listView.setAdapter(fechaAdapter);
             listView.setClickable(false);
 

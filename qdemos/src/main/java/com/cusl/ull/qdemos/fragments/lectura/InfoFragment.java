@@ -65,10 +65,6 @@ public class InfoFragment extends Fragment {
             GoogleMap mapa = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
             mapa.setMyLocationEnabled(true);
 
-
-
-
-
             titulo = (TextView) rootView.findViewById(R.id.tituloTV);
             descripcion = (TextView) rootView.findViewById(R.id.descripcionTV);
 

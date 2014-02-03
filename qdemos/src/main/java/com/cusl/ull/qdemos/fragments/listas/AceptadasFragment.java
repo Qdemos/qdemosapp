@@ -10,13 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.cusl.ull.qdemos.R;
-import com.cusl.ull.qdemos.adapters.QdadasAceptadasAdapter;
+import com.cusl.ull.qdemos.adapters.QdadasAdapter;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.google.gson.Gson;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,13 +41,19 @@ public class AceptadasFragment extends Fragment {
 
 
             List<Qdada> qdadas = new ArrayList<Qdada>();
+            List<Qdada> qdadasQuieroIr = new ArrayList<Qdada>();
             try {
-                qdadas = BBDD.getApplicationDataContext(getActivity()).qdadaDao.search(false, null, null, null, null, null, null, null);
-            } catch (Exception e){
-                System.out.println(e.getMessage());
-            }
+                String myIdFB = BBDD.quienSoy(getActivity()).getIdfacebook();
+                Date ahora = new Date();
+                qdadas = BBDD.getApplicationDataContext(getActivity()).qdadaDao.search(false, "Sinresponder = ? and Fechaganadora > ?", new String[]{"0", String.valueOf(ahora.getTime())}, null, null, null, null, null);
+                for (Qdada qdada: qdadas){
+                    if (BBDD.tengoEleccion(getActivity(), qdada.getID(), myIdFB)){
+                        qdadasQuieroIr.add(qdada);
+                    }
+                }
+            } catch (Exception e){}
 
-            QdadasAceptadasAdapter qdadasAceptadasAdapter = new QdadasAceptadasAdapter(getActivity(), qdadas);
+            QdadasAdapter qdadasAceptadasAdapter = new QdadasAdapter(getActivity(), qdadasQuieroIr, 0);
             listView.setAdapter(qdadasAceptadasAdapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

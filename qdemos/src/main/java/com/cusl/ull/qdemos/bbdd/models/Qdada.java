@@ -59,11 +59,15 @@ public class Qdada extends Entity {
     @TableField(name = "Reinvitacion", datatype = DATATYPE_BOOLEAN)
     public Boolean reinvitacion;
 
+    // Atributo que sirve para saber si un invitado a respondido o no a una qdada
+    @TableField(name = "Sinresponder", datatype = DATATYPE_BOOLEAN)
+    public Boolean sinresponder;
+
     public Qdada(){
         super();
     }
 
-    public Qdada(Context ctx, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, Double latitud, Double longitud, String direccion, Date limite, Boolean reinvitacion) {
+    public Qdada(Context ctx, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, Double latitud, Double longitud, String direccion, Date limite, Boolean reinvitacion, Boolean sinresponder) {
         setTitulo(titulo);
         setDescripcion(descripcion);
         setCreador(creador);
@@ -73,6 +77,7 @@ public class Qdada extends Entity {
         setLimite(limite);
         setReinvitacion(reinvitacion);
         setDireccion(direccion);
+        setSinresponder(sinresponder);
     }
 
     public String getTitulo() {
@@ -154,5 +159,14 @@ public class Qdada extends Entity {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
+    public Boolean getSinresponder() {
+        return sinresponder;
+    }
+
+    public void setSinresponder(Boolean sinresponder) {
+        this.sinresponder = sinresponder;
+    }
+
 
 }

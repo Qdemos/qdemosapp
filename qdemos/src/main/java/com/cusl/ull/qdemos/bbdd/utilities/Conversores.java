@@ -42,7 +42,7 @@ public class Conversores {
 
     public static Qdada fromDatosQdadaToQdada (Context ctx){
         try {
-            Qdada qdada =  new Qdada(ctx, DatosQdada.getTitulo(), DatosQdada.getDescripcion(), DatosQdada.getCreador(), Conversores.fromGraphUserToUsuario(ctx, DatosQdada.getInvitados()), DatosQdada.getLatitud(), DatosQdada.getLongitud(), DatosQdada.getDireccion(), DatosQdada.getLimite(), DatosQdada.getReinvitacion());
+            Qdada qdada =  new Qdada(ctx, DatosQdada.getTitulo(), DatosQdada.getDescripcion(), DatosQdada.getCreador(), Conversores.fromGraphUserToUsuario(ctx, DatosQdada.getInvitados()), DatosQdada.getLatitud(), DatosQdada.getLongitud(), DatosQdada.getDireccion(), DatosQdada.getLimite(), DatosQdada.getReinvitacion(), false);
             return qdada;
         } catch (Exception e){
             System.out.println(e.getMessage());

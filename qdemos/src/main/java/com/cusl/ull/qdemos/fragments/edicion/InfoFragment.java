@@ -173,7 +173,7 @@ public class InfoFragment extends Fragment {
                         } else {
                             geoLugar.setListener(new PlaceToPointMap_TaskListener(direccion.getText().toString()));
                             geoLugar.execute(buscarLugar.referencesPlace.get(direccion.getText().toString()));
-                            DatosQdada.setDescripcion(direccion.getText().toString());
+                            DatosQdada.setDireccion(direccion.getText().toString());
                         }
                     }
                 };

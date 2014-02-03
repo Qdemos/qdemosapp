@@ -215,8 +215,9 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                         return new FechasFragment();
                     else {
                         String qdadajson = getIntent().getExtras().getString("qdadajson");
+                        boolean isHistorica = getIntent().getExtras().getBoolean("historica");
                         com.cusl.ull.qdemos.bbdd.models.Qdada datos = BBDD.getQdadaFromJSON(getApplicationContext(), qdadajson);
-                        return new com.cusl.ull.qdemos.fragments.lectura.FechasFragment(datos);
+                        return new com.cusl.ull.qdemos.fragments.lectura.FechasFragment(datos, isHistorica);
                     }
                 case 2:
                     if (isEdition)

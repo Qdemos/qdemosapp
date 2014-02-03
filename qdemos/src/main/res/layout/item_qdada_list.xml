@@ -6,16 +6,26 @@
     android:paddingBottom="7dp"
     android:paddingTop="7dp"
     android:descendantFocusability="blocksDescendants"
+    android:id="@+id/fondoQdada"
     android:background="@drawable/background_listview_qdadas_selector">
+
+    <View android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/miEstadoQdada"
+        android:background="@drawable/circle_green"
+        android:layout_marginTop="3dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="7dp"/>
 
     <TextView
         android:id="@+id/tituloQdada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:textStyle="bold"
-        android:layout_alignParentLeft="true"/>
+        android:text="Mi Cumpleaños"
+        android:layout_toRightOf="@+id/miEstadoQdada"/>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

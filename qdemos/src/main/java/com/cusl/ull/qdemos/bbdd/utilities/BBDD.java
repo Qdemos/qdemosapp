@@ -224,4 +224,32 @@ public class BBDD {
         return fechas;
     }
 
+    public static boolean soyParticipante (Context ctx, Long idQdada, String idFB, Date fechaGanadora){
+        try {
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada.toString(), idFB}, null, null, null, null, null);
+            for (UsuarioEleccion ue: elecciones){
+                if (fechaGanadora.equals(ue.getFecha())){
+                    return true;
+                }
+            }
+        } catch (Exception e){}
+        return false;
+    }
+
+    public static boolean tengoEleccion (Context ctx, Long idQdada, String idFB){
+        try {
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada.toString(), idFB}, null, null, null, null, null);
+            if ((elecciones != null) && (!elecciones.isEmpty()))
+                return true;
+        } catch (Exception e){}
+        return false;
+    }
+
+    public static boolean qdadaHistorica (Context ctx, Qdada qdada){
+        if (qdada.getFechaGanadora().before(new Date())){
+            return true;
+        }
+        return false;
+    }
+
 }

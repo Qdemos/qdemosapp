@@ -25,10 +25,12 @@ public class FechaAdapter extends BaseAdapter {
     protected Activity activity;
     protected List<Date> items;
     ImageButton si, no;
+    boolean onlyRead;
 
-    public FechaAdapter(Activity activity, List<Date> items) {
+    public FechaAdapter(Activity activity, List<Date> items, Boolean onlyRead) {
         this.activity = activity;
         this.items = items;
+        this.onlyRead = onlyRead;
     }
 
     @Override
@@ -76,26 +78,33 @@ public class FechaAdapter extends BaseAdapter {
         } // Sino: No seteado aun, no ha respondido
 
         si.setTag(item);
-        si.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                si.setSelected(true);
-                no.setSelected(false);
-                EleccionFecha.setSelectedFecha(((Date) view.getTag()), true);
-                notifyDataSetChanged();
-            }
-        });
-
         no.setTag(item);
-        no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                no.setSelected(true);
-                si.setSelected(false);
-                EleccionFecha.setSelectedFecha(((Date)view.getTag()), false);
-                notifyDataSetChanged();
-            }
-        });
+
+        if (!onlyRead){
+            si.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    si.setSelected(true);
+                    no.setSelected(false);
+                    EleccionFecha.setSelectedFecha(((Date) view.getTag()), true);
+                    notifyDataSetChanged();
+                }
+            });
+
+
+            no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    no.setSelected(true);
+                    si.setSelected(false);
+                    EleccionFecha.setSelectedFecha(((Date)view.getTag()), false);
+                    notifyDataSetChanged();
+                }
+            });
+        } else {
+            si.setClickable(false);
+            no.setClickable(false);
+        }
 
         return vi;
     }
