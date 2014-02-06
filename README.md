@@ -22,3 +22,5 @@ Nuestro **algoritmo de matching,** permitirá buscar **la mejor fecha posible** 
 ¡Y todo esto sin dar datos extras, haciendo uso de la información de nuestros perfiles de las **redes sociales**!
 
 ¿Quieres quedar?... **Qdemos!**
+
+Para preparar el entorno de desarrollo, previamente hemos de descargar el Android Studio que es el IDE que usaremos. A continuación descargamos el SDK para android de java. Instalamos el Android Studio y posteriormente cambiamos el path, es decir la ruta.
