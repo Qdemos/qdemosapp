@@ -79,14 +79,24 @@ public class FechasFragment extends Fragment implements DatePickerDialog.OnDateS
 
         @Override
         public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+            //TODO: Comprobar que la fecha es actual
             if (DatosQdada.setNuevaFecha(year, month, day, hourOfDay, minute))
                 fechaAdapter.notifyDataSetChanged();
             else{
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(year, month, day, hourOfDay, minute, 0);
-                String fecha = new SimpleDateFormat("dd MMMM yyyy, HH:mm").format(calendar.getTime());
-                Crouton.cancelAllCroutons();
-                Crouton.makeText(getActivity(), getString(R.string.error_fecha)+" "+fecha, Style.ALERT).show();
+                //AÑADO UN NUEVO IF PARA DIFERENCIAR CUANDO ES UN ERROR DE FECHA YA ELEGIDA Y CUANDO ES UN ERROR PORQUE NO ES UNA FECHA VALIDA
+                if(DatosQdada.setFecha(year,month,day,hourOfDay,minute)){ //EL setFecha(year,month,day,hourOfDay,minute) es un metodo creado para esta finalidad
+                   Calendar calendar = Calendar.getInstance();
+                   calendar.set(year, month, day, hourOfDay, minute, 0);
+                   String fecha = new SimpleDateFormat("dd MMMM yyyy, HH:mm").format(calendar.getTime());
+                   Crouton.cancelAllCroutons();
+                   Crouton.makeText(getActivity(), getString(R.string.error_fecha)+" "+fecha, Style.ALERT).show();}
+                else{
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year, month, day, hourOfDay, minute, 0);
+                    String fecha = new SimpleDateFormat("dd MMMM yyyy, HH:mm").format(calendar.getTime());
+                    Crouton.cancelAllCroutons();
+                    Crouton.makeText(getActivity(), getString(R.string.error_fecha2), Style.ALERT).show();
+                }
             }
         }
 }

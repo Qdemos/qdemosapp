@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -80,8 +81,9 @@ public class DatosQdada {
 
     public static boolean setNuevaFecha(int year, int month, int day, int hourOfDay, int minute){
         Calendar calendar = Calendar.getInstance();
+        Calendar actual = Calendar.getInstance();
         calendar.set(year, month, day, hourOfDay, minute, 0);
-        if (Utilities.containsDate(fechas, calendar.getTime())){
+        if ((Utilities.containsDate(fechas, calendar.getTime()))||(actual.after(calendar))){
             return false;
         }
         fechas.add(calendar.getTime());
@@ -92,6 +94,22 @@ public class DatosQdada {
         });
         return true;
     }
+// esta funcion se encarga de comprobar que la quedada no sea antes que el instante en el que se hace
+ public static boolean setFecha(int year, int month, int day, int hourOfDay, int minute){
+     Calendar calendar = Calendar.getInstance();
+     Calendar actual = Calendar.getInstance();//cogemos el instante actual
+     calendar.set(year, month, day, hourOfDay, minute, 0);
+     if (actual.after(calendar)){  //realizamos la comparación que actual sea despues que calendar en cuyo caso
+         //devuelve falso
+         return false;
+     }
+     return true;
+
+ }
+
+  //  public static Calendar getFechaEvento(){
+
+    //}
 
     public static void setTitulo (String tit){
         titulo = tit;
@@ -176,10 +194,10 @@ public class DatosQdada {
         if ((DatosQdada.getTitulo() == null) || (DatosQdada.getTitulo().trim().isEmpty())){
             Crouton.makeText(activity, R.string.validar_titulo, Style.ALERT).show();
             return false;
-        } else if ((DatosQdada.getLatitud() == null) || (DatosQdada.getLongitud() == null) || (DatosQdada.getDireccion() == null) || (DatosQdada.getDireccion().trim().isEmpty())){
+        } /*else if ((DatosQdada.getLatitud() == null) || (DatosQdada.getLongitud() == null) || (DatosQdada.getDireccion() == null) || (DatosQdada.getDireccion().trim().isEmpty())){
             Crouton.makeText(activity, R.string.validar_direccion, Style.ALERT).show();
             return false;
-        }
+        }*/
         return true;
     }
 
