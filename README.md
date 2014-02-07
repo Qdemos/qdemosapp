@@ -54,7 +54,7 @@ Para la base de datos del servidor se usará un esquema usando MongoDB, una base
 
 Para ejecutar MongoDB, o creamos un servicio en el arranque del sistema, o cada vez que queramos hacer correr la BBDD para hacer uso de ella tendremos que situarnos en un terminal en la carpeta *bin/* dentro del directorio donde hemos descomprimido MongoDB y ejecutar **mongod**
 
-### 3. Node.js###
+### 3. Node.js ###
 
 Una vez instalado el entorno de la base de datos, hará falta instalar todo el framework encargado de la lógica del servidor. Para ello simplemente seguimos los pasos dados en la página oficial de Node.js que será la insfraestructura del servidor que usemos para definir todo el servicio de APIs para los Web Services dse tipo REST de Qdemos. [**Instalación Node.js**](http://www.nodejs.org/)
 
