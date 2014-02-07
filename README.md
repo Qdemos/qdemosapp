@@ -72,7 +72,7 @@ Para este proyecto se han usado librerias externas (de código abierto) tanto pa
 
 ### Android ###
 
-* [**DateTimePicker**](https://github.com/flavienlaurent/datetimepicker): Para el elección de fechas.
+* [**DateTimePicker**](https://github.com/flavienlaurent/datetimepicker): Para la elección de fechas.
 * [**Facebook SDK**](https://github.com/facebook/facebook-android-sdk): Permite Login y Recabar información con Facebook.
 * [**ADA Framework**](https://github.com/mobandme/ADA-Framework): ORM de SQL Lite, para el manejo de base de datos.
 * [**GSON**](https://code.google.com/p/google-gson/): Utilidades para el manejo del formato JSON.
