@@ -49,7 +49,7 @@
     <string name="error_problemautocompletado">Ha ocurrido un ERROR con el motor de AUTOCOMPLETADO de DIRECCIONES</string>
     <string name="error_bbdd">Hubo un ERROR al GUARDAR en Base de Datos, contacte con el administrador</string>
     <string name="error_bbdd_r">Hubo un ERROR al RECUPERAR de Base de Datos, contacte con el administrador</string>
-    <string name="error_fecha">Ya existe la fecha: </string>
-    <string name="error_fecha2">LA FECHA NO ES VÁLIDA</string>
+    <string name="error_fecha_existe">Ya existe la fecha: </string>
+    <string name="error_fecha_no_valida">NO se admiten FECHAS anteriores a la hora actual: </string>
 
 </resources>

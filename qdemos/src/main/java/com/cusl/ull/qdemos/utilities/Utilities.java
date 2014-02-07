@@ -167,4 +167,16 @@ public class Utilities {
         }
     }
 
+    // esta funcion se encarga de comprobar si una fecha esta vigente o ya paso, para no permitir crear qdadas con fechas anteriores a cuando se crea
+    public static boolean isActual(int year, int month, int day, int hourOfDay, int minute){
+        Calendar fechaPropuesta = Calendar.getInstance();
+        Calendar actual = Calendar.getInstance();//cogemos el instante actual
+        fechaPropuesta.set(year, month, day, hourOfDay, minute, 0);
+        if (fechaPropuesta.before(actual)){  // Si la fechaPropuesta es anterior a la actual, no dejamos meter esa fecha, ya que ya pasó
+            return false;
+        }
+        return true;
+
+    }
+
 }

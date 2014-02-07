@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.cusl.ull.qdemos.adapters.edicion.FechaAdapter;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
+import com.cusl.ull.qdemos.utilities.Utilities;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
@@ -79,23 +80,22 @@ public class FechasFragment extends Fragment implements DatePickerDialog.OnDateS
 
         @Override
         public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-            //TODO: Comprobar que la fecha es actual
-            if (DatosQdada.setNuevaFecha(year, month, day, hourOfDay, minute))
-                fechaAdapter.notifyDataSetChanged();
-            else{
-                //AÑADO UN NUEVO IF PARA DIFERENCIAR CUANDO ES UN ERROR DE FECHA YA ELEGIDA Y CUANDO ES UN ERROR PORQUE NO ES UNA FECHA VALIDA
-                if(DatosQdada.setFecha(year,month,day,hourOfDay,minute)){ //EL setFecha(year,month,day,hourOfDay,minute) es un metodo creado para esta finalidad
-                   Calendar calendar = Calendar.getInstance();
-                   calendar.set(year, month, day, hourOfDay, minute, 0);
-                   String fecha = new SimpleDateFormat("dd MMMM yyyy, HH:mm").format(calendar.getTime());
-                   Crouton.cancelAllCroutons();
-                   Crouton.makeText(getActivity(), getString(R.string.error_fecha)+" "+fecha, Style.ALERT).show();}
+            // Si la fecha que el usuario quiere meter para la Qdada es anterior a la fecha actual, no le dejamos ya que es imposible celebrar una Qdada en una fecha qye ya pasó
+            if (!Utilities.isActual(year, month, day, hourOfDay, minute)){
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day, hourOfDay, minute, 0);
+                String fecha = new SimpleDateFormat("dd MMMM yyyy, HH:mm").format(calendar.getTime());
+                Crouton.makeText(getActivity(), getString(R.string.error_fecha_no_valida)+" "+fecha, Style.ALERT).show();
+            }
+            else {
+                if (DatosQdada.setNuevaFecha(year, month, day, hourOfDay, minute))
+                    fechaAdapter.notifyDataSetChanged();
                 else{
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(year, month, day, hourOfDay, minute, 0);
                     String fecha = new SimpleDateFormat("dd MMMM yyyy, HH:mm").format(calendar.getTime());
                     Crouton.cancelAllCroutons();
-                    Crouton.makeText(getActivity(), getString(R.string.error_fecha2), Style.ALERT).show();
+                    Crouton.makeText(getActivity(), getString(R.string.error_fecha_existe)+" "+fecha, Style.ALERT).show();
                 }
             }
         }
