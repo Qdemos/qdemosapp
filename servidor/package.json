@@ -1,0 +1,15 @@
+{  
+  "name": "Qdemos",  
+  "version": "0.0.1",  
+  "scripts": {  
+    "start": "node app"  
+  },  
+  "dependencies": {  
+    "express": "*",  
+    "mongoose":"*",
+    "jade": "*",
+    "node-gcm": "*",
+    "underscore": "*",
+    "request": "*"
+  }  
+}  
