@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -125,18 +127,10 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
         if (id == R.id.menu_guardar) {
             boolean isEdition = getIntent().getExtras().getBoolean("edicion");
             if ((isEdition) && (validacionDatos())){
-                if (DatosQdada.guardarBBDD(this)){
-                    // TODO: Enviar al SERVER
-                    // TODO: Pasar algun Bundle para mostrar un Crouton de EXITO en el fragment del HOME
-                    Intent intent = new Intent(this, Home.class);
-                    // Para eliminar el historial de activities visitadas ya que volvemos al HOME y asi el boton ATRAS no tenga ningun comportamiento, se resetee.
-                    DatosQdada.reset(this);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Crouton.makeText(this, R.string.error_bbdd, Style.ALERT).show();
-                }
+                ProgressDialog pd = ProgressDialog.show(this, getResources().getText(R.string.esperar), getResources().getText(R.string.procesando));
+                pd.setIndeterminate(false);
+                pd.setCancelable(false);
+                DatosQdada.guardarEnServidor((Activity)this, pd);
             } else if (!isEdition){
                 List<Date> fechas = EleccionFecha.getFechas();
                 if (fechas == null){
@@ -148,7 +142,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                         String qdadajson = getIntent().getExtras().getString("qdadajson");
                         com.cusl.ull.qdemos.bbdd.models.Qdada qdada = BBDD.getQdadaFromJSON(this, qdadajson);
 
-                        BBDD.updateMiEleccion(this, qdada.getID(), BBDD.quienSoy(this).getIdfacebook(), fechas);
+                        BBDD.updateMiEleccion(this, qdada.getIdQdada(), BBDD.quienSoy(this).getIdfacebook(), fechas);
 
                         EleccionFecha.reset();
 

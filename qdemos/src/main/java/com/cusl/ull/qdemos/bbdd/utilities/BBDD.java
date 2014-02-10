@@ -95,10 +95,10 @@ public class BBDD {
         }
     }
 
-    public static List<Date> miEleccion (Context ctx, Long idQdada, String idFacebook){
+    public static List<Date> miEleccion (Context ctx, String idQdada, String idFacebook){
         List<Date> fechas = new ArrayList<Date>();
         try {
-            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada.toString(), idFacebook}, null, null, null, null, null);
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada, idFacebook}, null, null, null, null, null);
             for (UsuarioEleccion eleccion: elecciones){
                 fechas.add(eleccion.getFecha());
             }
@@ -106,9 +106,9 @@ public class BBDD {
         return fechas;
     }
 
-    public static void updateMiEleccion (Context ctx, Long idQdada, String idFacebook, List<Date> fechas){
+    public static void updateMiEleccion (Context ctx, String idQdada, String idFacebook, List<Date> fechas){
         try{
-            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada.toString(), idFacebook}, null, null, null, null, null);
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada, idFacebook}, null, null, null, null, null);
             if (elecciones != null){
                 for (UsuarioEleccion eleccion: elecciones){
                     eleccion.setStatus(Entity.STATUS_DELETED);
@@ -129,7 +129,7 @@ public class BBDD {
     public static Qdada getQdadaFromJSON (Context ctx, String qdadajson){
         com.cusl.ull.qdemos.bbdd.models.Qdada datos = new Gson().fromJson(qdadajson, com.cusl.ull.qdemos.bbdd.models.Qdada.class);
         try {
-            Qdada qdada = BBDD.getApplicationDataContext(ctx).qdadaDao.getElementByID(datos.getID());
+            Qdada qdada = BBDD.getQdadaByIDServer(ctx, datos.getIdQdada());
             return qdada;
         } catch (Exception e){
             Toast.makeText(ctx, R.string.error_bbdd_r, Toast.LENGTH_LONG).show();
@@ -137,7 +137,7 @@ public class BBDD {
         }
     }
 
-    public static void setFechas(Context ctx, List<Date> fechas, Long idqdada) {
+    public static void setFechas(Context ctx, List<Date> fechas, String idqdada) {
         try {
             for (Date fecha: fechas){
                 QdadaFechas qf = new QdadaFechas(idqdada, fecha);
@@ -150,11 +150,11 @@ public class BBDD {
     }
 
     // Función que se encarga de saber cual es la fecha más repetida de los participantes para conocer la que mejor se adapta a la Qdada.
-    public static void calcularFechaGanadora (Context ctx, Long idqdada){
+    public static void calcularFechaGanadora (Context ctx,  String idqdada){
         List<Date> totales = new ArrayList<Date>();
         List<Date> comparador = new ArrayList<Date>();
         try {
-            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ?", new String[]{idqdada.toString()}, null, null, null, null, null);
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ?", new String[]{idqdada}, null, null, null, null, null);
             for (UsuarioEleccion ele: elecciones){
                 totales.add(ele.getFecha());
             }
@@ -174,7 +174,7 @@ public class BBDD {
                     repeticiones.add(0);
                 }
             }
-            Qdada qdada = BBDD.getApplicationDataContext(ctx).qdadaDao.getElementByID(idqdada);
+            Qdada qdada = BBDD.getQdadaByIDServer(ctx, idqdada);
             qdada.setFechaGanadora(comparador.get(indice));
             qdada.setStatus(Entity.STATUS_UPDATED);
             BBDD.getApplicationDataContext(ctx).qdadaDao.save(qdada);
@@ -182,11 +182,11 @@ public class BBDD {
         } catch (Exception e){}
     }
 
-    public static int numeroParticipantes (Context ctx, Long idqdada){
+    public static int numeroParticipantes (Context ctx, String idqdada){
         int participantes = 0;
         try {
-            Qdada qdada = BBDD.getApplicationDataContext(ctx).qdadaDao.getElementByID(idqdada);
-            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ?", new String[]{idqdada.toString()}, null, null, null, null, null);
+            Qdada qdada = BBDD.getQdadaByIDServer(ctx, idqdada);
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ?", new String[]{idqdada}, null, null, null, null, null);
             for (UsuarioEleccion ele: elecciones){
                 if (ele.getFecha().equals(qdada.getFechaGanadora())){
                     participantes++;
@@ -196,11 +196,11 @@ public class BBDD {
         return participantes;
     }
 
-    public static List<Usuario> getParticipantes (Context ctx, Long idqdada){
+    public static List<Usuario> getParticipantes (Context ctx, String idqdada){
         List<Usuario> usuarios = new ArrayList<Usuario>();
         try {
-            Qdada qdada = BBDD.getApplicationDataContext(ctx).qdadaDao.getElementByID(idqdada);
-            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ?", new String[]{idqdada.toString()}, null, null, null, null, null);
+            Qdada qdada = BBDD.getQdadaByIDServer(ctx, idqdada);
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ?", new String[]{idqdada}, null, null, null, null, null);
             for (UsuarioEleccion ue: elecciones){
                 if (ue.getFecha().equals(qdada.getFechaGanadora())){
                     if (!Utilities.containsUsuario(usuarios, ue.getIdusuario())){
@@ -213,10 +213,10 @@ public class BBDD {
         return usuarios;
     }
 
-    public static List<Date> getFechas (Context ctx, Long idqdada){
+    public static List<Date> getFechas (Context ctx, String idqdada){
         List<Date> fechas = new ArrayList<Date>();
         try {
-            List<QdadaFechas> qf = BBDD.getApplicationDataContext(ctx).qdadaFechasDao.search(false, "Idqdada = ?", new String[]{idqdada.toString()}, null, null, null, null, null);
+            List<QdadaFechas> qf = BBDD.getApplicationDataContext(ctx).qdadaFechasDao.search(false, "Idqdada = ?", new String[]{idqdada}, null, null, null, null, null);
             for (QdadaFechas item: qf){
                 fechas.add(item.getFecha());
             }
@@ -224,9 +224,9 @@ public class BBDD {
         return fechas;
     }
 
-    public static boolean soyParticipante (Context ctx, Long idQdada, String idFB, Date fechaGanadora){
+    public static boolean soyParticipante (Context ctx, String idQdada, String idFB, Date fechaGanadora){
         try {
-            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada.toString(), idFB}, null, null, null, null, null);
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada, idFB}, null, null, null, null, null);
             for (UsuarioEleccion ue: elecciones){
                 if (fechaGanadora.equals(ue.getFecha())){
                     return true;
@@ -236,9 +236,9 @@ public class BBDD {
         return false;
     }
 
-    public static boolean tengoEleccion (Context ctx, Long idQdada, String idFB){
+    public static boolean tengoEleccion (Context ctx, String idQdada, String idFB){
         try {
-            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada.toString(), idFB}, null, null, null, null, null);
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada, idFB}, null, null, null, null, null);
             if ((elecciones != null) && (!elecciones.isEmpty()))
                 return true;
         } catch (Exception e){}
@@ -250,6 +250,27 @@ public class BBDD {
             return true;
         }
         return false;
+    }
+
+    public static Qdada getQdadaByIDServer(Context ctx, String idserver){
+        try {
+            Qdada qdada = BBDD.getApplicationDataContext(ctx).qdadaDao.search(false, "Idqdada = ?", new String[]{idserver}, null, null, null, null, null).get(0);
+            return qdada;
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public static boolean updateIdQdadaServer (Context ctx, Long idqdada, String idqdadaserver){
+        try{
+            Qdada qdada = BBDD.getApplicationDataContext(ctx).qdadaDao.getElementByID(idqdada);
+            qdada.setIdQdada(idqdadaserver);
+            qdada.setStatus(Entity.STATUS_UPDATED);
+            BBDD.getApplicationDataContext(ctx).qdadaDao.save(qdada);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
 }

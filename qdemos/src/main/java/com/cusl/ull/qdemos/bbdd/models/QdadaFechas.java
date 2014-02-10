@@ -15,8 +15,8 @@ import java.util.List;
 @Table(name = "Qdadafechas")
 public class QdadaFechas extends Entity {
 
-    @TableField(name = "Idqdada", datatype = DATATYPE_LONG)
-    public Long Idqdada;
+    @TableField(name = "Idqdada", datatype = DATATYPE_STRING)
+    public String Idqdada;
 
     // Fechas propuestas para la realización de las quedadas
     @TableField(name = "Fecha", datatype = DATATYPE_DATE_BINARY)
@@ -26,16 +26,16 @@ public class QdadaFechas extends Entity {
         super();
     }
 
-    public QdadaFechas(Long idqdada, Date fecha) {
+    public QdadaFechas(String idqdada, Date fecha) {
         Idqdada = idqdada;
         this.fecha = fecha;
     }
 
-    public Long getIdqdada() {
+    public String getIdqdada() {
         return Idqdada;
     }
 
-    public void setIdqdada(Long idqdada) {
+    public void setIdqdada(String idqdada) {
         Idqdada = idqdada;
     }
 

@@ -1,24 +1,33 @@
 package com.cusl.ull.qdemos.utilities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 
+import com.cusl.ull.qdemos.Home;
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
+import com.cusl.ull.qdemos.server.RequestSimpleResponse;
+import com.cusl.ull.qdemos.server.ServerConnection;
+import com.cusl.ull.qdemos.taskListeners.ResponseServer_nuevaQdada_TaskListener;
 import com.facebook.model.GraphUser;
 import com.mobandme.ada.Entity;
 import com.mobandme.ada.exceptions.AdaFrameworkException;
+
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -185,27 +194,53 @@ public class DatosQdada {
         return true;
     }
 
-    public static boolean guardarBBDD (Context ctx){
+    public static boolean guardarEnServidor(Activity activity, ProgressDialog pd){
+        RequestSimpleResponse taskResquest = new RequestSimpleResponse();
+
         try {
-            Qdada qdada = Conversores.fromDatosQdadaToQdada(ctx);
-            if (qdada == null)
-                return false;
+            Qdada qdada = Conversores.fromDatosQdadaToQdada(activity, null);
+            StringEntity body = new StringEntity(Utilities.getJSONServerFromQdada(qdada, DatosQdada.getFechas()).toString(), "UTF-8");
+            HttpPost post = ServerConnection.getPost(activity.getResources().getString(R.string.ip_server), activity.getResources().getString(R.string.port_server), "nuevaQdada/", body);
+            taskResquest.setParams(new ResponseServer_nuevaQdada_TaskListener(activity, pd), ServerConnection.getClient(), post);
+            taskResquest.execute();
+        } catch (Exception e){
+            pd.dismiss();
+        }
+        return false;
+    }
+
+    public static void guardarEnLocal (Activity activity, String idserver, ProgressDialog pd){
+        try {
+            Qdada qdada = Conversores.fromDatosQdadaToQdada(activity, idserver);
+            if (qdada == null){
+                pd.dismiss();
+                return;
+            }
             qdada.setStatus(Entity.STATUS_NEW);
-            com.cusl.ull.qdemos.bbdd.utilities.BBDD.getApplicationDataContext(ctx).qdadaDao.add(qdada);
-            com.cusl.ull.qdemos.bbdd.utilities.BBDD.getApplicationDataContext(ctx).qdadaDao.save();
+            com.cusl.ull.qdemos.bbdd.utilities.BBDD.getApplicationDataContext(activity).qdadaDao.add(qdada);
+            com.cusl.ull.qdemos.bbdd.utilities.BBDD.getApplicationDataContext(activity).qdadaDao.save();
 
             for (Date date: DatosQdada.getFechas()){
-                UsuarioEleccion ue = new UsuarioEleccion(ctx, DatosQdada.getCreador().getIdfacebook(), date, qdada.getID());
+                UsuarioEleccion ue = new UsuarioEleccion(activity, DatosQdada.getCreador().getIdfacebook(), date, idserver);
                 ue.setStatus(Entity.STATUS_NEW);
-                BBDD.getApplicationDataContext(ctx).participanteDao.add(ue);
-                BBDD.getApplicationDataContext(ctx).participanteDao.save();
+                BBDD.getApplicationDataContext(activity).participanteDao.add(ue);
+                BBDD.getApplicationDataContext(activity).participanteDao.save();
             }
 
-            BBDD.setFechas(ctx, DatosQdada.getFechas(), qdada.getID());
+            BBDD.setFechas(activity, DatosQdada.getFechas(), idserver);
 
-            return true;
-        } catch (AdaFrameworkException e) {
-            return false;
+            // TODO: Pasar algun Bundle para mostrar un Crouton de EXITO en el fragment del HOME
+            Intent intent = new Intent(activity, Home.class);
+            // Para eliminar el historial de activities visitadas ya que volvemos al HOME y asi el boton ATRAS no tenga ningun comportamiento, se resetee.
+            DatosQdada.reset(activity);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            pd.dismiss();
+            activity.startActivity(intent);
+            activity.finish();
+
+        } catch (Exception e) {
+            pd.dismiss();
+            Crouton.makeText(activity, R.string.error_bbdd, Style.ALERT).show();
         }
     }
 
@@ -216,5 +251,6 @@ public class DatosQdada {
     public static void setLatitud(Double latitud) {
         DatosQdada.latitud = latitud;
     }
+
 
 }
