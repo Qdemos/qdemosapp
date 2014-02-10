@@ -9,151 +9,166 @@
     android:id="@+id/fondoQdada"
     android:background="@drawable/background_listview_qdadas_selector">
 
-    <View android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:id="@+id/miEstadoQdada"
-        android:background="@drawable/circle_green"
-        android:layout_marginTop="3dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="7dp"/>
 
-    <TextView
-        android:id="@+id/tituloQdada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginLeft="10dp"
-        android:textStyle="bold"
-        android:text="Mi Cumpleaños"
-        android:layout_toRightOf="@+id/miEstadoQdada"/>
+    <ImageView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginRight="-15dp"
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/dateLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="3dp"
-        android:layout_below="@+id/tituloQdada"
-        >
+        />
 
-        <CalendarView
-            android:id="@+id/dateView"
-            android:layout_width="160dp"
-            android:layout_height="200dp"
-            android:showWeekNumber="false"
-            android:animateLayoutChanges="false"
-            android:clipChildren="false"
-            android:firstDayOfWeek="2"
-            android:drawingCacheQuality="low"
-            android:soundEffectsEnabled="false"
-            android:focusedMonthDateColor="@android:color/holo_orange_dark"
-            android:selectedWeekBackgroundColor="#22CC9900"
-            android:selectedDateVerticalBar="@color/darker_blue"
-            android:hapticFeedbackEnabled="false"/>
+       <TextView
+           android:id="@+id/tituloQdada"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textSize="20sp"
+           android:layout_marginLeft="40dp"
+           android:textStyle="bold"
+           android:text="Mi Cumpleaños"></TextView>
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@+id/dateView"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="7dp">
+       <RelativeLayout
+           xmlns:android="http://schemas.android.com/apk/res/android"
+           xmlns:tools="http://schemas.android.com/tools"
+           android:id="@+id/dateLayout"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:layout_marginLeft="3dp"
+           android:layout_below="@+id/tituloQdada"
+           >
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_height="wrap_content"
-                android:id="@+id/facebookInfo"
-                android:layout_width="wrap_content">
+           <View android:layout_width="5dp"
+               android:layout_height="185dp"
+               android:id="@+id/miEstadoQdada"
+               android:background="@drawable/green_rectangle"
+               android:layout_marginTop="15dp"
+               android:layout_alignParentLeft="true"
+               android:layout_marginLeft="7dp"/>
 
-                <com.facebook.widget.ProfilePictureView
-                    android:id="@+id/fotoPerfil"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    app:preset_size="small"/>
+           <CalendarView
+               android:id="@+id/dateView"
+               android:layout_width="160dp"
+               android:layout_height="200dp"
+               android:showWeekNumber="false"
+               android:animateLayoutChanges="false"
+               android:clipChildren="false"
+               android:firstDayOfWeek="2"
+               android:layout_toRightOf="@+id/miEstadoQdada"
+               android:layout_marginLeft="15dp"
+               android:drawingCacheQuality="low"
+               android:soundEffectsEnabled="false"
+               android:focusedMonthDateColor="@android:color/holo_orange_dark"
+               android:selectedWeekBackgroundColor="#22CC9900"
+               android:selectedDateVerticalBar="@color/darker_blue"
+               android:hapticFeedbackEnabled="false"
+               android:layout_alignParentTop="true"
+               android:layout_alignParentLeft="true"
+               android:layout_alignParentStart="true"/>
 
-                <TextView
-                    android:id="@+id/nombrePerfil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/fotoPerfil"
-                    android:layout_centerVertical="true"
-                    android:scrollHorizontally="true"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:textSize="14sp"
-                    android:layout_marginLeft="5dp"/>
+           <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+               xmlns:app="http://schemas.android.com/apk/res-auto"
+               xmlns:tools="http://schemas.android.com/tools"
+               android:layout_height="wrap_content"
+               android:layout_width="wrap_content"
+               android:layout_toRightOf="@+id/dateView"
+               android:layout_marginRight="5dp"
+               android:layout_marginLeft="7dp">
 
-            </RelativeLayout>
+               <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                   xmlns:tools="http://schemas.android.com/tools"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/facebookInfo"
+                   android:layout_width="wrap_content">
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:id="@+id/asistentesLayout"
-                android:layout_below="@+id/facebookInfo"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="10dp">
+                   <com.facebook.widget.ProfilePictureView
+                       android:id="@+id/fotoPerfil"
+                       android:layout_height="wrap_content"
+                       android:layout_width="wrap_content"
+                       app:preset_size="small"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/confirmadasTV"
-                    android:textSize="26sp"
-                    android:textStyle="bold"
-                    />
+                   <TextView
+                       android:id="@+id/nombrePerfil"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_toRightOf="@+id/fotoPerfil"
+                       android:layout_centerVertical="true"
+                       android:scrollHorizontally="true"
+                       android:ellipsize="end"
+                       android:maxLines="2"
+                       android:textSize="14sp"
+                       android:layout_marginLeft="5dp"/>
 
-                <ImageView
-                    android:id="@+id/confirmadasIcon"
-                    android:layout_toRightOf="@+id/confirmadasTV"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/confirmados_icon"/>
+               </RelativeLayout>
 
-                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp">
+               <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                   xmlns:tools="http://schemas.android.com/tools"
+                   android:layout_height="wrap_content"
+                   android:layout_width="wrap_content"
+                   android:id="@+id/asistentesLayout"
+                   android:layout_below="@+id/facebookInfo"
+                   android:layout_marginTop="40dp"
+                   android:layout_marginLeft="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/invitadasTV"
-                        android:textSize="26sp"
-                        android:textStyle="bold"
-                        />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/confirmadasTV"
+                       android:textSize="26sp"
+                       android:textStyle="bold"
+                       />
 
-                    <ImageView
-                        android:id="@+id/invitadasIcon"
-                        android:layout_toRightOf="@+id/invitadasTV"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/invitados_icon"/>
+                   <ImageView
+                       android:id="@+id/confirmadasIcon"
+                       android:layout_toRightOf="@+id/confirmadasTV"
+                       android:layout_width="24dp"
+                       android:layout_height="24dp"
+                       android:layout_marginLeft="10dp"
+                       android:src="@drawable/confirmados_icon"/>
 
-                </RelativeLayout>
+                   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                       xmlns:app="http://schemas.android.com/apk/res-auto"
+                       xmlns:tools="http://schemas.android.com/tools"
+                       android:layout_height="wrap_content"
+                       android:layout_width="wrap_content"
+                       android:layout_alignParentRight="true"
+                       android:layout_marginRight="10dp">
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:id="@+id/invitadasTV"
+                           android:textSize="26sp"
+                           android:textStyle="bold"
+                           />
+
+                       <ImageView
+                           android:id="@+id/invitadasIcon"
+                           android:layout_toRightOf="@+id/invitadasTV"
+                           android:layout_width="24dp"
+                           android:layout_height="24dp"
+                           android:layout_marginLeft="10dp"
+                           android:src="@drawable/invitados_icon"/>
+
+                   </RelativeLayout>
+
+              </RelativeLayout>
+
+              <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/horaTV"
+                   android:layout_below="@+id/asistentesLayout"
+                   android:layout_marginTop="30dp"
+                   android:layout_centerHorizontal="true"
+                   android:textSize="30sp"
+                   android:textStyle="bold" />
 
            </RelativeLayout>
 
-           <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/horaTV"
-                android:layout_below="@+id/asistentesLayout"
-                android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+       </RelativeLayout>
 
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-</RelativeLayout>
+   </RelativeLayout>

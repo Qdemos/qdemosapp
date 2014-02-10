@@ -7,21 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CalendarView;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
-import com.cusl.ull.qdemos.utilities.Utilities;
 import com.facebook.widget.ProfilePictureView;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -93,15 +86,15 @@ public class QdadasAdapter extends BaseAdapter {
                 int sdk = android.os.Build.VERSION.SDK_INT;
                 if (BBDD.soyParticipante(vi.getContext(), qdada.getID(), BBDD.quienSoy(vi.getContext()).getIdfacebook(), qdada.getFechaGanadora())){
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        miEstado.setBackgroundDrawable(vi.getResources().getDrawable(R.drawable.circle_green));
+                        miEstado.setBackgroundDrawable(vi.getResources().getDrawable(R.drawable.green_rectangle));
                     } else {
-                        miEstado.setBackground(vi.getResources().getDrawable(R.drawable.circle_green));
+                        miEstado.setBackground(vi.getResources().getDrawable(R.drawable.green_rectangle));
                     }
                 } else{
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        miEstado.setBackgroundDrawable(vi.getResources().getDrawable(R.drawable.circle_red));
+                        miEstado.setBackgroundDrawable(vi.getResources().getDrawable(R.drawable.red_rectangle));
                     } else {
-                        miEstado.setBackground(vi.getResources().getDrawable(R.drawable.circle_red));
+                        miEstado.setBackground(vi.getResources().getDrawable(R.drawable.red_rectangle));
                     }
                 }
             } else {
