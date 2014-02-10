@@ -52,11 +52,13 @@ module.exports = function(app){
     // Función encargada de comprobar los usuarios invitados que son usuarios de la app y llamar a la funcion encargada de notificarles la Qdada
     function notificarInvitados (qdada, res, funcion){
         Usuario.find({_id: {$in: qdada.invitados}}, function (err, usuarios){
-            var registrationIds=[];
-            usuarios.forEach(function (u){
-                registrationIds.push(u.idgcm);
-            });
-            funcion(registrationIds, qdada, res);
+            if ((usuarios !== null) && (usuarios !== undefined) && (usuarios !== '')){
+                var registrationIds=[];
+                usuarios.forEach(function (u){
+                    registrationIds.push(u.idgcm);
+                });
+                funcion(registrationIds, qdada, res);
+            }
         });
     }
 
@@ -68,24 +70,31 @@ module.exports = function(app){
              req.body.fechas.forEach(function (f){
                 fechas.push(Utilities.parseDate(f));
              });
-
              var qdadaNueva = new Qdada({ 
                                             titulo: req.body.titulo,
                                             descripcion: req.body.descripcion,
                                             creador: req.body.creador,
                                             invitados: req.body.invitados,
                                             fechas: fechas,
-                                            geo: [parseFloat(req.body.longitud), parseFloat(req.body.latitud)],
+                                            geo: [req.body.longitud, req.body.latitud],
                                             direccion: req.body.direccion,
                                             fechaganadora: Utilities.parseDate(req.body.fecha),
                                             limite: Utilities.parseDate(req.body.fecha),
                                             reinvitacion: req.body.reinvitacion
                                         });
              qdadaNueva.save();
+             // Creamos las elecciones del creador del usuario en la qdada, que seran todas las fechas propuestas
+             var eleccion = new UsuarioEleccion({ 
+                                                idqdada: qdadaNueva._id,
+                                                idfacebook: req.body.creador,
+                                                fechas: fechas
+                                           });
+             eleccion.save();
              // Notificar a los invitados
              notificarInvitados(qdadaNueva, res, callbackInformar);
              res.send(qdadaNueva._id);
         } catch (err){
+            console.log(err);
             res.send("err");
         }
     }

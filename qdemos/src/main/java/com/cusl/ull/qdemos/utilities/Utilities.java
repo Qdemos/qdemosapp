@@ -12,6 +12,10 @@ import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -176,7 +180,38 @@ public class Utilities {
             return false;
         }
         return true;
+    }
 
+    // Nos devuelve un objeto listo para pasar (en JSON) a la peticion del web service del servidor
+    public static JSONObject getJSONServerFromQdada(Qdada qdada, List<Date> fechas){
+        JSONObject data = new JSONObject();
+
+        try {
+
+            ArrayList<String> listFechas = new ArrayList<String>();
+            for (Date fecha: fechas){
+                listFechas.add(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(fecha));
+            }
+            JSONArray fechasJSON = new JSONArray(listFechas);
+
+            ArrayList<String> listInvitados = new ArrayList<String>();
+            for (Usuario user: qdada.getInvitados()){
+                listInvitados.add(user.getIdfacebook());
+            }
+            JSONArray invitadosJSON = new JSONArray(listInvitados);
+
+            data.put("titulo", qdada.getTitulo());
+            data.put("descripcion", qdada.getDescripcion());
+            data.put("creador", qdada.getCreador().getIdfacebook());
+            data.put("invitados", invitadosJSON.toString());
+            data.put("fechas", fechasJSON.toString());
+            data.put("latitud", qdada.getLatitud());
+            data.put("longitud", qdada.getLongitud());
+            data.put("direccion", qdada.getDireccion());
+            data.put("fecha", qdada.getFechaGanadora());
+            data.put("reinvitacion", qdada.getReinvitacion());
+        } catch (Exception e){}
+        return data;
     }
 
 }

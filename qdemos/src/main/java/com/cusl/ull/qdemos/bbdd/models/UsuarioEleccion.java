@@ -18,9 +18,8 @@ import java.util.List;
 @Table(name = "Usuarioeleccion")
 public class UsuarioEleccion extends Entity {
 
-
-    @TableField(name = "Idqdada", datatype = DATATYPE_LONG)
-    public Long Idqdada;
+    @TableField(name = "Idqdada", datatype = DATATYPE_STRING)
+    public String Idqdada;
 
     @TableField(name = "Idfacebook", datatype = DATATYPE_STRING)
     public String Idfacebook;
@@ -32,7 +31,7 @@ public class UsuarioEleccion extends Entity {
         super();
     }
 
-    public UsuarioEleccion(Context ctx, String idFB, Date fecha, Long idqdada) {
+    public UsuarioEleccion(Context ctx, String idFB, Date fecha, String idqdada) {
         super();
         setIdqdada(idqdada);
         setIdusuario(idFB);
@@ -43,12 +42,12 @@ public class UsuarioEleccion extends Entity {
         return this.Fecha;
     }
 
-    public Long getIdqdada() {
+    public String getIdqdada() {
         return Idqdada;
     }
 
-    public void setIdqdada(Long idqdada) {
-        this.Idqdada = idqdada;
+    public void setIdqdada(String idqdada) {
+        Idqdada = idqdada;
     }
 
     public void setFecha(Context ctx, Date fechap) {

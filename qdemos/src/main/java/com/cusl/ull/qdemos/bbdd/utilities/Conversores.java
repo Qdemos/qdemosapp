@@ -40,12 +40,11 @@ public class Conversores {
         return usuarios;
     }
 
-    public static Qdada fromDatosQdadaToQdada (Context ctx){
+    public static Qdada fromDatosQdadaToQdada (Context ctx, String idserver){
         try {
-            Qdada qdada =  new Qdada(ctx, DatosQdada.getTitulo(), DatosQdada.getDescripcion(), DatosQdada.getCreador(), Conversores.fromGraphUserToUsuario(ctx, DatosQdada.getInvitados()), DatosQdada.getLatitud(), DatosQdada.getLongitud(), DatosQdada.getDireccion(), DatosQdada.getLimite(), DatosQdada.getReinvitacion(), false);
+            Qdada qdada =  new Qdada(ctx, idserver, DatosQdada.getTitulo(), DatosQdada.getDescripcion(), DatosQdada.getCreador(), Conversores.fromGraphUserToUsuario(ctx, DatosQdada.getInvitados()), DatosQdada.getLatitud(), DatosQdada.getLongitud(), DatosQdada.getDireccion(), DatosQdada.getLimite(), DatosQdada.getReinvitacion(), false, DatosQdada.getFechas().get(0));
             return qdada;
         } catch (Exception e){
-            System.out.println(e.getMessage());
             return null;
         }
     }

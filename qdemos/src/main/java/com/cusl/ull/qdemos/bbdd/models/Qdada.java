@@ -19,6 +19,10 @@ import java.util.List;
 @Table(name = "Qdada")
 public class Qdada extends Entity {
 
+    // Id de la Qdada en el servidor
+    @TableField(name = "Idqdada", datatype = DATATYPE_STRING)
+    public String idQdada;
+
     // Nombre que le asignara el creador al evento o quedada
     @TableField(name = "Titulo", datatype = DATATYPE_STRING)
     public String titulo;
@@ -67,7 +71,7 @@ public class Qdada extends Entity {
         super();
     }
 
-    public Qdada(Context ctx, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, Double latitud, Double longitud, String direccion, Date limite, Boolean reinvitacion, Boolean sinresponder) {
+    public Qdada(Context ctx, String idserver, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, Double latitud, Double longitud, String direccion, Date limite, Boolean reinvitacion, Boolean sinresponder, Date fechaGanadora) {
         setTitulo(titulo);
         setDescripcion(descripcion);
         setCreador(creador);
@@ -75,9 +79,19 @@ public class Qdada extends Entity {
         setLatitud(latitud);
         setLongitud(longitud);
         setLimite(limite);
+        setFechaGanadora(fechaGanadora);
         setReinvitacion(reinvitacion);
         setDireccion(direccion);
         setSinresponder(sinresponder);
+        setIdQdada(idserver);
+    }
+
+    public String getIdQdada() {
+        return idQdada;
+    }
+
+    public void setIdQdada(String idQdada) {
+        this.idQdada = idQdada;
     }
 
     public String getTitulo() {
