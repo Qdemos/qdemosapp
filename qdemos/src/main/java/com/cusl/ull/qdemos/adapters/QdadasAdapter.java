@@ -79,7 +79,7 @@ public class QdadasAdapter extends BaseAdapter {
         nombre.setText(qdada.getCreador().getNombre());
 
         TextView confirmados = (TextView) vi.findViewById(R.id.confirmadasTV);
-        confirmados.setText(String.valueOf(BBDD.numeroParticipantes(vi.getContext(), qdada.getID())));
+        confirmados.setText(String.valueOf(BBDD.numeroParticipantes(vi.getContext(), qdada.getIdQdada())));
 
         // El más uno es para sumar tambien la 'auto'-invitación del creador
         TextView invitados = (TextView) vi.findViewById(R.id.invitadasTV);
@@ -91,7 +91,7 @@ public class QdadasAdapter extends BaseAdapter {
                 // Miramos el SDK para ver la version de Android en la que esta corriendo la app y asi saber que funcion usar para setear el color de si la fecha de la qdada es una de las que elegimos o no
                 // ya que a partir de las version 16 de Android (4.1) la funcion ha cambiado y para versiones anteriores se debe seguir usando la antigua, que ahora es deprecated.
                 int sdk = android.os.Build.VERSION.SDK_INT;
-                if (BBDD.soyParticipante(vi.getContext(), qdada.getID(), BBDD.quienSoy(vi.getContext()).getIdfacebook(), qdada.getFechaGanadora())){
+                if (BBDD.soyParticipante(vi.getContext(), qdada.getIdQdada(), BBDD.quienSoy(vi.getContext()).getIdfacebook(), qdada.getFechaGanadora())){
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         miEstado.setBackgroundDrawable(vi.getResources().getDrawable(R.drawable.circle_green));
                     } else {

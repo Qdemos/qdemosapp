@@ -9,7 +9,13 @@ module.exports = function(app){
     nuevoUsuario = function (req, res){
         Usuario.findOne({idfacebook: req.body.idfacebook}, function(err, usuario) {  
             if ((usuario !== null) && (usuario !== undefined) && (usuario !== '')){
-                 res.send(usuario._id);
+                 if ((usuario.idgcm === null) || (usuario.idgcm === undefined) || (usuario.idgcm === '') || (usuario.idgcm === '1')){
+                    if ((req.body.idgcm !== null) && (req.body.idgcm!== undefined) && (req.body.idgcm !== '')){
+                        usuario.idgcm=req.body.idgcm;
+                        usuario.save();  
+                    } 
+                 }
+                 res.send("ok");
             } else {
                  var usuarioNuevo = new Usuario({ 
                                                     nombre: req.body.nombre,
@@ -17,7 +23,7 @@ module.exports = function(app){
                                                     idfacebook: req.body.idfacebook
                                                 });
                  usuarioNuevo.save();
-                 res.send(usuarioNuevo._id);
+                 res.send("ok");
             }
         });
     }  

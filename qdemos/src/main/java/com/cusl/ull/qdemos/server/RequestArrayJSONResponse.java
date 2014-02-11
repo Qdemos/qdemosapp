@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.cusl.ull.qdemos.interfaces.IStandardTaskListener;
+
 /*
  * Clase encargada de lanzar la peticion a un servicio web y esperar como respuesta una Lista de JSON (ArrayJSON)
  */

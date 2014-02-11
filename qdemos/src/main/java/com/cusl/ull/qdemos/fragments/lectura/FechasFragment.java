@@ -39,14 +39,14 @@ public class FechasFragment extends Fragment  {
             // Empezar aqui a trabajar con la UI
 
             listView = (ListView) rootView.findViewById(R.id.listaFechas);
-            List<Date> miEleccion = BBDD.miEleccion(getActivity(), this.qdada.getID(), BBDD.quienSoy(getActivity()).getIdfacebook());
+            List<Date> miEleccion = BBDD.miEleccion(getActivity(), this.qdada.getIdQdada(), BBDD.quienSoy(getActivity()).getIdfacebook());
             if (miEleccion == null){
-                miEleccion=BBDD.getFechas(getActivity(), qdada.getID());
+                miEleccion=BBDD.getFechas(getActivity(), qdada.getIdQdada());
                 EleccionFecha.reset(miEleccion);
             } else {
-                EleccionFecha.reset(BBDD.getFechas(getActivity(), qdada.getID()), miEleccion);
+                EleccionFecha.reset(BBDD.getFechas(getActivity(), qdada.getIdQdada()), miEleccion);
             }
-            fechaAdapter = new FechaAdapter(getActivity(), BBDD.getFechas(getActivity(), qdada.getID()), onlyRead);
+            fechaAdapter = new FechaAdapter(getActivity(), BBDD.getFechas(getActivity(), qdada.getIdQdada()), onlyRead);
             listView.setAdapter(fechaAdapter);
             listView.setClickable(false);
 

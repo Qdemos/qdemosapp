@@ -45,7 +45,7 @@ public class HistorialFragment extends Fragment {
                 String myIdFB = BBDD.quienSoy(getActivity()).getIdfacebook();
                 qdadas = BBDD.getApplicationDataContext(getActivity()).qdadaDao.search(false, "Sinresponder = ?", new String[]{"0"}, null, null, null, null, null);
                 for (Qdada qdada: qdadas){
-                    if (!BBDD.tengoEleccion(getActivity(), qdada.getID(), myIdFB)){
+                    if (!BBDD.tengoEleccion(getActivity(), qdada.getIdQdada(), myIdFB)){
                         qdadasHistorico.add(qdada);
                     }else if (BBDD.qdadaHistorica(getActivity(), qdada)){
                         qdadasHistorico.add(qdada);

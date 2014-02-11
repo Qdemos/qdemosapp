@@ -62,7 +62,7 @@ public class InvitadosFragment extends Fragment {
                     return o1.getNombre().compareTo(o2.getNombre());
                 }
             });
-            invitados=Utilities.ordenarInvitados(invitados, BBDD.getParticipantes(getActivity(), this.qdada.getID()));
+            invitados=Utilities.ordenarInvitados(invitados, BBDD.getParticipantes(getActivity(), this.qdada.getIdQdada()));
 
             InvitadoGridAdapter customGridAdapter = new InvitadoGridAdapter(getActivity(), R.layout.item_invitados_lectura_list, invitados, this.qdada);
             gridView.setAdapter(customGridAdapter);

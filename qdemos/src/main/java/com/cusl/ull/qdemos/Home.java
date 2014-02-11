@@ -62,6 +62,8 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                // TODO: Obtener datos del servidor de nuestras Qdada para actualizar la BBDD Local
+                // TODO: Setear una variable temporal para que esta peticion al servidor no lo haga muy constante
                 actionBar.setSelectedNavigationItem(position);
             }
         });
@@ -74,14 +76,6 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
             // this tab is selected.
             actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
-        /*try {
-            List<com.cusl.ull.qdemos.bbdd.models.Qdada> qdadas = BBDD.appDataContext.qdadaDao.search(false, null, null, null, null, null, null, null);
-            System.out.println(qdadas.get(0).getInvitados().get(0).getNombre()+"-"+qdadas.get(0).getFechas().get(0).getFecha()+"||"+qdadas.get(0).getParticipantes().get(0).getFechas().get(0).getFecha()+"||"+qdadas.get(0).getParticipantes().get(0).getUsuario().getNombre());
-
-        } catch (Exception e){
-            System.out.println("Error: "+e.getMessage());
-        }*/
-
 
     }
 

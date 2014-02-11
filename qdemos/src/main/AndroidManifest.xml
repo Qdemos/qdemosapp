@@ -19,6 +19,8 @@
         android:required="true" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
     <!-- Keeps the processor from sleeping when a message is received. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -86,6 +88,23 @@
             android:screenOrientation="portrait"
             android:label="@string/title_activity_invitados">
         </activity>
+
+        <!--
+          WakefulBroadcastReceiver that will receive intents from GCM
+          services and hand them to the custom IntentService.
+
+          The com.google.android.c2dm.permission.SEND permission is necessary
+          so only GCM services can send data messages for the app.
+        -->
+        <receiver
+            android:name=".GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".GCMIntentService" />
     </application>
 
     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>

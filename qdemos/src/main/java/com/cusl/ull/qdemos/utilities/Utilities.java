@@ -182,7 +182,7 @@ public class Utilities {
         return true;
     }
 
-    // Nos devuelve un objeto listo para pasar (en JSON) a la peticion del web service del servidor
+    // Nos devuelve un objeto de tipo Qdada listo para pasar (en JSON) a la peticion del web service del servidor
     public static JSONObject getJSONServerFromQdada(Qdada qdada, List<Date> fechas){
         JSONObject data = new JSONObject();
 
@@ -210,6 +210,17 @@ public class Utilities {
             data.put("direccion", qdada.getDireccion());
             data.put("fecha", qdada.getFechaGanadora());
             data.put("reinvitacion", qdada.getReinvitacion());
+        } catch (Exception e){}
+        return data;
+    }
+
+    // Nos devuelve un objeto de tipo Usuario listo para pasar (en JSON) a la peticion del web service del servidor
+    public static JSONObject getJSONServerFromUsuario(String nombre, String idFB, String idGCM){
+        JSONObject data = new JSONObject();
+        try {
+            data.put("nombre", nombre);
+            data.put("idfacebook", idFB);
+            data.put("idgcm", idGCM);
         } catch (Exception e){}
         return data;
     }

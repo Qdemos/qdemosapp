@@ -51,17 +51,17 @@ public class BBDD {
         }
     }
 
-    public static void crearUsuarioIfNotExist (Context ctx, String nombre, String idFB){
+    public static void crearUsuarioIfNotExist (Context ctx, String nombre, String idFB, String idGcm){
         try{
-            // TODO: Rellenar el usuario correctamente con los datos de IDGCM y demás
-            if (existo(ctx)){
-                //TODO: Corroborar que el IDGCM es el correcto tanto en local como en el servidor
-            } else {
-                Usuario user = new Usuario(nombre, idFB, "1111");
+            if (!existo(ctx)) {
+                if (idGcm.isEmpty())
+                    idGcm = "1";
+                Usuario user = new Usuario(nombre, idFB, idGcm);
                 user.setStatus(Entity.STATUS_NEW);
                 BBDD.getApplicationDataContext(ctx).usuarioDao.add(user);
                 BBDD.getApplicationDataContext(ctx).usuarioDao.save();
             }
+            com.cusl.ull.qdemos.server.Utilities.crearUsuario(ctx, nombre, idFB, idGcm);
         } catch (Exception e){}
     }
 
@@ -123,6 +123,7 @@ public class BBDD {
                 BBDD.getApplicationDataContext(ctx).participanteDao.save();
             }
             calcularFechaGanadora(ctx, idQdada);
+            // TODO: Enviar al servidor
         } catch (Exception e){}
     }
 
@@ -268,6 +269,24 @@ public class BBDD {
             qdada.setStatus(Entity.STATUS_UPDATED);
             BBDD.getApplicationDataContext(ctx).qdadaDao.save(qdada);
             return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    public static boolean updateIdGCM (Context ctx, Usuario usuario, String idGCM){
+        if ((idGCM == null) || (idGCM.isEmpty()))
+            return false;
+        try{
+            if (usuario != null){
+                usuario.setIdgcm(idGCM);
+                usuario.setStatus(Entity.STATUS_UPDATED);
+                BBDD.getApplicationDataContext(ctx).usuarioDao.save(usuario);
+                com.cusl.ull.qdemos.server.Utilities.crearUsuario(ctx, usuario.getNombre(), usuario.getIdfacebook(), idGCM);
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e){
             return false;
         }

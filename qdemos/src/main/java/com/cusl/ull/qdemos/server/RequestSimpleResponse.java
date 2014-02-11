@@ -10,6 +10,7 @@ import org.apache.http.util.EntityUtils;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.cusl.ull.qdemos.interfaces.IStandardTaskListener;
 import com.cusl.ull.qdemos.taskListeners.ResponseServer_nuevaQdada_TaskListener;
 
 /*
@@ -48,7 +49,7 @@ public class RequestSimpleResponse extends AsyncTask<String, Void, Boolean>{
         }
     }
 
-    public void setParams(ResponseServer_nuevaQdada_TaskListener listener, HttpClient httpClient, HttpUriRequest method) {
+    public void setParams(IStandardTaskListener listener, HttpClient httpClient, HttpUriRequest method) {
         this.listener = listener;
         this.httpClient = httpClient;
         this.method = method;
