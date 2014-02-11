@@ -86,15 +86,15 @@ public class QdadasAdapter extends BaseAdapter {
                 int sdk = android.os.Build.VERSION.SDK_INT;
                 if (BBDD.soyParticipante(vi.getContext(), qdada.getID(), BBDD.quienSoy(vi.getContext()).getIdfacebook(), qdada.getFechaGanadora())){
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        miEstado.setBackgroundDrawable(vi.getResources().getDrawable(R.drawable.green_rectangle));
+                        miEstado.setBackgroundDrawable(vi.getResources().getDrawable(R.drawable.greenRectangle));
                     } else {
-                        miEstado.setBackground(vi.getResources().getDrawable(R.drawable.green_rectangle));
+                        miEstado.setBackground(vi.getResources().getDrawable(R.drawable.greenRectangle));
                     }
                 } else{
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        miEstado.setBackgroundDrawable(vi.getResources().getDrawable(R.drawable.red_rectangle));
+                        miEstado.setBackgroundDrawable(vi.getResources().getDrawable(R.drawable.redRectangle));
                     } else {
-                        miEstado.setBackground(vi.getResources().getDrawable(R.drawable.red_rectangle));
+                        miEstado.setBackground(vi.getResources().getDrawable(R.drawable.redRectangle));
                     }
                 }
             } else {
