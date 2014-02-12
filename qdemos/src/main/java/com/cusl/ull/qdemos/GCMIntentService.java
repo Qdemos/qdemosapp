@@ -87,6 +87,8 @@ public class GCMIntentService extends IntentService {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        // TODO: Parsear notificacion para almacenarla en BBDD Local, y avisar al usuario si procede
+
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
         new Intent(this, Inicio.class), 0);
 

@@ -225,4 +225,20 @@ public class Utilities {
         return data;
     }
 
+    // Nos devuelve un objeto de tipo Qdada listo para pasar (en JSON) a la peticion del web service del servidor
+    public static JSONObject getJSONServerFromEleccionQdada(String idQdada, String idFB, List<Date> fechas){
+        JSONObject data = new JSONObject();
+        try {
+            ArrayList<String> listFechas = new ArrayList<String>();
+            for (Date fecha: fechas){
+                listFechas.add(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(fecha));
+            }
+            JSONArray fechasJSON = new JSONArray(listFechas);
+            data.put("fechas", fechasJSON.toString());
+            data.put("idfacebook", idFB);
+            data.put("idqdada", idQdada);
+        } catch (Exception e){}
+        return data;
+    }
+
 }

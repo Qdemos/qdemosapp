@@ -38,3 +38,29 @@ module.exports.parseDate = function(fecha){
       return new Date();
    }
 }
+
+module.exports.getFechaGanadora = function(fechas){
+  var comparador=[];
+  var repeticiones=[];
+  var mayor=-1;
+  var indice=0;
+  fechas.forEach(function (fecha){
+    if (comparador.indexOf(fecha) != -1){
+      var index = comparador.indexOf(fecha);
+      var repetido = (repeticiones[index]+1);
+      if (repetido > mayor){
+        mayor = repetido;
+        indice = index;
+      }
+      repeticiones[index] = repetido;
+    } else {
+      comparador.push(fecha);
+      repeticiones.push(0);
+    }
+  })
+  try {
+    return comparador[indice];
+  } catch (err){
+    return null;
+  }
+}

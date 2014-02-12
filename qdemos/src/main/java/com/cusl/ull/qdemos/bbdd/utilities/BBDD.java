@@ -1,5 +1,7 @@
 package com.cusl.ull.qdemos.bbdd.utilities;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -53,15 +55,10 @@ public class BBDD {
 
     public static void crearUsuarioIfNotExist (Context ctx, String nombre, String idFB, String idGcm){
         try{
-            if (!existo(ctx)) {
-                if (idGcm.isEmpty())
-                    idGcm = "1";
-                Usuario user = new Usuario(nombre, idFB, idGcm);
-                user.setStatus(Entity.STATUS_NEW);
-                BBDD.getApplicationDataContext(ctx).usuarioDao.add(user);
-                BBDD.getApplicationDataContext(ctx).usuarioDao.save();
+            if (idGcm.isEmpty()){
+                idGcm = "1";
             }
-            com.cusl.ull.qdemos.server.Utilities.crearUsuario(ctx, nombre, idFB, idGcm);
+            com.cusl.ull.qdemos.server.Utilities.crearUsuario(ctx, nombre, idFB, idGcm, true);
         } catch (Exception e){}
     }
 
@@ -106,7 +103,14 @@ public class BBDD {
         return fechas;
     }
 
-    public static void updateMiEleccion (Context ctx, String idQdada, String idFacebook, List<Date> fechas){
+    public static void updateMiEleccion (Activity activity, String idQdada, String idFacebook, List<Date> fechas){
+        ProgressDialog pd = ProgressDialog.show(activity, activity.getResources().getText(R.string.esperar), activity.getResources().getText(R.string.procesando));
+        pd.setIndeterminate(false);
+        pd.setCancelable(false);
+        com.cusl.ull.qdemos.server.Utilities.crearEleccionQdada(activity, pd, idQdada, idFacebook, fechas);
+    }
+
+    public static void updateMiEleccionLocal (Context ctx, String idQdada, String idFacebook, List<Date> fechas){
         try{
             List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada, idFacebook}, null, null, null, null, null);
             if (elecciones != null){
@@ -123,7 +127,6 @@ public class BBDD {
                 BBDD.getApplicationDataContext(ctx).participanteDao.save();
             }
             calcularFechaGanadora(ctx, idQdada);
-            // TODO: Enviar al servidor
         } catch (Exception e){}
     }
 
@@ -159,28 +162,43 @@ public class BBDD {
             for (UsuarioEleccion ele: elecciones){
                 totales.add(ele.getFecha());
             }
-            List<Integer> repeticiones = new ArrayList<Integer>();
-            int mayor=-1, indice=0;
-            for (Date fecha: totales){
-                if (comparador.contains(fecha)){
-                    int index = comparador.indexOf(fecha);
-                    int repetido = (repeticiones.get(index)+1);
-                    if (repetido > mayor){
-                        mayor = repetido;
-                        indice = index;
-                    }
-                    repeticiones.set(index, repetido);
-                } else {
-                    comparador.add(fecha);
-                    repeticiones.add(0);
-                }
-            }
+            Date fechaGanadora = getFechaGanadora(ctx, totales);
             Qdada qdada = BBDD.getQdadaByIDServer(ctx, idqdada);
-            qdada.setFechaGanadora(comparador.get(indice));
+            qdada.setFechaGanadora(fechaGanadora);
             qdada.setStatus(Entity.STATUS_UPDATED);
             BBDD.getApplicationDataContext(ctx).qdadaDao.save(qdada);
 
         } catch (Exception e){}
+    }
+
+    // Función que se encarga de saber cual es la fecha más repetida de los participantes para conocer la que mejor se adapta a la Qdada.
+    public static Date getFechaGanadora (Context ctx,  List<Date> fechasGuardadas, List<Date> nuevasFechas){
+        List<Date> totales = new ArrayList<Date>();
+        totales.addAll(fechasGuardadas);
+        totales.addAll(nuevasFechas);
+        return getFechaGanadora(ctx, totales);
+    }
+
+    // Función que se encarga de saber cual es la fecha más repetida de los participantes para conocer la que mejor se adapta a la Qdada.
+    public static Date getFechaGanadora (Context ctx,  List<Date> totales){
+        List<Date> comparador = new ArrayList<Date>();
+        List<Integer> repeticiones = new ArrayList<Integer>();
+        int mayor=-1, indice=0;
+        for (Date fecha: totales){
+            if (comparador.contains(fecha)){
+                int index = comparador.indexOf(fecha);
+                int repetido = (repeticiones.get(index)+1);
+                if (repetido > mayor){
+                    mayor = repetido;
+                    indice = index;
+                }
+                repeticiones.set(index, repetido);
+            } else {
+                comparador.add(fecha);
+                repeticiones.add(0);
+            }
+        }
+        return comparador.get(indice);
     }
 
     public static int numeroParticipantes (Context ctx, String idqdada){
@@ -279,10 +297,7 @@ public class BBDD {
             return false;
         try{
             if (usuario != null){
-                usuario.setIdgcm(idGCM);
-                usuario.setStatus(Entity.STATUS_UPDATED);
-                BBDD.getApplicationDataContext(ctx).usuarioDao.save(usuario);
-                com.cusl.ull.qdemos.server.Utilities.crearUsuario(ctx, usuario.getNombre(), usuario.getIdfacebook(), idGCM);
+                com.cusl.ull.qdemos.server.Utilities.crearUsuario(ctx, usuario.getNombre(), usuario.getIdfacebook(), idGCM, false);
                 return true;
             } else {
                 return false;

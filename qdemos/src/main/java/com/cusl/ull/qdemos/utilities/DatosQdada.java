@@ -194,21 +194,6 @@ public class DatosQdada {
         return true;
     }
 
-    public static boolean guardarEnServidor(Activity activity, ProgressDialog pd){
-        RequestSimpleResponse taskResquest = new RequestSimpleResponse();
-
-        try {
-            Qdada qdada = Conversores.fromDatosQdadaToQdada(activity, null);
-            StringEntity body = new StringEntity(Utilities.getJSONServerFromQdada(qdada, DatosQdada.getFechas()).toString(), "UTF-8");
-            HttpPost post = ServerConnection.getPost(activity.getResources().getString(R.string.ip_server), activity.getResources().getString(R.string.port_server), "nuevaQdada/", body);
-            taskResquest.setParams(new ResponseServer_nuevaQdada_TaskListener(activity, pd), ServerConnection.getClient(), post);
-            taskResquest.execute();
-        } catch (Exception e){
-            pd.dismiss();
-        }
-        return false;
-    }
-
     public static void guardarEnLocal (Activity activity, String idserver, ProgressDialog pd){
         try {
             Qdada qdada = Conversores.fromDatosQdadaToQdada(activity, idserver);

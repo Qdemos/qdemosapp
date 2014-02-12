@@ -35,4 +35,4 @@ mongoose.connect('mongodb://localhost/qdemos_db');
 //Start the server  
 http.createServer(app).listen(0108); 
 
-console.log("Lanzado en puerto 0108..")
+console.log("Lanzado en puerto 0108..");

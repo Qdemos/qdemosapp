@@ -130,7 +130,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                 ProgressDialog pd = ProgressDialog.show(this, getResources().getText(R.string.esperar), getResources().getText(R.string.procesando));
                 pd.setIndeterminate(false);
                 pd.setCancelable(false);
-                DatosQdada.guardarEnServidor((Activity)this, pd);
+                com.cusl.ull.qdemos.server.Utilities.crearQdada((Activity) this, pd);
             } else if (!isEdition){
                 List<Date> fechas = EleccionFecha.getFechas();
                 if (fechas == null){
@@ -142,14 +142,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                         String qdadajson = getIntent().getExtras().getString("qdadajson");
                         com.cusl.ull.qdemos.bbdd.models.Qdada qdada = BBDD.getQdadaFromJSON(this, qdadajson);
 
-                        BBDD.updateMiEleccion(this, qdada.getIdQdada(), BBDD.quienSoy(this).getIdfacebook(), fechas);
-
-                        EleccionFecha.reset();
-
-                        Intent intent = new Intent(this, Home.class);
-                        // Para eliminar el historial de activities visitadas ya que volvemos al HOME y asi el boton ATRAS no tenga ningun comportamiento, se resetee.
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        BBDD.updateMiEleccion((Activity) getApplicationContext(), qdada.getIdQdada(), BBDD.quienSoy(this).getIdfacebook(), fechas);
                     } catch (Exception e){
                         Toast.makeText(this, R.string.error_bbdd_r, Toast.LENGTH_LONG).show();
                     }

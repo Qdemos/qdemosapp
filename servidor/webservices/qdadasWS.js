@@ -46,7 +46,21 @@ module.exports = function(app){
                                                     fechas: fechas
                                                });
             eleccion.save();
-            res.send("ok");
+            UsuarioEleccion.findOne({idqdada: req.body.idqdada}, function(err, usuariosElecciones) {  
+                if ((usuariosElecciones !== null) && (usuariosElecciones !== undefined) && (usuariosElecciones !== '')){ 
+                    Qdada.findOne({_id: req.body.idqdada}, function(err, qdada) {  
+                        if ((qdada!== null) && (qdada !== undefined) && (qdada !== '')){
+                             qdada.fechaganadora = Utilities.getFechaGanadora(usuariosElecciones.fechas);
+                             qdada.save();
+                             res.send("ok");
+                        } else {
+                             res.send("err");
+                        }
+                    });
+                } else {
+                    res.send("err");
+                }
+            });
         });
     }
 
