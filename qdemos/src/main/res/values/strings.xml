@@ -6,7 +6,7 @@
     <string name="api_id_gcm">677460586680</string>
     <string name="app_key_play_services">AIzaSyBBgC6pax3qlZDpHOqV1BArBgCLpN85TZs</string>
 
-    <string name="ip_server">http://192.168.0.196</string>
+    <string name="ip_server">http://192.168.0.195</string>
     <string name="port_server">0108</string>
 
     <string name="logout">Cerrar Sesión</string>
@@ -60,6 +60,10 @@
     <string name="error_fecha_existe">Ya existe la fecha: </string>
     <string name="error_fecha_no_valida">NO se admiten FECHAS anteriores a la hora actual: </string>
 
+    <string name="error_conexion">ERROR: Debes tener una CONEXIÓN Estable para realizar esta acción</string>
+
     <string name="error_generico">Error Generico</string>
+
+    <string name="no_disponible">No Disponible</string>
 
 </resources>

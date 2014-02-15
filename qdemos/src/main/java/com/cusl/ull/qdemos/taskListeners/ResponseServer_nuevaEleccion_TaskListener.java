@@ -3,6 +3,7 @@ package com.cusl.ull.qdemos.taskListeners;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.cusl.ull.qdemos.Home;
 import com.cusl.ull.qdemos.R;
@@ -36,8 +37,8 @@ public class ResponseServer_nuevaEleccion_TaskListener implements IStandardTaskL
     public void taskComplete(Object result) {
         if (result != null){
             String responseServer = (String) result;
-            if ((result != null) && (result.equals("ok"))){
-                BBDD.updateMiEleccionLocal(activity, idQdada, idFB, fechas);
+            if ((responseServer != null) && (responseServer.equals("ok"))){
+                BBDD.updateEleccionLocal(activity, idQdada, idFB, fechas);
 
                 EleccionFecha.reset();
                 Intent intent = new Intent(activity, Home.class);
@@ -47,11 +48,11 @@ public class ResponseServer_nuevaEleccion_TaskListener implements IStandardTaskL
                 activity.startActivity(intent);
             } else {
                 pd.dismiss();
-                Crouton.makeText(activity, R.string.error_bbdd, Style.ALERT).show();
+                Toast.makeText(activity, R.string.error_bbdd, Toast.LENGTH_SHORT);
             }
         } else {
             pd.dismiss();
-            Crouton.makeText(activity, R.string.error_bbdd, Style.ALERT).show();
+            Toast.makeText(activity, R.string.error_bbdd, Toast.LENGTH_SHORT);
         }
     }
 }

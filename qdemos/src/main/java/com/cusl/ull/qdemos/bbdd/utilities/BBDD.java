@@ -13,10 +13,15 @@ import com.cusl.ull.qdemos.bbdd.models.QdadaFechas;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
 import com.cusl.ull.qdemos.utilities.Utilities;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.model.GraphUser;
 import com.google.gson.Gson;
 import com.mobandme.ada.Entity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +33,10 @@ import java.util.List;
 public class BBDD {
 
     public static QdemosDataContext appDataContext;
+
+    public static Date ultimaSincronizacionConServidor;
+
+    static final String TAG = "En Local";
 
     public static void initBBDD (Context ctx){
         getApplicationDataContext(ctx);
@@ -60,6 +69,44 @@ public class BBDD {
             }
             com.cusl.ull.qdemos.server.Utilities.crearUsuario(ctx, nombre, idFB, idGcm, true);
         } catch (Exception e){}
+    }
+
+    public static void crearUsuarioByIdFacebook (Context ctx, String idFB){
+        if (BBDD.getApplicationDataContext(ctx).usuarioDao.exist(idFB))
+            return;
+        Session session = Session.getActiveSession();
+        if (session != null && session.isOpened()) {
+            Request request = Request.newMeRequest(session,
+                    new Request.GraphUserCallback() {
+                        @Override
+                        public void onCompleted(GraphUser user, Response response) {
+                            // If the response is successful
+                            if (user != null) {
+                                Usuario usuario = new Usuario(user.getName(), user.getId(), null);
+                                try {
+                                    usuario.setStatus(Entity.STATUS_NEW);
+                                    BBDD.appDataContext.usuarioDao.add(usuario);
+                                    BBDD.appDataContext.usuarioDao.save();
+                                    Log.i(TAG, "Usuario Creado Correctamente");
+                                } catch (Exception e){}
+                            }
+                            if (response.getError() != null) {
+                                // Handle errors, will do so later.
+                            }
+                        }
+                    });
+            request.executeAsync();
+        } else {
+            // TODO: Comprobar si se repite mucho esto, y si es asi hacer un hilo que cada cierto tiempo cumprueba si existen en BBDD Local usuarios sin nombres para setearselos si se puede
+            // TODO: A colación de lo anterior, ver si procede actualizar los nombres (En Local y en el Servidor) cada cierto tiempo, por si los usuarios se los cambian en Facebook.
+            Usuario user = new Usuario(ctx.getString(R.string.no_disponible), idFB, null);
+            try {
+                user.setStatus(Entity.STATUS_NEW);
+                BBDD.getApplicationDataContext(ctx).usuarioDao.add(user);
+                BBDD.getApplicationDataContext(ctx).usuarioDao.save();
+                Log.i(TAG, "Usuario Creado Correctamente");
+            } catch (Exception e){}
+        }
     }
 
     public static boolean existo(Context ctx){
@@ -110,7 +157,7 @@ public class BBDD {
         com.cusl.ull.qdemos.server.Utilities.crearEleccionQdada(activity, pd, idQdada, idFacebook, fechas);
     }
 
-    public static void updateMiEleccionLocal (Context ctx, String idQdada, String idFacebook, List<Date> fechas){
+    public static void updateEleccionLocal (Context ctx, String idQdada, String idFacebook, List<Date> fechas){
         try{
             List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{idQdada, idFacebook}, null, null, null, null, null);
             if (elecciones != null){
@@ -303,6 +350,21 @@ public class BBDD {
                 return false;
             }
         } catch (Exception e){
+            return false;
+        }
+    }
+
+    public static boolean hayQueActualizar (){
+        if (BBDD.ultimaSincronizacionConServidor == null)
+            return true;
+        Calendar ahora = Calendar.getInstance();
+        Calendar actualizacion = Calendar.getInstance();
+        actualizacion.setTime(BBDD.ultimaSincronizacionConServidor);
+        // TODO: Ponerlo mas alto, quizas no, la frecuencia de actualizacion, esta bajo para depuracion en desarrollo. Incluso meterlo en una property o algo de eso
+        actualizacion.add(Calendar.MINUTE, 5);
+        if (actualizacion.before(ahora)){
+            return true;
+        } else {
             return false;
         }
     }

@@ -95,7 +95,8 @@ public class Inicio extends FragmentActivity {
     public void initConfigApp (){
         BBDD.initBBDD(this);
 
-        // TODO: Pedir info actualizada al servidor de Mis Qdadas, y actualizar con ella la BBDD Local
+        // TODO: ¿Cómo se podría hacer para implementar MultiUsuario?... de esta manera sólo vale para un único usuario...
+        com.cusl.ull.qdemos.server.Utilities.sincronizarBBDD(this);
 
         // Check device for Play Services APK. If check succeeds, proceed with
         //  GCM registration.

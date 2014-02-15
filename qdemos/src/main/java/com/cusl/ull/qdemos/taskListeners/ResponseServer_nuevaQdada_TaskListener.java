@@ -2,6 +2,7 @@ package com.cusl.ull.qdemos.taskListeners;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.widget.Toast;
 
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.interfaces.IStandardTaskListener;
@@ -24,15 +25,15 @@ public class ResponseServer_nuevaQdada_TaskListener implements IStandardTaskList
     public void taskComplete(Object result) {
         if (result != null){
             String responseServer = (String) result;
-            if ((result != null) && (!result.equals("err"))){
+            if ((responseServer != null) && (!responseServer.equals("err"))){
                 DatosQdada.guardarEnLocal(activity, responseServer, pd);
             } else {
                 pd.dismiss();
-                Crouton.makeText(activity, R.string.error_bbdd, Style.ALERT).show();
+                Toast.makeText(activity, R.string.error_bbdd, Toast.LENGTH_SHORT);
             }
         } else {
             pd.dismiss();
-            Crouton.makeText(activity, R.string.error_bbdd, Style.ALERT).show();
+            Toast.makeText(activity, R.string.error_bbdd, Toast.LENGTH_SHORT);
         }
     }
 }

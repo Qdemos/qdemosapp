@@ -17,6 +17,28 @@ public class UsuarioObjectSet extends ObjectSet {
 
     }
 
+    public boolean exist(String id){
+        try{
+            if (id != null && !id.trim().equals("")){
+                String wherePattern = String.format("%s = ?", this.getDataTableFieldName("idfacebook"));
+
+                String[] whereValores = new String[] { id };
+
+                List resultado = search(true, wherePattern, whereValores, null, null, null, 0, 1);
+                if (resultado != null && resultado.size() > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public Usuario getPorIdFacebook(String id){
         return getPorIdFacebook(id, null, null, false);
     }

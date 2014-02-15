@@ -3,6 +3,7 @@ package com.cusl.ull.qdemos.taskListeners;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Usuario;
@@ -32,7 +33,7 @@ public class ResponseServer_nuevoUsuario_TaskListener implements IStandardTaskLi
     public void taskComplete(Object result) {
         if (result != null){
             String responseServer = (String) result;
-            if ((result != null) && (result.equals("ok"))){
+            if ((responseServer != null) && (responseServer.equals("ok"))){
                 if (nuevo){
                     if (!BBDD.existo(ctx)) {
                         Usuario user = new Usuario(nombre, idFB, idGcm);
@@ -53,10 +54,10 @@ public class ResponseServer_nuevoUsuario_TaskListener implements IStandardTaskLi
                     } catch (Exception e){}
                 }
             } else {
-                Crouton.makeText((Activity) ctx, R.string.error_bbdd, Style.ALERT).show();
+                Toast.makeText(ctx, R.string.error_bbdd, Toast.LENGTH_SHORT);
             }
         } else {
-            Crouton.makeText((Activity) ctx, R.string.error_bbdd, Style.ALERT).show();
+            Toast.makeText(ctx, R.string.error_bbdd, Toast.LENGTH_SHORT);
         }
     }
 }

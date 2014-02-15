@@ -37,7 +37,8 @@ module.exports = function(app){
             } 
             // Como las fechas la obtenemos parseadas en un JSON, la convertimos a un tipo Fecha para su almacenaje
             var fechas=[];
-            req.body.fechas.forEach(function (f){
+            var listaFechas = JSON.parse(req.body.fechas);
+            listaFechas.forEach(function (f){
                fechas.push(Utilities.parseDate(f));
             });
             var eleccion = new UsuarioEleccion({ 
@@ -87,7 +88,9 @@ module.exports = function(app){
         try {
              // Como las fechas la obtenemos parseadas en un JSON, la convertimos a un tipo Fecha para su almacenaje
              var fechas=[];
-             req.body.fechas.forEach(function (f){
+             console.log("aqui");
+             var listaFechas = JSON.parse(req.body.fechas);
+             listaFechas.forEach(function (f){
                 fechas.push(Utilities.parseDate(f));
              });
              var qdadaNueva = new Qdada({ 

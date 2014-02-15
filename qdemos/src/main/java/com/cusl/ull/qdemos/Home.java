@@ -62,8 +62,7 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                // TODO: Obtener datos del servidor de nuestras Qdada para actualizar la BBDD Local
-                // TODO: Setear una variable temporal para que esta peticion al servidor no lo haga muy constante
+                com.cusl.ull.qdemos.server.Utilities.sincronizarBBDD(getApplicationContext());
                 actionBar.setSelectedNavigationItem(position);
             }
         });
