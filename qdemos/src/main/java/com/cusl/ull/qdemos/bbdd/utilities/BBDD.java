@@ -145,6 +145,7 @@ public class BBDD {
                                                 Usuario usuario = BBDD.getUsuario(ctx, idFB);
                                                 try {
                                                     usuario.setStatus(Entity.STATUS_UPDATED);
+                                                    usuario.setNombre(user.getName());
                                                     BBDD.appDataContext.usuarioDao.save(usuario);
                                                     Log.i(TAG, "Usuario Actualizado Correctamente");
                                                 } catch (Exception e){}
