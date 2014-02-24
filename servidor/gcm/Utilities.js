@@ -5,6 +5,7 @@ module.exports.sendMessage = function(receivers, qdada, res) {
     message = new gcm.Message;
     var msg = {};
     msg.idqdada = qdada._id;
+    msg.titulo = qdada.titulo;
     msg.descripcion = qdada.descripcion;
     msg.idcreador = qdada.creador;
     msg.invitados = qdada.invitados;
@@ -14,15 +15,17 @@ module.exports.sendMessage = function(receivers, qdada, res) {
     msg.direccion = qdada.direccion;
     msg.fechaganadora = qdada.fechaganadora;
     msg.limite = qdada.limite;
-    msg.reinvitacion = qdada.reinvitacion;
+    msg.reinvitacion = qdada.reinvitacion ? qdada.reinvitacion != undefined : false;
     var jsonString = JSON.stringify(msg);
     message.addData('message', jsonString);
     sender.send(message, receivers, 4, function(error, result) {
       if (error === null){
-          res.send("ok");
+          if (res != null)
+            res.send("ok");
       } else{
           console.log("Error: "+result);
-          res.send("err");
+          if (res != null)
+            res.send("err");
       }
     });
 

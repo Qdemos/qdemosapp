@@ -12,6 +12,8 @@ import java.util.List;
  * Created by Paco on 27/01/14.
  */
 
+// Clase que representa una de las fechas propuesta para una de las Qdadas. De esta manera buscando todas las filas de esta tabla que contengan un mismo ID de Qdada podemos obtener
+// todas las fechas propuestas para hacer la Qdada
 @Table(name = "Qdadafechas")
 public class QdadaFechas extends Entity {
 

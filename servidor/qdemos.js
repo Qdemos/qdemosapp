@@ -36,3 +36,13 @@ mongoose.connect('mongodb://localhost/qdemos_db');
 http.createServer(app).listen(0108); 
 
 console.log("Lanzado en puerto 0108..");
+
+/*var registrationIds=[];
+registrationIds.push("APA91bFQpVxpEIBFIjJD3_4MmiBSwh5SqyR3V4Qvtc3F0Ri_2Ys2ZDHSpqfxwbuTssyv4w5JNuQ8UY62HvsJkbsF9xzOPDNfKAdY5wZV3qS-ZclDItNFgaYxfHGikAm9ChmVtahNJNYbOEvZ7m_mg4RCx5re_GTmPw");
+var Utilities = require('./gcm/Utilities');
+var Qdada = require('./models/qdada');
+Qdada.findOne({_id: "530b8026afdc864822ca2494"}, function(err, qdada) {  
+    if ((qdada !== null) && (qdada !== undefined) && (qdada !== '')){
+        Utilities.sendMessage(registrationIds, qdada, null);
+    }
+});*/

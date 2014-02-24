@@ -3,6 +3,7 @@ package com.cusl.ull.qdemos.bbdd.utilities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ public class BBDD {
 
     public static Date ultimaSincronizacionConServidor;
 
-    static final String TAG = "En Local";
+    public static final String TAG = "En Local";
 
     public static void initBBDD (Context ctx){
         getApplicationDataContext(ctx);
@@ -69,6 +70,22 @@ public class BBDD {
             }
             com.cusl.ull.qdemos.server.Utilities.crearUsuario(ctx, nombre, idFB, idGcm, true);
         } catch (Exception e){}
+    }
+
+    public static Usuario crearUsuarioIfNotExistOnlyLocal (Context ctx, String idFB){
+        try{
+            if (BBDD.getApplicationDataContext(ctx).usuarioDao.exist(idFB))
+                return BBDD.getApplicationDataContext(ctx).usuarioDao.getPorIdFacebook(idFB);
+            Usuario user = new Usuario(ctx.getString(R.string.no_disponible), idFB, null);
+            try {
+                user.setStatus(Entity.STATUS_NEW);
+                BBDD.getApplicationDataContext(ctx).usuarioDao.add(user);
+                BBDD.getApplicationDataContext(ctx).usuarioDao.save();
+                Log.i(BBDD.TAG, "Usuario Creado Correctamente");
+                return user;
+            } catch (Exception e){}
+        } catch (Exception e){}
+        return null;
     }
 
     public static void crearUsuarioByIdFacebook (Context ctx, String idFB){
@@ -107,6 +124,49 @@ public class BBDD {
                 Log.i(TAG, "Usuario Creado Correctamente");
             } catch (Exception e){}
         }
+    }
+
+    public static void actualizarUsuarioByIdFacebook (final Context ctx, final String idFB){
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                try {
+                    if (!BBDD.getApplicationDataContext(ctx).usuarioDao.exist(idFB)){
+                        crearUsuarioByIdFacebook(ctx, idFB);
+                    } else {
+                        Session session = Session.getActiveSession();
+                        if (session != null && session.isOpened()) {
+                            Request request = Request.newMeRequest(session,
+                                    new Request.GraphUserCallback() {
+                                        @Override
+                                        public void onCompleted(GraphUser user, Response response) {
+                                            // If the response is successful
+                                            if (user != null) {
+                                                Usuario usuario = BBDD.getUsuario(ctx, idFB);
+                                                try {
+                                                    usuario.setStatus(Entity.STATUS_UPDATED);
+                                                    BBDD.appDataContext.usuarioDao.save(usuario);
+                                                    Log.i(TAG, "Usuario Actualizado Correctamente");
+                                                } catch (Exception e){}
+                                            }
+                                            if (response.getError() != null) {
+                                                // Handle errors, will do so later.
+                                            }
+                                        }
+                                    });
+                            request.executeAsync();
+                        } else {
+                            // TODO: No hay sesion en Facebook, pensar en si se deberia almacenar estas acciones en un pila y reintentar mas tarde hasta que se consiga
+                        }
+                    }
+                } catch (Exception e){}
+                return "ok";
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+            }
+        }.execute(null, null, null);
     }
 
     public static boolean existo(Context ctx){

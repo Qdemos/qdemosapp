@@ -88,16 +88,16 @@ module.exports = function(app){
         try {
              // Como las fechas la obtenemos parseadas en un JSON, la convertimos a un tipo Fecha para su almacenaje
              var fechas=[];
-             console.log("aqui");
              var listaFechas = JSON.parse(req.body.fechas);
              listaFechas.forEach(function (f){
                 fechas.push(Utilities.parseDate(f));
              });
+             var invitadosJSON = JSON.parse(req.body.invitados);
              var qdadaNueva = new Qdada({ 
                                             titulo: req.body.titulo,
                                             descripcion: req.body.descripcion,
                                             creador: req.body.creador,
-                                            invitados: req.body.invitados,
+                                            invitados: invitadosJSON,
                                             fechas: fechas,
                                             geo: [req.body.longitud, req.body.latitud],
                                             direccion: req.body.direccion,

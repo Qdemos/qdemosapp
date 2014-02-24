@@ -1,5 +1,6 @@
 package com.cusl.ull.qdemos.taskListeners;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,7 +14,9 @@ import com.mobandme.ada.Entity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class ResponseServer_actualizarQdada_TaskListener implements IStandardTas
             if (result != null){
                 String responseServer = (String) result;
                 if ((responseServer != null) && (!responseServer.equals("err")) && (!responseServer.equals("err_no_exist"))){
-                    JSONObject datos = (JSONObject) result;
+                    JSONObject datos = new JSONObject(responseServer);
                     String idQdada = datos.getString("idqdada");
                     JSONArray elecciones = datos.getJSONArray("usuarioselecciones");
                     for (int i=0; i < elecciones.length(); i++){
@@ -40,7 +43,15 @@ public class ResponseServer_actualizarQdada_TaskListener implements IStandardTas
                         String idfacebook = eleccion.getString("idfacebook");
                         BBDD.crearUsuarioByIdFacebook(ctx, idfacebook);
                         List<Date> fechas = new ArrayList<Date>();
-                        // TODO: Recuperar fechas de eleccion que estan en una Lista, ver como se pueden coger
+                        JSONArray fechasJSON = eleccion.getJSONArray("fechas");
+                        for (int j=0; j< fechasJSON.length(); j++){
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(sdf.parse(fechasJSON.getString(j)));
+                            Date date = cal.getTime();
+                            System.out.println("Fecha: "+date);
+                            fechas.add(date);
+                        }
                         BBDD.updateEleccionLocal(ctx, idQdada, idfacebook, fechas);
                     }
                 } else {

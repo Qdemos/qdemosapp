@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+// Clase que representa una Qdada y toda la informacion básica que atañe a esta
 @Table(name = "Qdada")
 public class Qdada extends Entity {
 
@@ -74,8 +76,8 @@ public class Qdada extends Entity {
     public Qdada(Context ctx, String idserver, String titulo, String descripcion, Usuario creador, List<Usuario> invitados, Double latitud, Double longitud, String direccion, Date limite, Boolean reinvitacion, Boolean sinresponder, Date fechaGanadora) {
         setTitulo(titulo);
         setDescripcion(descripcion);
-        setCreador(creador);
-        setInvitados(invitados);
+        setCreador(creador, ctx);
+        setInvitados(invitados, ctx);
         setLatitud(latitud);
         setLongitud(longitud);
         setLimite(limite);
@@ -114,16 +116,23 @@ public class Qdada extends Entity {
         return creador;
     }
 
-    public void setCreador(Usuario creador) {
-        this.creador = creador;
+    public void setCreador(Usuario creador, Context ctx) {
+        // Lo volvemos a buscar en BBDD para por si acaso habia un hilo en segundo plano actualizando la info del usuario en la bbdd local
+        Usuario usuario = BBDD.getUsuario(ctx, creador.getIdfacebook());
+        this.creador = usuario;
     }
 
     public List<Usuario> getInvitados() {
         return invitados;
     }
 
-    public void setInvitados(List<Usuario> invitados) {
-        this.invitados = invitados;
+    public void setInvitados(List<Usuario> invitados, Context ctx) {
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        // Lo volvemos a buscar en BBDD para por si acaso habia un hilo en segundo plano actualizando la info del usuario en la bbdd local
+        for (Usuario user: invitados){
+            usuarios.add(BBDD.getUsuario(ctx, user.getIdfacebook()));
+        }
+        this.invitados = usuarios;
     }
 
     public Double getLatitud() {

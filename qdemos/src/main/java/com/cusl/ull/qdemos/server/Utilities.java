@@ -92,8 +92,9 @@ public class Utilities {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                if (!BBDD.hayQueActualizar())
-                    return null;
+                if (!BBDD.hayQueActualizar()){
+                   return null;
+                }
                 // TODO: Mejorar la actualizacion de la variable de tiempo de ultima actualizacion con el servidor, ya que ahora no se tiene en cuenta si ha fallado algo durante esa actualizacion
                 BBDD.ultimaSincronizacionConServidor = new Date();
                 String msg = "";
@@ -103,7 +104,9 @@ public class Utilities {
                     for (Qdada qdada: qdadas){
                         obtenerDatosQdadaServer(ctx, qdada.getIdQdada());
                     }
-                } catch (Exception ex) {}
+                } catch (Exception ex) {
+                    System.out.println("Error al recuperar Qdadas");
+                }
                 return msg;
             }
 

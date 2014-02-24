@@ -26,7 +26,8 @@ public class ResponseServer_nuevaQdada_TaskListener implements IStandardTaskList
         if (result != null){
             String responseServer = (String) result;
             if ((responseServer != null) && (!responseServer.equals("err"))){
-                DatosQdada.guardarEnLocal(activity, responseServer, pd);
+                // Ojo, es importante limpiar las " porque el servidor nos devuelve el id entre comillas, estas incluidas.
+                DatosQdada.guardarEnLocal(activity, responseServer.replace("\"", ""), pd);
             } else {
                 pd.dismiss();
                 Toast.makeText(activity, R.string.error_bbdd, Toast.LENGTH_SHORT);

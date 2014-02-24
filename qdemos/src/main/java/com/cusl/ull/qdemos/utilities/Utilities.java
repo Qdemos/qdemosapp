@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
@@ -11,6 +12,7 @@ import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.models.UsuarioEleccion;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
+import com.mobandme.ada.Entity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -239,6 +241,70 @@ public class Utilities {
             data.put("idqdada", idQdada);
         } catch (Exception e){}
         return data;
+    }
+
+    public static Date dateStringZTToDate (String zt){
+        Date ret = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(sdf.parse(zt));
+            ret = cal.getTime();
+        } catch (Exception e){}
+        return ret;
+    }
+
+    public static boolean notificacionToBBDD (Context ctx, String notificacion){
+        try {
+            JSONObject datos = new JSONObject(notificacion);
+            Usuario creador = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, datos.getString("idcreador"));
+            BBDD.actualizarUsuarioByIdFacebook(ctx, creador.getIdfacebook());
+            List<Usuario> invitados = new ArrayList<Usuario>();
+            JSONArray invitadosJSON = datos.getJSONArray("invitados");
+            for (int j=0; j< invitadosJSON.length(); j++){
+               Usuario invitado = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, invitadosJSON.getString(j));
+               if (invitado != null){
+                  invitados.add(invitado);
+                  BBDD.actualizarUsuarioByIdFacebook(ctx, invitado.getIdfacebook());
+               }
+            }
+            Date limite = Utilities.dateStringZTToDate(datos.getString("limite"));
+            Date ganadora = Utilities.dateStringZTToDate(datos.getString("fechaganadora"));
+            Qdada qdada = new Qdada(ctx,
+                                    datos.getString("idqdada"),
+                                    datos.getString("titulo"),
+                                    datos.getString("descripcion"),
+                                    creador,
+                                    invitados,
+                                    datos.getDouble("latitud"),
+                                    datos.getDouble("longitud"),
+                                    datos.getString("direccion"),
+                                    limite,
+                                    datos.getBoolean("reinvitacion"),
+                                    true,
+                                    ganadora
+                                   );
+            if (BBDD.getQdadaByIDServer(ctx, datos.getString("idqdada")) != null){
+                // Ya existe...
+                System.out.println("Ya existe");
+            } else {
+                qdada.setStatus(Entity.STATUS_NEW);
+                com.cusl.ull.qdemos.bbdd.utilities.BBDD.getApplicationDataContext(ctx).qdadaDao.add(qdada);
+                com.cusl.ull.qdemos.bbdd.utilities.BBDD.getApplicationDataContext(ctx).qdadaDao.save();
+            }
+            List<Date> fechas = new ArrayList<Date>();
+            JSONArray fechasJSON = datos.getJSONArray("fechas");
+            for (int j=0; j< fechasJSON.length(); j++){
+                Date fecha = Utilities.dateStringZTToDate(fechasJSON.getString(j));
+                if (fecha != null)
+                    fechas.add(fecha);
+            }
+            BBDD.setFechas(ctx, fechas, datos.getString("idqdada"));
+            return true;
+        } catch (Exception e) {
+            // TODO: Fallo grande, la notificación ha llegado pero hubo un error al parsearla y la Qdada no le ha llegado al usuario
+            return false;
+        }
     }
 
 }
