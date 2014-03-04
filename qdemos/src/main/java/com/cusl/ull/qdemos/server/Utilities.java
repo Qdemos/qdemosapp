@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.cusl.ull.qdemos.R;
 import com.cusl.ull.qdemos.bbdd.models.Qdada;
+import com.cusl.ull.qdemos.bbdd.models.Usuario;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.bbdd.utilities.Conversores;
 import com.cusl.ull.qdemos.taskListeners.ResponseServer_actualizarQdada_TaskListener;
@@ -20,9 +21,13 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -85,6 +90,7 @@ public class Utilities {
         return false;
     }
 
+    // Funcion que se utiliza para conectarse con el servidor y ver si hay que actualizar la BBDD Local
     public static void sincronizarBBDD(final Context ctx){
         if (!com.cusl.ull.qdemos.utilities.Utilities.haveInternet(ctx)){
             return;
@@ -96,14 +102,17 @@ public class Utilities {
                    return null;
                 }
                 // TODO: Mejorar la actualizacion de la variable de tiempo de ultima actualizacion con el servidor, ya que ahora no se tiene en cuenta si ha fallado algo durante esa actualizacion
+                // TODO: ...Hacer esta mejora descrita en la linea anterior: Esto sería mejor hacerlo cuando alguien notifique al servidor que ha cambiado una Qdada. De manera que se envie una notificación
+                // TODO: ...PUSH a todos los participantes para avisarlos de que deben actualizar
                 BBDD.ultimaSincronizacionConServidor = new Date();
                 String msg = "";
                 try {
                     List<Qdada> qdadas = BBDD.getApplicationDataContext(ctx).qdadaDao.search(false, null, null, null, null, null, null, null);
-                    // TODO: Ver si hacer esto en una sola petición, que se le pase el id de todas las Qdadas, y devuelva la informacion todas juntas
+                    ArrayList<String> ids = new ArrayList<String>();
                     for (Qdada qdada: qdadas){
-                        obtenerDatosQdadaServer(ctx, qdada.getIdQdada());
+                        ids.add(qdada.getIdQdada());
                     }
+                    obtenerDatosQdadasServer(ctx, ids);
                 } catch (Exception ex) {
                     System.out.println("Error al recuperar Qdadas");
                 }
@@ -116,14 +125,39 @@ public class Utilities {
         }.execute(null, null, null);
     }
 
+    // Función encargada de pedir un conjunto de Qdadas al servidor para ver si hay cambios respecto a los daots locales
+    public static void obtenerDatosQdadasServer(Context ctx, ArrayList<String> idsQdada){
+        try {
+            if (idsQdada.isEmpty()){
+                Log.i("Fallo al Enviar", "No se ha podido enviar los idsQdadas al servidor");
+            } else {
+                JSONObject data = new JSONObject();
+                JSONArray idsJSON = new JSONArray(idsQdada);
+                data.put("ids", idsJSON.toString());
+
+                StringEntity body = new StringEntity(data.toString(), "UTF-8");
+
+                RequestSimpleResponse taskResquest = new RequestSimpleResponse();
+                // Hacemos una petición de tipo PUT, por si en un futuro se piensa que a la vez de recoger los datos del servidor, se quisiera corroborar que hay cambios en local que no están reflejados en el servidor
+                // por si el usuario cambio algo y no se actualizó correctamente en el servidor por fallos de conexión o similares. Esto es una MEJORA FUTURA NO IMPLEMENTADA TODAVIA
+                HttpPut put = ServerConnection.getPut(ctx.getResources().getString(R.string.ip_server), ctx.getResources().getString(R.string.port_server), "datosQdadas", body);
+                taskResquest.setParams(new ResponseServer_actualizarQdada_TaskListener(ctx, false), ServerConnection.getClient(), put);
+                taskResquest.execute();
+            }
+        } catch (Exception e){
+            Log.i("Fallo al Enviar", "No se ha podido enviar los idsQdadas al servidor");
+        }
+    }
+
+    // Función encargada de pedir una Qdada al servidor para ver si hay cambios respecto a los daots locales
     public static void obtenerDatosQdadaServer(Context ctx, String idQdada){
         try {
             RequestSimpleResponse taskResquest = new RequestSimpleResponse();
             HttpGet get = ServerConnection.getGet(ctx.getResources().getString(R.string.ip_server), ctx.getResources().getString(R.string.port_server), "datosQdada/" + idQdada);
-            taskResquest.setParams(new ResponseServer_actualizarQdada_TaskListener(ctx), ServerConnection.getClient(), get);
+            taskResquest.setParams(new ResponseServer_actualizarQdada_TaskListener(ctx, true), ServerConnection.getClient(), get);
             taskResquest.execute();
         } catch (Exception e){
-            Log.i("Fallo al Enviar", "No se ha podido enviar el usuario al servidor");
+            Log.i("Fallo al Enviar", "No se ha podido enviar el idQdada servidor");
         }
     }
 }

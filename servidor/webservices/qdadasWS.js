@@ -146,9 +146,47 @@ module.exports = function(app){
         }
     }
 
+    // Función encargada de devolver a los usuarios los datos que se van actualizando de un conjunto de Qdadas para que lo reflejen en local, mediante el
+    // web services de tipo rest.
+    datosQdadas = function (req, res){
+        try {
+            var idsJSON = JSON.parse(req.body.ids);
+            var listRes = [];
+            var msg;
+            var idsReady = [];
+            var ues = [];
+            UsuarioEleccion.find({idqdada: {$in: idsJSON}}, function(err, usuariosElecciones) {  
+                if ((usuariosElecciones !== null) && (usuariosElecciones !== undefined)){
+                    usuariosElecciones.forEach(function (ue){
+                        if (idsReady.indexOf(ue.idqdada) === -1){
+                            msg = {};
+                            msg.idqdada = ue.idqdada;
+                            usuariosElecciones.forEach(function (uej){
+                                if (ue.idqdada === uej.idqdada){
+                                    ues.push(uej);
+                                }
+                            });
+                            msg.usuarioselecciones = JSON.stringify(ues);
+                            var jsonString = JSON.stringify(msg);
+                            listRes.push(jsonString);
+                            idsReady.push(ue.idqdada);
+                        }
+                    });
+                    res.send(JSON.stringify(listRes));
+                } else {
+                    res.send("err_no_exist");
+                }   
+            });
+        } catch (err){
+            console.log("Error: "+err);
+            res.send("err");
+        }
+    }
+
     // Servicios Web de tipo rest, tantos POST como GET
     app.post('/nuevoUsuario', nuevoUsuario);     // Crear Usuario
     app.post('/nuevaQdada', nuevaQdada);         // Crear Qdada
     app.post('/nuevaEleccion', nuevaEleccion);   // Modificar Eleccion Qdada por parte de una Usuario
     app.get('/datosQdada/:idqdada', datosQdada); // Devolver datos más relevantes de las actualizaciones de una Qdada
+    app.put('/datosQdadas', datosQdadas); // Devolver datos más relevantes de las actualizaciones de un conjunto de Qdadas
 } 

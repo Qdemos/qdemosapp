@@ -64,6 +64,7 @@ public class InvitadoGridAdapter extends ArrayAdapter<Usuario> {
         Usuario item = data.get(position);
         holder.txtTitle.setText(item.getNombre().split(" ")[0]);
         holder.imageItem.setProfileId(item.getIdfacebook());
+        // TODO: No pinta bien el recuadro.... siempre lo pinta gris
         if (Utilities.isParticipante(getContext(), qdada, item.getIdfacebook()) == null){
             holder.fondo.setBackgroundResource(R.drawable.background_invitados_qdadas);
         } else if (Utilities.isParticipante(getContext(), qdada, item.getIdfacebook())){
