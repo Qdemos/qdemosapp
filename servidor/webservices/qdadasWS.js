@@ -72,7 +72,7 @@ module.exports = function(app){
 
     // Función encargada de comprobar los usuarios invitados que son usuarios de la app y llamar a la funcion encargada de notificarles la Qdada
     function notificarInvitados (qdada, res, funcion){
-        Usuario.find({_id: {$in: qdada.invitados}}, function (err, usuarios){
+        Usuario.find({idfacebook: {$in: qdada.invitados}}, function (err, usuarios){
             if ((usuarios !== null) && (usuarios !== undefined) && (usuarios !== '')){
                 var registrationIds=[];
                 usuarios.forEach(function (u){

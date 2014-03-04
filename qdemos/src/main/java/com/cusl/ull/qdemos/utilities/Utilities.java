@@ -210,7 +210,7 @@ public class Utilities {
             data.put("latitud", qdada.getLatitud());
             data.put("longitud", qdada.getLongitud());
             data.put("direccion", qdada.getDireccion());
-            data.put("fecha", qdada.getFechaGanadora());
+            data.put("fecha", new SimpleDateFormat("dd-MM-yyyy HH:mm").format(qdada.getFechaGanadora()));
             data.put("reinvitacion", qdada.getReinvitacion());
         } catch (Exception e){}
         return data;
@@ -227,7 +227,7 @@ public class Utilities {
         return data;
     }
 
-    // Nos devuelve un objeto de tipo Qdada listo para pasar (en JSON) a la peticion del web service del servidor
+    // Nos devuelve un objeto de tipo EleccionQdada listo para pasar (en JSON) a la peticion del web service del servidor
     public static JSONObject getJSONServerFromEleccionQdada(String idQdada, String idFB, List<Date> fechas){
         JSONObject data = new JSONObject();
         try {
@@ -300,6 +300,14 @@ public class Utilities {
                     fechas.add(fecha);
             }
             BBDD.setFechas(ctx, fechas, datos.getString("idqdada"));
+
+            for (Date f: fechas){
+                UsuarioEleccion ue = new UsuarioEleccion(ctx, creador.getIdfacebook(), f, qdada.getIdQdada());
+                ue.setStatus(Entity.STATUS_NEW);
+                BBDD.getApplicationDataContext(ctx).participanteDao.add(ue);
+                BBDD.getApplicationDataContext(ctx).participanteDao.save();
+            }
+
             return true;
         } catch (Exception e) {
             // TODO: Fallo grande, la notificación ha llegado pero hubo un error al parsearla y la Qdada no le ha llegado al usuario

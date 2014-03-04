@@ -142,7 +142,7 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                         String qdadajson = getIntent().getExtras().getString("qdadajson");
                         com.cusl.ull.qdemos.bbdd.models.Qdada qdada = BBDD.getQdadaFromJSON(this, qdadajson);
 
-                        BBDD.updateMiEleccion((Activity) getApplicationContext(), qdada.getIdQdada(), BBDD.quienSoy(this).getIdfacebook(), fechas);
+                        BBDD.updateMiEleccion(this, qdada.getIdQdada(), BBDD.quienSoy(this).getIdfacebook(), fechas);
                     } catch (Exception e){
                         Toast.makeText(this, R.string.error_bbdd_r, Toast.LENGTH_LONG).show();
                     }

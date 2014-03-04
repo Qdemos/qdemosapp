@@ -40,7 +40,7 @@ public class FechasFragment extends Fragment  {
 
             listView = (ListView) rootView.findViewById(R.id.listaFechas);
             List<Date> miEleccion = BBDD.miEleccion(getActivity(), this.qdada.getIdQdada(), BBDD.quienSoy(getActivity()).getIdfacebook());
-            if (miEleccion == null){
+            if ((miEleccion == null) || (miEleccion.isEmpty())){
                 miEleccion=BBDD.getFechas(getActivity(), qdada.getIdQdada());
                 EleccionFecha.reset(miEleccion);
             } else {

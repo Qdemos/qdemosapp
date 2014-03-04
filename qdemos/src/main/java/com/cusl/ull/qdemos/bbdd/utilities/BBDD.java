@@ -264,7 +264,6 @@ public class BBDD {
     // Función que se encarga de saber cual es la fecha más repetida de los participantes para conocer la que mejor se adapta a la Qdada.
     public static void calcularFechaGanadora (Context ctx,  String idqdada){
         List<Date> totales = new ArrayList<Date>();
-        List<Date> comparador = new ArrayList<Date>();
         try {
             List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ?", new String[]{idqdada}, null, null, null, null, null);
             for (UsuarioEleccion ele: elecciones){

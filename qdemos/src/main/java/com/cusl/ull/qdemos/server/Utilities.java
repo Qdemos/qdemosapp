@@ -18,6 +18,7 @@ import com.cusl.ull.qdemos.taskListeners.ResponseServer_nuevaQdada_TaskListener;
 import com.cusl.ull.qdemos.taskListeners.ResponseServer_nuevoUsuario_TaskListener;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.mobandme.ada.Entity;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -77,9 +78,16 @@ public class Utilities {
             Toast.makeText(activity, activity.getString(R.string.conexion), Toast.LENGTH_LONG);
             return false;
         }
-        RequestSimpleResponse taskResquest = new RequestSimpleResponse();
 
         try {
+            if (fechas.isEmpty()){
+                Qdada qdada = BBDD.getQdadaByIDServer(activity, idQdada);
+                qdada.sinresponder=false;
+                qdada.setStatus(Entity.STATUS_UPDATED);
+                BBDD.getApplicationDataContext(activity).qdadaDao.save(qdada);
+                return false;
+            }
+            RequestSimpleResponse taskResquest = new RequestSimpleResponse();
             StringEntity body = new StringEntity(com.cusl.ull.qdemos.utilities.Utilities.getJSONServerFromEleccionQdada(idQdada, idFB, fechas).toString(), "UTF-8");
             HttpPost post = ServerConnection.getPost(activity.getResources().getString(R.string.ip_server), activity.getResources().getString(R.string.port_server), "nuevaEleccion", body);
             taskResquest.setParams(new ResponseServer_nuevaEleccion_TaskListener(activity, pd, idQdada, idFB, fechas), ServerConnection.getClient(), post);

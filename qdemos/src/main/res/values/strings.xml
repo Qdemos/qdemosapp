@@ -6,7 +6,7 @@
     <string name="api_id_gcm">677460586680</string>
     <string name="app_key_play_services">AIzaSyBBgC6pax3qlZDpHOqV1BArBgCLpN85TZs</string>
 
-    <string name="ip_server">http://192.168.0.195</string>
+    <string name="ip_server">http://192.168.0.197</string>
     <string name="port_server">0108</string>
 
     <string name="logout">Cerrar Sesión</string>

@@ -7,10 +7,12 @@ import android.widget.Toast;
 
 import com.cusl.ull.qdemos.Home;
 import com.cusl.ull.qdemos.R;
+import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.interfaces.IStandardTaskListener;
 import com.cusl.ull.qdemos.utilities.DatosQdada;
 import com.cusl.ull.qdemos.utilities.EleccionFecha;
+import com.mobandme.ada.Entity;
 
 import java.util.Date;
 import java.util.List;
@@ -39,6 +41,14 @@ public class ResponseServer_nuevaEleccion_TaskListener implements IStandardTaskL
             String responseServer = (String) result;
             if ((responseServer != null) && (responseServer.equals("ok"))){
                 BBDD.updateEleccionLocal(activity, idQdada, idFB, fechas);
+                try{
+                    Qdada qdada = BBDD.getQdadaByIDServer(activity, idQdada);
+                    qdada.sinresponder=false;
+                    qdada.setStatus(Entity.STATUS_UPDATED);
+                    BBDD.getApplicationDataContext(activity).qdadaDao.save(qdada);
+                } catch (Exception e){
+                    Toast.makeText(activity, R.string.error_bbdd, Toast.LENGTH_SHORT);
+                }
 
                 EleccionFecha.reset();
                 Intent intent = new Intent(activity, Home.class);
