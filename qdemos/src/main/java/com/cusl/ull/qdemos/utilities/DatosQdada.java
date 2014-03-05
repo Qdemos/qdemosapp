@@ -214,8 +214,8 @@ public class DatosQdada {
 
             BBDD.setFechas(activity, DatosQdada.getFechas(), idserver);
 
-            // TODO: Pasar algun Bundle para mostrar un Crouton de EXITO en el fragment del HOME
             Intent intent = new Intent(activity, Home.class);
+            intent.putExtra("creadaqdada", true);
             // Para eliminar el historial de activities visitadas ya que volvemos al HOME y asi el boton ATRAS no tenga ningun comportamiento, se resetee.
             DatosQdada.reset(activity);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

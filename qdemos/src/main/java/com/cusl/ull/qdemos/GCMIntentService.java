@@ -89,6 +89,9 @@ public class GCMIntentService extends IntentService {
 
         if (qdada != null){
             Intent intentQ = new Intent(this, Inicio.class);
+            // Para diferenciar el Intent de otros Intent similares (app en segundo plano o abierta) que pueda haber.
+            // Al crearse desde la notificación, para que Android no considere que el Intent ya lo ha creado antes, hay que indicarle
+            // que es una nueva acción, por eso se setea con un valor aleatorio el Action, para diferenciarlos de otros Intent (de Inicio.class) que esten abiertos.
             intentQ.setAction("" + Math.random());
             intentQ.putExtra("qdadajson", new Gson().toJson(qdada));
             intentQ.putExtra("goto", true);

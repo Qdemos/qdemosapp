@@ -22,6 +22,9 @@ import com.cusl.ull.qdemos.fragments.listas.AceptadasFragment;
 import com.cusl.ull.qdemos.fragments.listas.HistorialFragment;
 import com.cusl.ull.qdemos.fragments.listas.PendientesFragment;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 public class Home extends FragmentActivity implements ActionBar.TabListener {
 
     /**
@@ -74,6 +77,14 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
             // the TabListener interface, as the callback (listener) for when
             // this tab is selected.
             actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
+        }
+
+        // Muestra un mensajito si hemos sido redirigidos a este Activity a través de la creación, con éxito, de una Qdada
+        if (getIntent().getExtras() != null){
+            Boolean qdadacreada = getIntent().getExtras().getBoolean("creadaqdada");
+            if ((qdadacreada != null) && (qdadacreada)){
+                Crouton.makeText(this, getString(R.string.qdadacreada), Style.CONFIRM).show();
+            }
         }
 
     }
