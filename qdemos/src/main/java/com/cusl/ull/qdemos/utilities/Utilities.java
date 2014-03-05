@@ -258,16 +258,33 @@ public class Utilities {
         return ret;
     }
 
+    // Funcion que recupera un nombre a traves de un identificador. Esto es debido a que el servidor envia esta informacion de la siguiente maner: "nombre;id", es un string.
+    public static String getNombreFromJSONServer (Context ctx, JSONArray nombres_ids, String id){
+        try {
+            for (int i=0; i< nombres_ids.length(); i++){
+                String nombreid = nombres_ids.getString(i);
+                String nombre = nombreid.split(";")[0];
+                String ids = nombreid.split(";")[1];
+                if (ids.equals(id)){
+                    return nombre;
+                }
+            }
+        } catch (Exception e){
+            System.out.println("Fallo al recuperar el nombre de usuario");
+        }
+        return ctx.getString(R.string.no_disponible);
+    }
+
+    // Función encargada de convertir una Notificación Push en la información correspondiente que se almacene en la BBDD Local
     public static boolean notificacionToBBDD (Context ctx, String notificacion){
         try {
-            // TODO: Comprobar si con el nuevo metodo de tambien pasar los nombres de los usuarios en la notificacion funciona. ¡¡{datos.getJSONArray("nombreinvitados")}!!
             JSONObject datos = new JSONObject(notificacion);
             JSONArray nombresJSON = datos.getJSONArray("nombreinvitados");
-            Usuario creador = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, datos.getString("idcreador"), nombresJSON.getString(nombresJSON.length()-1));
+            Usuario creador = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, datos.getString("idcreador"), getNombreFromJSONServer(ctx, nombresJSON, datos.getString("idcreador")));
             List<Usuario> invitados = new ArrayList<Usuario>();
             JSONArray invitadosJSON = datos.getJSONArray("invitados");
             for (int j=0; j< invitadosJSON.length(); j++){
-               Usuario invitado = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, invitadosJSON.getString(j), nombresJSON.getString(j));
+               Usuario invitado = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, invitadosJSON.getString(j), getNombreFromJSONServer(ctx, nombresJSON, invitadosJSON.getString(j)));
                if (invitado != null){
                   invitados.add(invitado);
                }

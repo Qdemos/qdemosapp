@@ -66,7 +66,8 @@ public class ResponseServer_actualizarQdada_TaskListener implements IStandardTas
         for (int i=0; i < elecciones.length(); i++){
             JSONObject eleccion = elecciones.getJSONObject(i);
             String idfacebook = eleccion.getString("idfacebook");
-            BBDD.crearUsuarioByIdFacebook(ctx, idfacebook);
+            // TODO: En un futuro, cuando se permitan invitaciones por parte de otros usuarios, habría que tambien enviar desde el servidor, en esta peticion el nombre del usuario, por si no está creado.
+            //BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, idfacebook, nombre);
             List<Date> fechas = new ArrayList<Date>();
             JSONArray fechasJSON = eleccion.getJSONArray("fechas");
             for (int j=0; j< fechasJSON.length(); j++){
@@ -86,7 +87,8 @@ public class ResponseServer_actualizarQdada_TaskListener implements IStandardTas
         for (int i=0; i < elecciones.length(); i++){
             JSONObject eleccion = elecciones.getJSONObject(i);
             String idfacebook = eleccion.getString("idfacebook");
-            BBDD.crearUsuarioByIdFacebook(ctx, idfacebook);
+            // TODO: En un futuro, cuando se permitan invitaciones por parte de otros usuarios, habría que tambien enviar desde el servidor, en esta peticion el nombre del usuario, por si no está creado.
+            //BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, idfacebook, nombre);
             List<Date> fechas = new ArrayList<Date>();
             JSONArray fechasJSON = eleccion.getJSONArray("fechas");
             for (int j=0; j< fechasJSON.length(); j++){

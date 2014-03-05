@@ -93,44 +93,6 @@ public class BBDD {
         return null;
     }
 
-    public static void crearUsuarioByIdFacebook (Context ctx, String idFB){
-        if (BBDD.getApplicationDataContext(ctx).usuarioDao.exist(idFB))
-            return;
-        Session session = Session.getActiveSession();
-        if (session != null && session.isOpened()) {
-            Request request = Request.newMeRequest(session,
-                    new Request.GraphUserCallback() {
-                        @Override
-                        public void onCompleted(GraphUser user, Response response) {
-                            // If the response is successful
-                            if (user != null) {
-                                Usuario usuario = new Usuario(user.getName(), user.getId(), null);
-                                try {
-                                    usuario.setStatus(Entity.STATUS_NEW);
-                                    BBDD.appDataContext.usuarioDao.add(usuario);
-                                    BBDD.appDataContext.usuarioDao.save();
-                                    Log.i(TAG, "Usuario Creado Correctamente");
-                                } catch (Exception e){}
-                            }
-                            if (response.getError() != null) {
-                                // Handle errors, will do so later.
-                            }
-                        }
-                    });
-            request.executeAsync();
-        } else {
-            // TODO: Comprobar si se repite mucho esto, y si es asi hacer un hilo que cada cierto tiempo cumprueba si existen en BBDD Local usuarios sin nombres para setearselos si se puede
-            // TODO: A colación de lo anterior, ver si procede actualizar los nombres (En Local y en el Servidor) cada cierto tiempo, por si los usuarios se los cambian en Facebook.
-            Usuario user = new Usuario(ctx.getString(R.string.no_disponible), idFB, null);
-            try {
-                user.setStatus(Entity.STATUS_NEW);
-                BBDD.getApplicationDataContext(ctx).usuarioDao.add(user);
-                BBDD.getApplicationDataContext(ctx).usuarioDao.save();
-                Log.i(TAG, "Usuario Creado Correctamente");
-            } catch (Exception e){}
-        }
-    }
-
     public static boolean existo(Context ctx){
         try {
             if (BBDD.getApplicationDataContext(ctx).usuarioDao.getMyUser() != null)

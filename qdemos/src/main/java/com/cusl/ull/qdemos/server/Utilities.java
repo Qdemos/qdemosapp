@@ -108,7 +108,7 @@ public class Utilities {
                 // TODO: ...PUSH a todos los participantes para avisarlos de que deben actualizar
                 BBDD.ultimaSincronizacionConServidor = new Date();
                 // Esto es para pedir al servidor la info de las Qdadas que tenemos almacenadas en local
-                // TODO: ¿Seria conveniente pedir tambien las que no tenemos almacenadas en local? ¿Por eso de cuando funcione en MultiDispositivo?
+                // TODO: ¿Seria conveniente pedir tambien las que no tenemos almacenadas en local? ¿Por eso de cuando funcione en MultiDispositivo? Algo así de que a través de un IDFacebook te de todas las Qdadas
                 String msg = "";
                 try {
                     List<Qdada> qdadas = BBDD.getApplicationDataContext(ctx).qdadaDao.search(false, null, null, null, null, null, null, null);
@@ -129,7 +129,7 @@ public class Utilities {
         }.execute(null, null, null);
     }
 
-    // Función encargada de pedir un conjunto de Qdadas al servidor para ver si hay cambios respecto a los daots locales
+    // Función encargada de pedir un conjunto de Qdadas al servidor para ver si hay cambios respecto a los datos locales
     public static void obtenerDatosQdadasServer(Context ctx, ArrayList<String> idsQdada){
         try {
             if (idsQdada.isEmpty()){

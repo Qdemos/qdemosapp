@@ -14,10 +14,9 @@ module.exports.sendMessage = function(receivers, qdada, res) {
         nombreusuarios = [];
         if ((usuarios !== null) && (usuarios !== undefined) && (usuarios !== '')){
             usuarios.forEach(function (u){
-                nombreusuarios.push(u.nombre);
+                nombreusuarios.push(u.nombre+";"+u.idfacebook);
             });
         } 
-        console.log("Nombres: "+nombreusuarios);
         msg.nombreinvitados = nombreusuarios;
         msg.idqdada = qdada._id;
         msg.titulo = qdada.titulo;

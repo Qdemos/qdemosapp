@@ -48,7 +48,7 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
             // First time through, we create our fragment programmatically.
             final Bundle args = getIntent().getExtras();
             friendPickerFragment = new FriendPickerFragment(args);
-            // TODO: Descomentar para que solo salgan los usuario de Facebook que tengan instalas la APP o buscar otra manera
+            // TODO: Descomentar para que solo salgan los usuario de Facebook que tengan instalas la APP o buscar otra manera ¿Es así?
             friendPickerFragment.setExtraFields(Arrays.asList(INSTALLED));
             fm.beginTransaction().add(R.id.friend_picker_fragment, friendPickerFragment).commit();
         } else {
