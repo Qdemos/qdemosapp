@@ -28,6 +28,7 @@ import com.facebook.model.GraphUser;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
@@ -91,13 +92,21 @@ public class Inicio extends FragmentActivity {
         transaction.hide(fragments[LOGIN]);
         transaction.commit();
         getActionBar().hide();
+
     }
 
     public void initConfigApp (){
         BBDD.initBBDD(this);
 
-        // Le pedimos al servidor info de las Qdadas para ver si hay que actualizar en Local
-        com.cusl.ull.qdemos.server.Utilities.sincronizarBBDD(this);
+        // Le pedimos al servidor info de las Qdadas para ver si hay que actualizar en Local, sólo si es un inicio normal y corriente (no por notificacion push)
+        if (getIntent().getExtras() != null){
+            Boolean goTo = getIntent().getExtras().getBoolean("goto");
+            if ((goTo == null) || (!goTo)){
+                com.cusl.ull.qdemos.server.Utilities.sincronizarBBDD(this);
+            }
+        } else {
+            com.cusl.ull.qdemos.server.Utilities.sincronizarBBDD(this);
+        }
 
         // Check device for Play Services APK. If check succeeds, proceed with
         //  GCM registration.
@@ -221,6 +230,22 @@ public class Inicio extends FragmentActivity {
                 });
         request.executeAsync();
         // Empezar aqui a trabajar con la UI
+        try {
+            if (getIntent().getExtras() != null){
+                Boolean goTo = getIntent().getExtras().getBoolean("goto");
+                if ((goTo != null) && (goTo)){
+                    String qdadajson = getIntent().getExtras().getString("qdadajson");
+                    Intent intentQ = new Intent(this, com.cusl.ull.qdemos.Qdada.class);
+                    intentQ.putExtra("qdadajson", qdadajson);
+                    intentQ.putExtra("edicion", false);
+                    startActivity(intentQ);
+                    finish();
+                    return;
+                }
+            }
+        } catch (Exception e){
+            System.out.println("Fallo algo... iniciando en modo normal");
+        }
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
         finish();

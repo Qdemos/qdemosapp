@@ -12,9 +12,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
 
+import com.cusl.ull.qdemos.bbdd.models.*;
+import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.utilities.Utilities;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -82,9 +85,14 @@ public class GCMIntentService extends IntentService {
 
         BBDD.initBBDD(this);
 
-        if (Utilities.notificacionToBBDD(getApplicationContext(), msg)){
-            // TODO: Cambiar esto y que vaya directamente a la eleccion de fechas de la Qdada en cuestión
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, Inicio.class), 0);
+        Qdada qdada = Utilities.notificacionToBBDD(getApplicationContext(), msg);
+
+        if (qdada != null){
+            Intent intentQ = new Intent(this, Inicio.class);
+            intentQ.setAction("" + Math.random());
+            intentQ.putExtra("qdadajson", new Gson().toJson(qdada));
+            intentQ.putExtra("goto", true);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intentQ, 0);
 
             // TODO: Personalizar el mensaje de la Notificacion y el icono
             NotificationCompat.Builder mBuilder =

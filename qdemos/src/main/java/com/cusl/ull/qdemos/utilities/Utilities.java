@@ -276,7 +276,7 @@ public class Utilities {
     }
 
     // Función encargada de convertir una Notificación Push en la información correspondiente que se almacene en la BBDD Local
-    public static boolean notificacionToBBDD (Context ctx, String notificacion){
+    public static Qdada notificacionToBBDD (Context ctx, String notificacion){
         try {
             JSONObject datos = new JSONObject(notificacion);
             JSONArray nombresJSON = datos.getJSONArray("nombreinvitados");
@@ -329,10 +329,10 @@ public class Utilities {
                 BBDD.getApplicationDataContext(ctx).participanteDao.save();
             }
 
-            return true;
+            return qdada;
         } catch (Exception e) {
             // TODO: Fallo grande, la notificación ha llegado pero hubo un error al parsearla y la Qdada no le ha llegado al usuario
-            return false;
+            return null;
         }
     }
 
