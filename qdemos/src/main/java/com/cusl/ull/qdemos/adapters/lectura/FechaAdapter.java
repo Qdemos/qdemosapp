@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cusl.ull.qdemos.R;
+import com.cusl.ull.qdemos.bbdd.models.Qdada;
 import com.cusl.ull.qdemos.utilities.EleccionFecha;
 
 import java.text.SimpleDateFormat;
@@ -26,11 +27,13 @@ public class FechaAdapter extends BaseAdapter {
     protected List<Date> items;
     ImageButton si, no;
     boolean onlyRead;
+    Qdada qdada;
 
-    public FechaAdapter(Activity activity, List<Date> items, Boolean onlyRead) {
+    public FechaAdapter(Activity activity, List<Date> items, Boolean onlyRead, Qdada qdada) {
         this.activity = activity;
         this.items = items;
         this.onlyRead = onlyRead;
+        this.qdada = qdada;
     }
 
     @Override
@@ -72,7 +75,7 @@ public class FechaAdapter extends BaseAdapter {
         if ((EleccionFecha.elecciones.get(item) != null) && (EleccionFecha.elecciones.get(item))){
             si.setSelected(true);
             no.setSelected(false);
-        } else if (EleccionFecha.elecciones.get(item) != null){
+        } else if ((EleccionFecha.elecciones.get(item) != null) || (!qdada.sinresponder)){
             no.setSelected(true);
             si.setSelected(false);
         } // Sino: No seteado aun, no ha respondido

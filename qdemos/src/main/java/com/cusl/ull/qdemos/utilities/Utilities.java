@@ -127,7 +127,7 @@ public class Utilities {
 
     public static Boolean isParticipante (Context ctx, Qdada qdada, String idFacebook){
         try {
-            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{qdada.getID().toString(), idFacebook}, null, null, null, null, null);
+            List<UsuarioEleccion> elecciones = BBDD.getApplicationDataContext(ctx).participanteDao.search(false, "Idqdada = ? and Idfacebook = ?", new String[]{qdada.getIdQdada().toString(), idFacebook}, null, null, null, null, null);
             if ((elecciones == null) || elecciones.isEmpty())
                 return null;
             for (UsuarioEleccion ue: elecciones){
@@ -197,15 +197,19 @@ public class Utilities {
             JSONArray fechasJSON = new JSONArray(listFechas);
 
             ArrayList<String> listInvitados = new ArrayList<String>();
+            ArrayList<String> listInvitadosNombre = new ArrayList<String>();
             for (Usuario user: qdada.getInvitados()){
                 listInvitados.add(user.getIdfacebook());
+                listInvitadosNombre.add(user.getNombre());
             }
             JSONArray invitadosJSON = new JSONArray(listInvitados);
+            JSONArray invitadosNombreJSON = new JSONArray(listInvitadosNombre);
 
             data.put("titulo", qdada.getTitulo());
             data.put("descripcion", qdada.getDescripcion());
             data.put("creador", qdada.getCreador().getIdfacebook());
             data.put("invitados", invitadosJSON.toString());
+            data.put("invitadosnombre", invitadosNombreJSON.toString());
             data.put("fechas", fechasJSON.toString());
             data.put("latitud", qdada.getLatitud());
             data.put("longitud", qdada.getLongitud());
@@ -256,16 +260,16 @@ public class Utilities {
 
     public static boolean notificacionToBBDD (Context ctx, String notificacion){
         try {
+            // TODO: Comprobar si con el nuevo metodo de tambien pasar los nombres de los usuarios en la notificacion funciona. ¡¡{datos.getJSONArray("nombreinvitados")}!!
             JSONObject datos = new JSONObject(notificacion);
-            Usuario creador = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, datos.getString("idcreador"));
-            BBDD.actualizarUsuarioByIdFacebook(ctx, creador.getIdfacebook());
+            JSONArray nombresJSON = datos.getJSONArray("nombreinvitados");
+            Usuario creador = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, datos.getString("idcreador"), nombresJSON.getString(nombresJSON.length()-1));
             List<Usuario> invitados = new ArrayList<Usuario>();
             JSONArray invitadosJSON = datos.getJSONArray("invitados");
             for (int j=0; j< invitadosJSON.length(); j++){
-               Usuario invitado = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, invitadosJSON.getString(j));
+               Usuario invitado = BBDD.crearUsuarioIfNotExistOnlyLocal(ctx, invitadosJSON.getString(j), nombresJSON.getString(j));
                if (invitado != null){
                   invitados.add(invitado);
-                  BBDD.actualizarUsuarioByIdFacebook(ctx, invitado.getIdfacebook());
                }
             }
             Date limite = Utilities.dateStringZTToDate(datos.getString("limite"));

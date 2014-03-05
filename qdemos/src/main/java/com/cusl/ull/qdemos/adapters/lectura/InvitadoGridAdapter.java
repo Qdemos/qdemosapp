@@ -64,12 +64,13 @@ public class InvitadoGridAdapter extends ArrayAdapter<Usuario> {
         Usuario item = data.get(position);
         holder.txtTitle.setText(item.getNombre().split(" ")[0]);
         holder.imageItem.setProfileId(item.getIdfacebook());
-        // TODO: No pinta bien el recuadro.... siempre lo pinta gris
-        if (Utilities.isParticipante(getContext(), qdada, item.getIdfacebook()) == null){
+        if ((Utilities.isParticipante(getContext(), qdada, item.getIdfacebook()) == null) && (!qdada.sinresponder)){ // Si ha respondido a todas las fechas con un NO
+            holder.fondo.setBackgroundResource(R.drawable.background_noparticipante_usuario_qdadas);
+        } else if (Utilities.isParticipante(getContext(), qdada, item.getIdfacebook()) == null) { // Si aún no ha respondido a las fechas
             holder.fondo.setBackgroundResource(R.drawable.background_invitados_qdadas);
-        } else if (Utilities.isParticipante(getContext(), qdada, item.getIdfacebook())){
+        } else if (Utilities.isParticipante(getContext(), qdada, item.getIdfacebook())){ // Si ha elegido una fecha que de momentoe s la ganadora
             holder.fondo.setBackgroundResource(R.drawable.background_participante_usuario_qdadas);
-        } else {
+        } else { // Si ha elegido una fecha que de momento NO es ganadora
             holder.fondo.setBackgroundResource(R.drawable.background_noparticipante_usuario_qdadas);
         }
         return row;

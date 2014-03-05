@@ -80,13 +80,6 @@ public class Utilities {
         }
 
         try {
-            if (fechas.isEmpty()){
-                Qdada qdada = BBDD.getQdadaByIDServer(activity, idQdada);
-                qdada.sinresponder=false;
-                qdada.setStatus(Entity.STATUS_UPDATED);
-                BBDD.getApplicationDataContext(activity).qdadaDao.save(qdada);
-                return false;
-            }
             RequestSimpleResponse taskResquest = new RequestSimpleResponse();
             StringEntity body = new StringEntity(com.cusl.ull.qdemos.utilities.Utilities.getJSONServerFromEleccionQdada(idQdada, idFB, fechas).toString(), "UTF-8");
             HttpPost post = ServerConnection.getPost(activity.getResources().getString(R.string.ip_server), activity.getResources().getString(R.string.port_server), "nuevaEleccion", body);
@@ -103,6 +96,7 @@ public class Utilities {
         if (!com.cusl.ull.qdemos.utilities.Utilities.haveInternet(ctx)){
             return;
         }
+
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
@@ -113,6 +107,8 @@ public class Utilities {
                 // TODO: ...Hacer esta mejora descrita en la linea anterior: Esto sería mejor hacerlo cuando alguien notifique al servidor que ha cambiado una Qdada. De manera que se envie una notificación
                 // TODO: ...PUSH a todos los participantes para avisarlos de que deben actualizar
                 BBDD.ultimaSincronizacionConServidor = new Date();
+                // Esto es para pedir al servidor la info de las Qdadas que tenemos almacenadas en local
+                // TODO: ¿Seria conveniente pedir tambien las que no tenemos almacenadas en local? ¿Por eso de cuando funcione en MultiDispositivo?
                 String msg = "";
                 try {
                     List<Qdada> qdadas = BBDD.getApplicationDataContext(ctx).qdadaDao.search(false, null, null, null, null, null, null, null);

@@ -12,6 +12,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
 
+import com.cusl.ull.qdemos.bbdd.utilities.BBDD;
 import com.cusl.ull.qdemos.utilities.Utilities;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -78,6 +79,8 @@ public class GCMIntentService extends IntentService {
     // a GCM message.
     private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        BBDD.initBBDD(this);
 
         if (Utilities.notificacionToBBDD(getApplicationContext(), msg)){
             // TODO: Cambiar esto y que vaya directamente a la eleccion de fechas de la Qdada en cuestión

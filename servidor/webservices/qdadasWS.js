@@ -41,27 +41,31 @@ module.exports = function(app){
             listaFechas.forEach(function (f){
                fechas.push(Utilities.parseDate(f));
             });
-            var eleccion = new UsuarioEleccion({ 
-                                                    idqdada: req.body.idqdada,
-                                                    idfacebook: req.body.idfacebook,
-                                                    fechas: fechas
-                                               });
-            eleccion.save();
-            UsuarioEleccion.findOne({idqdada: req.body.idqdada}, function(err, usuariosElecciones) {  
-                if ((usuariosElecciones !== null) && (usuariosElecciones !== undefined) && (usuariosElecciones !== '')){ 
-                    Qdada.findOne({_id: req.body.idqdada}, function(err, qdada) {  
-                        if ((qdada!== null) && (qdada !== undefined) && (qdada !== '')){
-                             qdada.fechaganadora = Utilities.getFechaGanadora(usuariosElecciones.fechas);
-                             qdada.save();
-                             res.send("ok");
-                        } else {
-                             res.send("err");
-                        }
-                    });
-                } else {
-                    res.send("err");
-                }
-            });
+            if (fechas.length === 0) { // Si sus elecciones han sido todas que NO
+                res.send("ok");
+            } else {
+                var eleccion = new UsuarioEleccion({ 
+                                                        idqdada: req.body.idqdada,
+                                                        idfacebook: req.body.idfacebook,
+                                                        fechas: fechas
+                                                   });
+                eleccion.save();
+                UsuarioEleccion.findOne({idqdada: req.body.idqdada}, function(err, usuariosElecciones) {  
+                    if ((usuariosElecciones !== null) && (usuariosElecciones !== undefined) && (usuariosElecciones !== '')){ 
+                        Qdada.findOne({_id: req.body.idqdada}, function(err, qdada) {  
+                            if ((qdada!== null) && (qdada !== undefined) && (qdada !== '')){
+                                 qdada.fechaganadora = Utilities.getFechaGanadora(usuariosElecciones.fechas);
+                                 qdada.save();
+                                 res.send("ok");
+                            } else {
+                                 res.send("err");
+                            }
+                        });
+                    } else {
+                        res.send("err");
+                    }
+                });
+            }
         });
     }
 
@@ -93,6 +97,44 @@ module.exports = function(app){
                 fechas.push(Utilities.parseDate(f));
              });
              var invitadosJSON = JSON.parse(req.body.invitados);
+             var invitadosNombreJSON = JSON.parse(req.body.invitadosnombre);
+             Usuario.find({idfacebook: {$in: invitadosJSON}}, function(err, usuarios) {
+                if ((usuarios !== null) && (usuarios !== undefined) && (usuarios !== '')){
+                    var i = -1;
+                    var ids = [];
+                    usuarios.forEach (function(us){
+                        ids.push(us.idfacebook);
+                    });
+                    invitadosJSON.forEach(function(u){
+                        i++;
+                        if (ids.indexOf(u) !== -1){
+                            var index = ids.indexOf(u);
+                            usuarios[index].nombre=invitadosNombreJSON[i];
+                            usuarios[index].save();
+                        } else {
+                            var usuarioNuevo = new Usuario({ 
+                                                nombre: invitadosNombreJSON[i],
+                                                idgcm: null,
+                                                idfacebook: u
+                                            });
+                            usuarioNuevo.save();
+                        }
+                    });
+                } else {
+                    var i = -1;
+                    invitadosJSON.forEach(function(u){
+                        i++;
+                        var usuarioNuevo = new Usuario({ 
+                                                nombre: invitadosNombreJSON[i],
+                                                idgcm: null,
+                                                idfacebook: u
+                                            });
+                        usuarioNuevo.save();
+                    });
+                }
+             });
+
+
              var qdadaNueva = new Qdada({ 
                                             titulo: req.body.titulo,
                                             descripcion: req.body.descripcion,

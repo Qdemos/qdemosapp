@@ -72,11 +72,16 @@ public class BBDD {
         } catch (Exception e){}
     }
 
-    public static Usuario crearUsuarioIfNotExistOnlyLocal (Context ctx, String idFB){
+    public static Usuario crearUsuarioIfNotExistOnlyLocal (Context ctx, String idFB, String nombre){
         try{
-            if (BBDD.getApplicationDataContext(ctx).usuarioDao.exist(idFB))
-                return BBDD.getApplicationDataContext(ctx).usuarioDao.getPorIdFacebook(idFB);
-            Usuario user = new Usuario(ctx.getString(R.string.no_disponible), idFB, null);
+            if (BBDD.getApplicationDataContext(ctx).usuarioDao.exist(idFB)){
+                Usuario u = BBDD.getApplicationDataContext(ctx).usuarioDao.getPorIdFacebook(idFB);
+                u.setStatus(Entity.STATUS_UPDATED);
+                u.setNombre(nombre);
+                BBDD.getApplicationDataContext(ctx).usuarioDao.save(u);
+                return u;
+            }
+            Usuario user = new Usuario(nombre, idFB, null);
             try {
                 user.setStatus(Entity.STATUS_NEW);
                 BBDD.getApplicationDataContext(ctx).usuarioDao.add(user);
@@ -126,64 +131,9 @@ public class BBDD {
         }
     }
 
-    public static void actualizarUsuarioByIdFacebook (final Context ctx, final String idFB){
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                try {
-                    if (!BBDD.getApplicationDataContext(ctx).usuarioDao.exist(idFB)){
-                        crearUsuarioByIdFacebook(ctx, idFB);
-                    } else {
-                        Session session = Session.getActiveSession();
-                        if (session != null && session.isOpened()) {
-                            Request request = Request.newMeRequest(session,
-                                    new Request.GraphUserCallback() {
-                                        @Override
-                                        public void onCompleted(GraphUser user, Response response) {
-                                            // If the response is successful
-                                            if (user != null) {
-                                                Usuario usuario = BBDD.getUsuario(ctx, idFB);
-                                                try {
-                                                    usuario.setStatus(Entity.STATUS_UPDATED);
-                                                    usuario.setNombre(user.getName());
-                                                    BBDD.appDataContext.usuarioDao.save(usuario);
-                                                    Log.i(TAG, "Usuario Actualizado Correctamente");
-                                                } catch (Exception e){}
-                                            }
-                                            if (response.getError() != null) {
-                                                // Handle errors, will do so later.
-                                            }
-                                        }
-                                    });
-                            request.executeAsync();
-                        } else {
-                            // TODO: No hay sesion en Facebook, pensar en si se deberia almacenar estas acciones en un pila y reintentar mas tarde hasta que se consiga
-                        }
-                    }
-                } catch (Exception e){}
-                return "ok";
-            }
-
-            @Override
-            protected void onPostExecute(String msg) {
-            }
-        }.execute(null, null, null);
-    }
-
     public static boolean existo(Context ctx){
         try {
             if (BBDD.getApplicationDataContext(ctx).usuarioDao.getMyUser() != null)
-                return true;
-            else
-                return false;
-        } catch (Exception e){
-            return false;
-        }
-    }
-
-    public static boolean existeUsuario (Context ctx, String idFB){
-        try {
-            if (BBDD.getApplicationDataContext(ctx).usuarioDao.getPorIdFacebook(idFB) != null)
                 return true;
             else
                 return false;
@@ -368,6 +318,17 @@ public class BBDD {
             if ((elecciones != null) && (!elecciones.isEmpty()))
                 return true;
         } catch (Exception e){}
+        return false;
+    }
+
+    public static boolean existeUsuario (Context ctx, String idFB){
+        try {
+            List<Usuario> usuarios = BBDD.getApplicationDataContext(ctx).usuarioDao.search(false, "Idfacebook = ?", new String[]{idFB}, null, null, null, null, null);
+            if ((usuarios != null) && (!usuarios.isEmpty()))
+                return true;
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return false;
     }
 

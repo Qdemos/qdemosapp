@@ -133,15 +133,14 @@ public class Qdada extends FragmentActivity implements ActionBar.TabListener {
                 com.cusl.ull.qdemos.server.Utilities.crearQdada((Activity) this, pd);
             } else if (!isEdition){
                 List<Date> fechas = EleccionFecha.getFechas();
+                String qdadajson = getIntent().getExtras().getString("qdadajson");
+                com.cusl.ull.qdemos.bbdd.models.Qdada qdada = BBDD.getQdadaFromJSON(this, qdadajson);
                 if (fechas == null){
                     Crouton.makeText(this, R.string.validar_fechas_invitado, Style.ALERT).show();
-                } else if (fechas.isEmpty()) {
+                } else if ((fechas.isEmpty()) && (qdada.getCreador().getIdfacebook().equals(BBDD.quienSoy(this).getIdfacebook()))){
                     Crouton.makeText(this, R.string.validar_fechas_creador, Style.ALERT).show();
                 } else {
                     try {
-                        String qdadajson = getIntent().getExtras().getString("qdadajson");
-                        com.cusl.ull.qdemos.bbdd.models.Qdada qdada = BBDD.getQdadaFromJSON(this, qdadajson);
-
                         BBDD.updateMiEleccion(this, qdada.getIdQdada(), BBDD.quienSoy(this).getIdfacebook(), fechas);
                     } catch (Exception e){
                         Toast.makeText(this, R.string.error_bbdd_r, Toast.LENGTH_LONG).show();

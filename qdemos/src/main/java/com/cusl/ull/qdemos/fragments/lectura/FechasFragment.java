@@ -46,7 +46,7 @@ public class FechasFragment extends Fragment  {
             } else {
                 EleccionFecha.reset(BBDD.getFechas(getActivity(), qdada.getIdQdada()), miEleccion);
             }
-            fechaAdapter = new FechaAdapter(getActivity(), BBDD.getFechas(getActivity(), qdada.getIdQdada()), onlyRead);
+            fechaAdapter = new FechaAdapter(getActivity(), BBDD.getFechas(getActivity(), qdada.getIdQdada()), onlyRead, qdada);
             listView.setAdapter(fechaAdapter);
             listView.setClickable(false);
 
