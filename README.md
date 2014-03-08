@@ -68,7 +68,7 @@ Para hacer correr el servidor, simplemente debemos situarnos en la carpeta donde
 
 ## Librerias externas ##
 
-Para este proyecto se han usado librerias externas (de código abierto) tanto para la parte del cliente Android como para el servidor Node.js (módulos). A continuación se detallan cuales han sido, y su enlace para una posible reutilización en proyectos externos.
+Para este proyecto se han usado librerias externas (de código abierto) tanto para la parte del cliente Android como para el servidor (WebApp y BackEnd de APIs). A continuación se detallan cuales han sido, y su enlace para una posible reutilización en proyectos externos.
 
 ### Android ###
 
@@ -78,8 +78,12 @@ Para este proyecto se han usado librerias externas (de código abierto) tanto pa
 * [**GSON**](https://code.google.com/p/google-gson/): Utilidades para el manejo del formato JSON.
 * [**Crouton**](https://github.com/keyboardsurfer/Crouton): Alternativa mejorada de los típicos Toasts.
 
-### Node.js ###
+### Servidor (FrontEnd + BackEnd) ###
 
-* [**Mongoose**](https://github.com/LearnBoost/mongoose): ORM de MongoDB, para el manejo de la base de datos.
-* [**Express**](https://github.com/visionmedia/express): Para crear WebServices de tipo REST.
-* [**Node-gcm**](https://github.com/ToothlessGear/node-gcm): Para comunicar nuestro servidor node con Google Cloud Messaging de manera fácil. 
+* [**Node.js**] (http://www.nodejs.org/): Tecnología usada en el servidor como BackEnd.
+* [**Mongoose**](https://github.com/LearnBoost/mongoose): Módulo para Node.js, ORM de MongoDB, para el manejo de la base de datos.
+* [**Express.js**](https://github.com/visionmedia/express): Módulo para Node.js, para crear WebServices de tipo REST.
+* [**Node-gcm**](https://github.com/ToothlessGear/node-gcm): Modulo de Node.js, para comunicar nuestro servidor node con Google Cloud Messaging de manera fácil. 
+* [**Angular.js**](http://angularjs.org/): Frameowrk para el Front-End de la App Web y crearla de de forma versatil, sencillo y con mucha potencia.
+* [**Bootstrap**](http://getbootstrap.com/): Framework para el diseño de la Web, que define todos los detalles de la interfaz gráfica.
+* [**Textillate**](http://jschr.github.io/textillate/): Libreria JavaScript que permite definir textos dinámicos con animaciones muy chulas para representar la entrada o salida de un texto en la web.
