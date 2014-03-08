@@ -1,0 +1,67 @@
+/* Home video */
+#video_background { 
+    position: absolute; 
+    bottom: 0px; 
+    right: 0px; 
+    min-width: 100%; 
+    min-height: 100%; 
+    width: auto; 
+    height: auto; 
+    z-index: -1000; 
+    overflow: hidden
+}
+
+/* Home Style */
+
+html,body{
+  height: 100%;
+}
+
+#home{
+	min-height: 100%;
+    height: auto !important; /* ie7 fix */
+    height: 100%;
+    margin: 0 auto -30px;
+}
+
+.portada{
+    margin-top: 10%;
+}
+
+.portada-interior{
+	background: rgb(253, 253, 253); /* Fall-back for browsers that don't support rgba */
+    background: rgba(253, 253, 253, .6);
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-width:medium;
+    border-color: rgb(25, 25, 25); /* Fall-back for browsers that don't support rgba */
+    border-color: rgba(25, 25, 25, .8);
+}
+
+.portada-superior{
+	padding-top: 1%;
+    border-top-left-radius:2em;
+    border-top-right-radius:2em;
+    border-top-style:solid;
+    border-right-style:solid;
+    border-left-style:solid;
+}
+
+.portada-inferior{
+	padding-bottom: 1%;
+    border-bottom-right-radius:2em;
+    border-bottom-left-radius:2em;
+    border-bottom-style:solid;
+    border-right-style:solid;
+    border-left-style:solid;
+}
+
+.banner-frases{
+    margin-top: 11%;
+}
+
+#frase {
+    color: #fff;
+    font-size: 400%;
+    font-family: 'Averia Sans Libre';
+}

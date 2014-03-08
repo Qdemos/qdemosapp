@@ -1,0 +1,92 @@
+<html ng-app="qdemosApp">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/qdemos.css">
+	<link href='http://fonts.googleapis.com/css?family=Averia+Sans+Libre' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/modernizr-2.5.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.fittext.js"></script>
+	<script type="text/javascript" src="js/jquery.lettering.js"></script>
+	<script type="text/javascript" src="js/jquery.textillate.js"></script>
+</head>
+
+<body>
+	<div class="container-fluid" id="home">
+		<div class="row">
+    		<video id="video_background" preload="auto" loop="loop" muted="muted" volume="0"> 
+    			<source src="videos/background.webm" type="video/webm">
+    			Video not supported
+    		</video>
+    	</div>
+    	
+		<div class="row portada">
+    		<div class="row">
+	    		<div class="col-md-4"></div>
+	    		<div class="col-md-4 text-center portada-interior portada-superior">
+	    			<img src="images/qdemos.png" style="width: 90%"></img>
+	    		</div>
+	    		<div class="col-md-4"></div>
+    		</div>
+    		<div class="row">
+	    		<div class="col-md-4"></div>
+	    		<div class="col-md-4 text-center portada-interior portada-inferior">
+				    <button type="submit" id="login" class="btn" style="background: url(/images/fb-login-button.png) no-repeat; width: 214px; height: 41px;"></button>
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+		</div>
+
+		<div class="row banner-frases">
+    		<div class="col-md-1"></div>
+    		<div class="col-md-1"></div>
+    		<div class="col-md-8 text-center">
+			    <div id="frase">
+                    <ul class="texts" style="display: none">
+                      <li>Menos Whatsapp y Más Ven a Verme</li>
+                      <li>Quedar con tus amig@s nunca fue tan fácil</li>
+                      <li>Encuentra la fecha exacta para quedar con ell@s</li>
+                      <li>Un Proyecto hecho en Canarias</li>
+                      <li>De Código Totalmente Libre</li>
+                      <li>Es hora de desvirtualizar a quién tú y yo sabemos</li>
+                      <li>Un abrazo vale más que 1000 emoticonos</li>
+                      <li>Organiza las quedadas de tu grupo de amig@s</li>
+                      <li>Propón visitar a tus amig@s ese rincón tan especial</li>
+                      <li>Queda con ese grupito de amig@s que llevas tanto tiempo sin ver</li>
+                      <li>Da el primer paso y organiza la Quedada</li>
+                      <li>Qdemos es la herramienta que estabas buscando</li>
+                    </ul>
+                </div>
+			</div>
+			<div class="col-md-1"></div>
+    		<div class="col-md-1"></div>
+		</div>
+    </div>
+
+	<!-- Site footer -->
+
+	<footer id="footer" class="container text-center">
+	    <p class="text-muted credit" style="color:#fff">Hecho desde Canarias con mucho ♥. <a href="http://qdemos.wordpress.com/" target="_blank">Qdemos</a>, 2014</p>
+	</footer>
+   	 
+<script type="text/javascript">
+
+	window.onload = function(){
+		document.getElementById("video_background").play();
+    };
+
+	(function(){
+	    $('#frase').textillate({loop: true, minDisplayTime: 4000, in: {effect: 'bounceInDown', shuffle: true}, out: {effect: 'hinge', shuffle: true}});
+	})();
+	
+</script>
+
+</body>
+
+
+</html>
