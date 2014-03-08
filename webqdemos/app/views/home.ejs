@@ -46,7 +46,7 @@
     		<div class="col-md-1"></div>
     		<div class="col-md-1"></div>
     		<div class="col-md-8 text-center">
-			    <div id="frase">
+			    <div id="frase" class="viewport">
                     <ul class="texts" style="display: none">
                       <li>Menos Whatsapp y Más Ven a Verme</li>
                       <li>Quedar con tus amig@s nunca fue tan fácil</li>
@@ -81,7 +81,7 @@
     };
 
 	(function(){
-	    $('#frase').textillate({loop: true, minDisplayTime: 4000, in: {effect: 'bounceInDown', shuffle: true}, out: {effect: 'hinge', shuffle: true}});
+	    $('#frase').textillate({loop: true, minDisplayTime: 4000, in: {effect: 'bounceInDown', secuence: true}, out: {effect: 'bounceOutDown', reverse: true}});
 	})();
 	
 </script>

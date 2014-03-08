@@ -65,3 +65,7 @@ html,body{
     font-size: 400%;
     font-family: 'Averia Sans Libre';
 }
+
+.viewport {
+  overflow: hidden;
+}
