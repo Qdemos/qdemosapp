@@ -12,8 +12,8 @@ var app = express();
 //           methodOverride to implement custom HTTP methods  
 //           router to crete custom routes  
 app.configure(function(){  
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
+  app.set('views', __dirname + '/app/views');
+  app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -28,21 +28,12 @@ app.configure('development', function(){
   
 //Sample routes are in a separate module, just for keep the code clean  
 routes = require('./routes/router')(app);  
-  
+
+
 //Connect to the MongoDB test database  
 mongoose.connect('mongodb://localhost/qdemos_db');  
   
 //Start the server  
 http.createServer(app).listen(0108); 
 
-console.log("Lanzado en puerto 0108..");
-
-/*var registrationIds=[];
-registrationIds.push("APA91bFQpVxpEIBFIjJD3_4MmiBSwh5SqyR3V4Qvtc3F0Ri_2Ys2ZDHSpqfxwbuTssyv4w5JNuQ8UY62HvsJkbsF9xzOPDNfKAdY5wZV3qS-ZclDItNFgaYxfHGikAm9ChmVtahNJNYbOEvZ7m_mg4RCx5re_GTmPw");
-var Utilities = require('./gcm/Utilities');
-var Qdada = require('./models/qdada');
-Qdada.findOne({_id: "530b8026afdc864822ca2494"}, function(err, qdada) {  
-    if ((qdada !== null) && (qdada !== undefined) && (qdada !== '')){
-        Utilities.sendMessage(registrationIds, qdada, null);
-    }
-});*/
+console.log("Lanzado en puerto 0108...")
