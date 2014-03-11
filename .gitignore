@@ -12,12 +12,8 @@
 bin/
 gen/
 
-servidor/node_modules/
-
 webqdemos/public/videos/
 webqdemos/node_modules/
-
-
 
 # Local configuration file (sdk path, etc)
 local.properties
