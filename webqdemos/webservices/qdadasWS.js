@@ -50,20 +50,23 @@ module.exports = function(app){
                                                         fechas: fechas
                                                    });
                 eleccion.save();
-                UsuarioEleccion.findOne({idqdada: req.body.idqdada}, function(err, usuariosElecciones) {  
-                    if ((usuariosElecciones !== null) && (usuariosElecciones !== undefined) && (usuariosElecciones !== '')){ 
-                        Qdada.findOne({_id: req.body.idqdada}, function(err, qdada) {  
+                UsuarioEleccion.find({idqdada: req.body.idqdada}, function(err, usuariosElecciones) {  
+                    if ((usuariosElecciones !== null) && (usuariosElecciones !== undefined) && (usuariosElecciones.length>0)){ 
+                        usuariosElecciones.forEach(function (u){
+                            u.fechas.forEach(function (f){
+                                fechas.push(f); // Añadimos a las fechas que hemos actualizado, eleccion que hemos actualizado, todas el resto de elecciones del resto de usuarios, para despues calcular la fecha ganadora y actualizarla
+                            });
+                        });
+                    } 
+                    Qdada.findOne({_id: req.body.idqdada}, function(err, qdada) {  
                             if ((qdada!== null) && (qdada !== undefined) && (qdada !== '')){
-                                 qdada.fechaganadora = Utilities.getFechaGanadora(usuariosElecciones.fechas);
+                                 qdada.fechaganadora = Utilities.getFechaGanadora(fechas);
                                  qdada.save();
                                  res.send("ok");
                             } else {
                                  res.send("err");
                             }
-                        });
-                    } else {
-                        res.send("err");
-                    }
+                    });
                 });
             }
         });
