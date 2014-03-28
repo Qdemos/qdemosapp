@@ -3,7 +3,7 @@ Qdemos!
 
 ### ¡Ojo!: Rama más actualizada en la fase actual 
 
-##[WebServices](https://github.com/Qdemos/qdemosapp/tree/webservices) *(Rama como la versión Beta de la App)*
+##[WebServices](https://github.com/Qdemos/qdemosapp/tree/webservices) *(Código de la versión Beta)*
 
 <a href="https://github.com/Qdemos/qdemosapp/raw/webservices/QdemosVersion1.0.apk">
   <p align="center">
