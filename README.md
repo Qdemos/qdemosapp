@@ -1,9 +1,17 @@
-### ¡Ojo!: Rama más actualizada en la fase actual 
-
-[WebServices](https://github.com/Qdemos/qdemosapp/tree/webservices)
-
 Qdemos!
 =========
+
+### ¡Ojo!: Rama más actualizada en la fase actual 
+
+##[WebServices](https://github.com/Qdemos/qdemosapp/tree/webservices) *(Rama como la versión Beta de la App)*
+
+<a href="https://github.com/Qdemos/qdemosapp/raw/webservices/QdemosVersion1.0.apk">
+  <p align="center">
+    <img alt="App" src="https://raw.githubusercontent.com/Qdemos/qdemosapp/webservices/imagenesREADME/descarga.png" width="210"/>
+  </p>
+</a>
+
+## ¿Qué es Qdemos? ##
 
 <a href="http://qdemos.wordpress.com/">
   <p align="center">
@@ -15,7 +23,7 @@ App Android participante en el [**VIII Concurso Universitario de Software Libre*
 
 <a href="http://www.concursosoftwarelibre.org/1314/">
   <p align="center">
-    <img alt="CUSL" src="http://www.concursosoftwarelibre.org/1314/themes/kanji/logo.png" />
+    <img alt="CUSL" src="http://www.concursosoftwarelibre.org/1314/themes/kanji/logo.png"/>
   </p>
 </a>
 
