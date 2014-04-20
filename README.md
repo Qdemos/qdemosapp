@@ -1,7 +1,7 @@
 Qdemos!
 =========
 
-<a href="https://github.com/Qdemos/qdemosapp/raw/webservices/QdemosVersion1.0.apk">
+<a href="https://github.com/Qdemos/qdemosapp/raw/webservices/qdemos/QdemosVersion1.0.apk">
   <p align="center">
     <img alt="App" src="https://raw.githubusercontent.com/Qdemos/qdemosapp/webservices/imagenesREADME/descarga.png" width="210"/>
   </p>
