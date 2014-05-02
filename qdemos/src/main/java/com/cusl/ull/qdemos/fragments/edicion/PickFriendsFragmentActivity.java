@@ -32,8 +32,8 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
 
     private static final String INSTALLED = "installed";
 
-    private static final Configuration CONFIGURATION_INFINITE = new Configuration.Builder()
-            .setDuration(Configuration.DURATION_INFINITE)
+    private static final Configuration CONFIGURATION_LONG = new Configuration.Builder()
+            .setDuration(Configuration.DURATION_LONG)
             .build();
 
     // A helper to simplify life for callers who want to populate a Bundle with the necessary
@@ -97,7 +97,7 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
         });
 
         Crouton crouton = Crouton.makeText(this, R.string.friendsInstallApp, Style.INFO);
-        crouton.setConfiguration(CONFIGURATION_INFINITE).show();
+        crouton.setConfiguration(CONFIGURATION_LONG).show();
     }
 
     private void onError(Exception error) {
