@@ -18,6 +18,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import de.keyboardsurfer.android.widget.crouton.Configuration;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 // This class provides an example of an Activity that uses FriendPickerFragment to display a list of
 // the user's friends. It takes a programmatic approach to creating the FriendPickerFragment with the
 // desired parameters -- see PickPlaceActivity in the PlacePickerSample project for an example of an
@@ -27,6 +31,10 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
     FriendPickerFragment friendPickerFragment;
 
     private static final String INSTALLED = "installed";
+
+    private static final Configuration CONFIGURATION_INFINITE = new Configuration.Builder()
+            .setDuration(Configuration.DURATION_INFINITE)
+            .build();
 
     // A helper to simplify life for callers who want to populate a Bundle with the necessary
     // parameters. A more sophisticated Activity might define its own set of parameters; our needs
@@ -48,8 +56,6 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
             // First time through, we create our fragment programmatically.
             final Bundle args = getIntent().getExtras();
             friendPickerFragment = new FriendPickerFragment(args);
-            // TODO: Descomentar para que solo salgan los usuario de Facebook que tengan instalas la APP o buscar otra manera ¿Es así?
-            friendPickerFragment.setExtraFields(Arrays.asList(INSTALLED));
             fm.beginTransaction().add(R.id.friend_picker_fragment, friendPickerFragment).commit();
         } else {
             // Subsequent times, our fragment is recreated by the framework and already has saved and
@@ -57,6 +63,8 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
             // incorrect if the fragment was modified programmatically since it was created.)
             friendPickerFragment = (FriendPickerFragment) fm.findFragmentById(R.id.friend_picker_fragment);
         }
+
+        friendPickerFragment.setExtraFields(Arrays.asList(INSTALLED));
 
         friendPickerFragment.setOnErrorListener(new PickerFragment.OnErrorListener() {
             @Override
@@ -79,6 +87,17 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
                 finish();
             }
         });
+
+        friendPickerFragment.setFilter(new PickerFragment.GraphObjectFilter<GraphUser>() {
+            @Override
+            public boolean includeItem(GraphUser graphObject) {
+                Boolean installed = graphObject.cast(GraphUserWithInstalled.class).getInstalled();
+                return (installed != null) && installed.booleanValue();
+            }
+        });
+
+        Crouton crouton = Crouton.makeText(this, R.string.friendsInstallApp, Style.INFO);
+        crouton.setConfiguration(CONFIGURATION_INFINITE).show();
     }
 
     private void onError(Exception error) {
@@ -100,5 +119,9 @@ public class PickFriendsFragmentActivity extends FragmentActivity {
         } catch (Exception ex) {
             onError(ex);
         }
+    }
+
+    private interface GraphUserWithInstalled extends GraphUser {
+        Boolean getInstalled();
     }
 }

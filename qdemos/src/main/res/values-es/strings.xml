@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="logout">Cerrar Sesión</string>
+    <string name="inicio">Inicio</string>
+    <string name="nuevo">Añadir</string>
+    <string name="guardar">Guardar</string>
+    <string name="title_section_aceptadas">Aceptadas</string>
+    <string name="title_section_pendientes">Pendientes</string>
+    <string name="title_section_historial">Historial</string>
+    <string name="title_activity_qdada">Editar Qdada</string>
+    <string name="title_activity_invitados">¿Con quién quieres Qdar?</string>
+    <string name="title_section_info">Información General</string>
+    <string name="title_section_fechas">Fechas</string>
+    <string name="title_section_invitados">Invitados</string>
+
+    <string name="friendsInstallApp">Recuerda que es necesario que tus Amigos tengan Instalada la App para poder Invitarlos</string>
+
+    <string name="notificacion">¡Te han invitado a una Qdada!</string>
+
+    <string name="title_qdada_lectura">Datos Qdada</string>
+
+    <string name="nodescripcion">No existe más información sobre esta Qdada</string>
+
+    <string name="titulo">Introduzca un Título...</string>
+    <string name="descripcion">Introduzca una Descripción...</string>
+    <string name="direccion">Introduzca una Dirección...</string>
+
+    <string name="exception">Excepción</string>
+
+    <string name="validar_fechas">Debes INDICAR al menos una FECHA para la Qdada</string>
+    <string name="validar_invitados">Debes INVITAR al menos a una PERSONA a la Qdada</string>
+    <string name="validar_titulo">Debes INDICAR un TITULO para la Qdada</string>
+    <string name="validar_direccion">Debes INDICAR correctamente un LUGAR para la Qdada</string>
+
+    <string name="validar_fechas_invitado">Debes RESPONDER a todas las FECHAS propuestas</string>
+    <string name="validar_fechas_creador">Como CREADOR debes INDICAR al menos una FECHA</string>
+
+    <string name="cuidado">¡Cuidado!</string>
+    <string name="validar_datos">Existen DATOS que NO has GUARDADO. ¿Deseas continuar y perderlos?</string>
+
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+
+    <string name="esperar">Espere Por Favor</string>
+    <string name="procesando">Procesando...</string>
+    <string name="inicializando">Inicializando datos por primera vez...</string>
+
+    <string name="conexion">Error: No está conectado a Intenet o la velocidad es demasiado lenta...</string>
+
+    <string name="app_key_google_apis_web">AIzaSyClBprsTLkbUoiFhHUtSLHpWt0GHc5vGF0</string>
+
+    <string name="error_problemautocompletado">Ha ocurrido un ERROR con el motor de AUTOCOMPLETADO de DIRECCIONES</string>
+    <string name="error_bbdd">Hubo un ERROR al GUARDAR en Base de Datos, contacte con el administrador</string>
+    <string name="error_bbdd_r">Hubo un ERROR al RECUPERAR de Base de Datos, contacte con el administrador</string>
+    <string name="error_fecha_existe">Ya existe la fecha: </string>
+    <string name="error_fecha_no_valida">NO se admiten FECHAS anteriores a la hora actual: </string>
+
+    <string name="error_conexion">ERROR: Debes tener una CONEXIÓN Estable para realizar esta acción</string>
+
+    <string name="error_generico">Error Generico</string>
+
+    <string name="no_disponible">No Disponible</string>
+
+    <string name="qdadacreada">La Qdada ha sido creada con ÉXITO</string>
+
+</resources>

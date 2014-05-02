@@ -45,7 +45,7 @@ public class AceptadasFragment extends Fragment {
             try {
                 String myIdFB = BBDD.quienSoy(getActivity()).getIdfacebook();
                 Date ahora = new Date();
-                qdadas = BBDD.getApplicationDataContext(getActivity()).qdadaDao.search(false, "Sinresponder = ? and Fechaganadora > ?", new String[]{"0", String.valueOf(ahora.getTime())}, null, null, null, null, null);
+                qdadas = BBDD.getApplicationDataContext(getActivity()).qdadaDao.search(false, "Sinresponder = ? and Fechaganadora > ?", new String[]{"0", String.valueOf(ahora.getTime())}, "Fechaganadora ASC", null, null, null, null);
                 for (Qdada qdada: qdadas){
                     if (BBDD.tengoEleccion(getActivity(), qdada.getIdQdada(), myIdFB)){
                         qdadasQuieroIr.add(qdada);

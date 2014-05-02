@@ -6,68 +6,70 @@
     <string name="api_id_gcm">677460586680</string>
     <string name="app_key_play_services">AIzaSyBBgC6pax3qlZDpHOqV1BArBgCLpN85TZs</string>
 
-    <string name="ip_server">http://192.168.0.197</string>
-    <string name="port_server">0108</string>
+    <string name="ip_server">IP</string>
+    <string name="port_server">PORT</string>
 
-    <string name="logout">Cerrar Sesión</string>
-    <string name="inicio">Inicio</string>
-    <string name="nuevo">Añadir</string>
-    <string name="guardar">Guardar</string>
-    <string name="title_section_aceptadas">Aceptadas</string>
-    <string name="title_section_pendientes">Pendientes</string>
-    <string name="title_section_historial">Historial</string>
-    <string name="title_activity_qdada">Editar Qdada</string>
-    <string name="title_activity_invitados">¿Con quién quieres Qdar?</string>
-    <string name="title_section_info">Información General</string>
-    <string name="title_section_fechas">Fechas</string>
-    <string name="title_section_invitados">Invitados</string>
+    <string name="logout">Logout</string>
+    <string name="inicio">Home</string>
+    <string name="nuevo">Add</string>
+    <string name="guardar">Save</string>
+    <string name="title_section_aceptadas">Accepted</string>
+    <string name="title_section_pendientes">Not Answered</string>
+    <string name="title_section_historial">History</string>
+    <string name="title_activity_qdada">Edit Qdada</string>
+    <string name="title_activity_invitados">Who do you want Meet?</string>
+    <string name="title_section_info">General Information</string>
+    <string name="title_section_fechas">Dates</string>
+    <string name="title_section_invitados">Guests</string>
 
-    <string name="notificacion">¡Te han invitado a una Qdada!</string>
+    <string name="friendsInstallApp">Remember, your Friends need to have the App Installed to Invite.</string>
 
-    <string name="title_qdada_lectura">Datos Qdada</string>
+    <string name="notificacion">You are invited to a Qdada!</string>
 
-    <string name="nodescripcion">No existe más información sobre esta Qdada</string>
+    <string name="title_qdada_lectura">Qdada Data</string>
 
-    <string name="titulo">Introduzca un Título...</string>
-    <string name="descripcion">Introduzca una Descripción...</string>
-    <string name="direccion">Introduzca una Dirección...</string>
+    <string name="nodescripcion">No further information on this Qdada</string>
 
-    <string name="exception">Excepción</string>
+    <string name="titulo">Enter a Title...</string>
+    <string name="descripcion">Enter a Description...</string>
+    <string name="direccion">Enter an Address...</string>
 
-    <string name="validar_fechas">Debes INDICAR al menos una FECHA para la Qdada</string>
-    <string name="validar_invitados">Debes INVITAR al menos a una PERSONA a la Qdada</string>
-    <string name="validar_titulo">Debes INDICAR un TITULO para la Qdada</string>
-    <string name="validar_direccion">Debes INDICAR correctamente un LUGAR para la Qdada</string>
+    <string name="exception">Exception</string>
 
-    <string name="validar_fechas_invitado">Debes RESPONDER a todas las FECHAS propuestas</string>
-    <string name="validar_fechas_creador">Como CREADOR debes INDICAR al menos una FECHA</string>
+    <string name="validar_fechas">You must SPECIFY at least a DATE for the Qdada.</string>
+    <string name="validar_invitados">You must INVITE at least one FRIEND to the Qdada</string>
+    <string name="validar_titulo">You must ENTER a TITLE for the Qdada</string>
+    <string name="validar_direccion">You must correctly INDICATE a PLACE for the Qdada</string>
 
-    <string name="cuidado">¡Cuidado!</string>
-    <string name="validar_datos">Existen DATOS que NO has GUARDADO. ¿Deseas continuar y perderlos?</string>
+    <string name="validar_fechas_invitado">You must ANSWER all the proposed DATES</string>
+    <string name="validar_fechas_creador">As a CREATOR you must SPECIFY at least a DATE</string>
 
-    <string name="si">Sí</string>
+    <string name="cuidado">Warning!</string>
+    <string name="validar_datos">There are DATA that have NOT SAVED. Do you want to continue and LOSE the DATA?</string>
+
+    <string name="si">Yes</string>
     <string name="no">No</string>
 
-    <string name="esperar">Espere Por Favor</string>
-    <string name="procesando">Procesando...</string>
-    <string name="inicializando">Inicializando datos por primera vez...</string>
+    <string name="esperar">Please Wait</string>
+    <string name="procesando">Processing...</string>
+    <string name="inicializando">Initializing Data First...</string>
 
-    <string name="conexion">Error: No está conectado a Intenet o la velocidad es demasiado lenta...</string>
+    <string name="conexion">Error: Not connected to the Intenet or the speed is too slow...</string>
 
     <string name="app_key_google_apis_web">AIzaSyClBprsTLkbUoiFhHUtSLHpWt0GHc5vGF0</string>
 
-    <string name="error_problemautocompletado">Ha ocurrido un ERROR con el motor de AUTOCOMPLETADO de DIRECCIONES</string>
-    <string name="error_bbdd">Hubo un ERROR al GUARDAR en Base de Datos, contacte con el administrador</string>
-    <string name="error_bbdd_r">Hubo un ERROR al RECUPERAR de Base de Datos, contacte con el administrador</string>
-    <string name="error_fecha_existe">Ya existe la fecha: </string>
-    <string name="error_fecha_no_valida">NO se admiten FECHAS anteriores a la hora actual: </string>
+    <string name="error_problemautocompletado">An ERROR occurred with the ADDRESS AUTOCOMPLETION Engine</string>
+    <string name="error_bbdd">There was an ERROR SAVING in Database, contact Administrator</string>
+    <string name="error_bbdd_r">There was an ERROR RESTORING in Database, contact Administrator</string>
+    <string name="error_fecha_existe">Date Already Exists: </string>
+    <string name="error_fecha_no_valida">EARLIER DATES are NOT allowed to the CURRENT TIME: </string>
 
-    <string name="error_conexion">ERROR: Debes tener una CONEXIÓN Estable para realizar esta acción</string>
+    <string name="error_conexion">ERROR: You must have a stable CONNECTION to perform this action</string>
 
-    <string name="error_generico">Error Generico</string>
+    <string name="error_generico">Generic Error</string>
 
-    <string name="no_disponible">No Disponible</string>
+    <string name="no_disponible">No Available</string>
 
-    <string name="qdadacreada">La Qdada ha sido creada con ÉXITO</string>
+    <string name="qdadacreada">The Qdada has been SUCCESSFULLY CREATED</string>
 
 </resources>
