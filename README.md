@@ -1,9 +1,9 @@
 Qdemos!
 =========
 
-<a href="https://github.com/Qdemos/qdemosapp/raw/webservices/qdemos/QdemosVersion1.0.apk">
+<a href="https://play.google.com/store/apps/details?id=com.cusl.ull.qdemos" target="_blank">
   <p align="center">
-    <img alt="App" src="https://raw.githubusercontent.com/Qdemos/qdemosapp/webservices/imagenesREADME/descarga.png" width="210"/>
+    <img alt="App" src="http://www.geek.com.mx/wp-content/uploads/2014/02/Google-Play.png?3d5e77" width="210"/>
   </p>
 </a>
 
@@ -15,7 +15,7 @@ Qdemos!
   </p>
 </a>
 
-App Android participante en el [**VIII Concurso Universitario de Software Libre**](http://www.concursosoftwarelibre.org/1314/)
+App Android participante en el [**VIII Concurso Universitario de Software Libre**](http://www.concursosoftwarelibre.org/1314/), donde ha sido premiada con el 2º Premio en la fase Local de la Universidad de La Laguna, y ha sido Finalista en la Fase Nacional.
 
 <a href="http://www.concursosoftwarelibre.org/1314/">
   <p align="center">
